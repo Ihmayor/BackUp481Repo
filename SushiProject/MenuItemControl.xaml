@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="SushiSushi.MenuItemControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="200" d:DesignWidth="300">
+    <Grid>
+        <Image HorizontalAlignment="Left" Height="70" Margin="10,10,0,0" VerticalAlignment="Top" Width="100"/>
+        <Label Content="Name" HorizontalAlignment="Left" Margin="115,10,0,0" VerticalAlignment="Top"/>
+        <Label Content="Price" HorizontalAlignment="Left" Margin="115,40,0,0" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Height="80" Margin="10,85,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="220"><Run Text="Description of Food."/><LineBreak/><Run Text="Yum"/><LineBreak/><Run Text="Good "/><LineBreak/><Run Text="Eat"/><LineBreak/><Run Text="Line 5 about food"/></TextBlock>
+        <Button Content="Order" HorizontalAlignment="Left" Margin="10,170,0,0" VerticalAlignment="Top" Width="75"/>
+        <ComboBox HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="110,170,0,0"/>
+        <Label Content="G" HorizontalAlignment="Left" Height="29" Margin="235,85,0,0" VerticalAlignment="Top" Width="38" RenderTransformOrigin="1.077,0.274"/>
+        <Label Content="V" HorizontalAlignment="Left" Height="29" Margin="235,136,0,0" VerticalAlignment="Top" Width="38" RenderTransformOrigin="1.077,0.274"/>
+
+    </Grid>
+</UserControl>
