@@ -5,18 +5,19 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
            
              mc:Ignorable="d" 
-             d:DesignHeight="1000" d:DesignWidth="Auto">
+             d:DesignHeight="1000" d:DesignWidth="700">
     <Grid>
-        <ListBox x:Name="ItemsListBox" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+        <ListBox x:Name="ItemsListBox" Width="500" Height="200" ScrollViewer.CanContentScroll="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible">
            <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <WrapPanel IsItemsHost="True" Width="500" Height="Auto" Orientation="Horizontal"/>
+                    <WrapPanel IsItemsHost="True" Width="400" Height="Auto" Orientation="Horizontal"/>
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
            <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid Width="100" Height="100">
                         <Button Width="100" Height="100" Content="{Binding name}" Background="Beige"/>
+                        <Image Width="100" Height="100" Source="{Binding source}"/>
                     </Grid> 
                  </DataTemplate>
             </ListBox.ItemTemplate>

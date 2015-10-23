@@ -17,6 +17,8 @@
         <StackPanel HorizontalAlignment="Left" Height="475" Margin="900,150,0,0" VerticalAlignment="Top" Width="275"/>
         <Button Content="Button" HorizontalAlignment="Left" Margin="900,640,0,0" VerticalAlignment="Top" Width="275" Height="60"/>
         <Label Content="Label" HorizontalAlignment="Left" Height="30" Margin="50,10,0,0" VerticalAlignment="Top" Width="400"/>
-        <local:toproveapoint />
+       
+        
+        <local:toproveapoint x:Name="PleaseConsider" />
     </Grid>
 </Window>

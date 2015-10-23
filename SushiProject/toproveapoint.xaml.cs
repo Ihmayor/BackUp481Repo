@@ -23,24 +23,28 @@ namespace SushiSushi
         public toproveapoint()
         {
             InitializeComponent();
-             List<provingPointObj> list = new List<provingPointObj>() { 
-                 new provingPointObj("inari"), 
-                 new provingPointObj("sushi"), 
-                 new provingPointObj("roe") ,  
-                 new provingPointObj("california roll"), 
-                 new provingPointObj("wrap"), 
-                 new provingPointObj("tempura"),
-                 new provingPointObj("shrimp"), 
-                 new provingPointObj("icecream"), 
-                 new provingPointObj("bob")};
+             List<provingPointObj> list = new List<provingPointObj>() 
+             { 
+                 new provingPointObj("inari", new BitmapImage(new Uri("../../Images/sushi.png",UriKind.Relative))), 
+                 new provingPointObj("sushi", new BitmapImage(new Uri("../../Images/sushi.png",UriKind.Relative))), 
+                 new provingPointObj("roe", new BitmapImage(new Uri("../../Images/sushi.png",UriKind.Relative))) ,  
+                 new provingPointObj("california roll", new BitmapImage(new Uri("../../Images/sushi.png",UriKind.Relative))), 
+                 new provingPointObj("wrap", new BitmapImage(new Uri("../../Images/sushi.png",UriKind.Relative))), 
+                 new provingPointObj("tempura", new BitmapImage(new Uri("../../Images/sushi.png",UriKind.Relative))),
+                 new provingPointObj("shrimp", new BitmapImage(new Uri("../../Images/sushi.png",UriKind.Relative))), 
+                 new provingPointObj("icecream", new BitmapImage(new Uri("../../Images/sushi.png",UriKind.Relative))), 
+                 new provingPointObj("bob", new BitmapImage(new Uri("../../Images/sushi.png",UriKind.Relative)))
+             };
              ItemsListBox.ItemsSource = list;   
         }
         public class provingPointObj
         {
             public string name { get ; set; }
-            public provingPointObj(string aaaaa)
+            public BitmapImage source { get; set; }
+            public provingPointObj(string aaaaa,BitmapImage imageSource)
             {
                 name = aaaaa;
+                source = imageSource;
             }
         }
 
