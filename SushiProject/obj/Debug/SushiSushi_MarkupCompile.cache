@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\LastGasp\Documents\Visual Studio 2013\Projects\SushiProject\obj\Debug\
+C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\
 SushiSushi
 none
 false
 DEBUG;TRACE
-C:\Users\LastGasp\Documents\Visual Studio 2013\Projects\SushiProject\App.xaml
-3444715900
+C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\App.xaml
+51245790645
 
-7-173959787
+91548176791
 141012385901
-MainWindow.xaml;MenuItem.xaml;OrderConfirmationWindow.xaml;
+MainWindow.xaml;MenuItemControl.xaml;OrderConfirmationWindow.xaml;SidebarItemControl.xaml;toproveapoint.xaml;
 
 False
 

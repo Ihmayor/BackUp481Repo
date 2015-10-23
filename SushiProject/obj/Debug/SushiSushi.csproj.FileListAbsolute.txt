@@ -32,3 +32,26 @@ C:\Users\LastGasp\Documents\Visual Studio 2013\Projects\SushiProject\obj\Debug\S
 C:\Users\LastGasp\Documents\Visual Studio 2013\Projects\SushiProject\obj\Debug\SushiSushi.g.resources
 C:\Users\LastGasp\Documents\Visual Studio 2013\Projects\SushiProject\obj\Debug\SushiSushi.Properties.Resources.resources
 C:\Users\LastGasp\Documents\Visual Studio 2013\Projects\SushiProject\obj\Debug\SushiSushi.csproj.GenerateResource.Cache
+C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\bin\Debug\SushiSushi.exe.config
+C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\SushiSushi.exe
+C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\SushiSushi.pdb
+C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\SushiSushi.csprojResolveAssemblyReference.cache
+C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\MenuItemControl.baml
+C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\OrderConfirmationWindow.baml
+C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\SidebarItemControl.baml
+C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\toproveapoint.baml
+C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\MenuItemControl.g.cs
+C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\OrderConfirmationWindow.g.cs
+C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\SidebarItemControl.g.cs
+C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\toproveapoint.g.cs
+C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\App.g.cs
+C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\SushiSushi_MarkupCompile.cache
+C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\bin\Debug\SushiSushi.exe
+C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\bin\Debug\SushiSushi.pdb
+C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\MainWindow.g.cs
+C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\SushiSushi_MarkupCompile.lref
+C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\MainWindow.baml
+C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\SushiSushi.g.resources
+C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\SushiSushi.Properties.Resources.resources
+C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\SushiSushi.csproj.GenerateResource.Cache
