@@ -26,7 +26,8 @@
         <!--<Label Content="INSERT LEGEND HERE MAYBE"/>-->
         <!--<Button GRID. Content="Call For Assistance" HorizontalAlignment="Right" Margin="20,10"/>
         <Button Content="Finish Meal" HorizontalAlignment="Right" Margin="20,10"/>-->
-        
+        <Label Content="PUT_LEGEND_HERE" FontSize="20" HorizontalAlignment="Left" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="0"  Height="60" Margin="10,10,0,0" VerticalAlignment="Top" Width="400"/>
+
         <Button Content="Specials"   Margin="10" Grid.Row="1" Grid.Column="1" Width="120" Height="60"/>
         <Button Content="Appetizers" Margin="10" Grid.Row="1" Grid.Column="2" Width="120" Height="60"/>
         <Button Content="Sushi"      Margin="10" Grid.Row="1" Grid.Column="3" Width="120" Height="60"/>
@@ -36,13 +37,12 @@
         <StackPanel Margin="10" Grid.Row="1" Grid.Column="8">
             <Button Margin="10" Content="Call For Assistance" Height="60"/>
         </StackPanel>
-        <!--<Button Content="Button" HorizontalAlignment="Left" Margin="900,640,0,0" VerticalAlignment="Top" Width="275" Height="60"/>
-        <Label Content="Label" HorizontalAlignment="Left" Height="30" Margin="50,10,0,0" VerticalAlignment="Top" Width="400"/>-->
-        <ListBox x:Name="MainListView" Margin="10" Grid.Row="2" Grid.Column="1" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.ColumnSpan="6" Height="500" Width="820">
+        <!--<Button Content="Button" HorizontalAlignment="Left" Margin="900,640,0,0" VerticalAlignment="Top" Width="275" Height="60"/> -->
+        <ListBox x:Name="MainListView" Margin="0" Grid.Row="2" Grid.Column="1" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.ColumnSpan="6" Height="500" Width="820">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Background="HotPink" Height="Auto" Width="820">
-                        <Label HorizontalAlignment="Center" Content="{Binding CategoryName}" Foreground="White" Background="Green" Height="40" Width="{Binding ElementName=MainListView, Path=Width}"/>
+                        <Label HorizontalAlignment="Right" Content="{Binding CategoryName}" Foreground="White" Background="Green" Height="40" Width="{Binding ElementName=MainListView, Path=Width}"/>
                         <local:MenuCategoryControl DataContext="{Binding AssociatedMenuItems}" Background="Blue" />
                     </StackPanel>
                 </DataTemplate>

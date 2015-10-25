@@ -15,8 +15,8 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                    <Grid Width="240" Height="200" Margin="5">
-                        <Button Width="200" Height="200" Content="{Binding name}" Background="Beige"/>
+                    <Grid Width="250" Height="200" Margin="5">
+                        <Button Width="250" Height="200" Content="{Binding name}" Background="Beige"/>
                         <Image  Width="100" Height="100" Source="{Binding source}"/>
                      </Grid>
                     </DataTemplate>
