@@ -124,7 +124,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
@@ -137,10 +137,31 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\special.png" />
+    <Resource Include="Resources\Sushi.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\sushi.png" />
+    <Resource Include="Resources\Inari.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ShrimpTempura.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\SpecialSushi.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Images\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Gyoza.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\SalmonSushi.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\CocaCola.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Mochi.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,0 +1,32 @@
+﻿<UserControl x:Class="SushiSushi.MenuCategoryControl"
+             x:Name="MenuCategoryUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             xmlns:local ="clr-namespace:SushiSushi"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <ItemsControl Background="Azure" 
+                      x:Name="ItemsListBox" 
+                      ItemsSource="{Binding ElementName=MenuCategoryUC, Path=DataContext}"
+                      Width="820"  
+                      Height="Auto" 
+                      ScrollViewer.CanContentScroll="False"
+                      ScrollViewer.VerticalScrollBarVisibility="Visible"
+                      HorizontalAlignment="Stretch" 
+                      VerticalAlignment="Stretch" >
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel IsItemsHost="True" Width="{Binding ElementName=ItemsListBox, Path=Width}" Height="{Binding ElementName=ItemsListBox, Path=Height}" Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate >
+                <DataTemplate x:Name="ListBoxTemplate">
+                     <local:MenuItemControl />
+                  </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
+</UserControl>
