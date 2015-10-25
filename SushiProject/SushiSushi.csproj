@@ -148,7 +148,9 @@
   <ItemGroup>
     <Resource Include="Resources\SpecialSushi.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\Appetizer1.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Gyoza.png" />
   </ItemGroup>
