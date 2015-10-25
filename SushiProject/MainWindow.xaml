@@ -5,6 +5,23 @@
   
         Title="MainWindow" Height="750" Width="1225" ResizeMode="NoResize" WindowState="Maximized" WindowStyle="None">
     <Grid Background="BurlyWood">
+        <Grid.Resources>
+            <Style x:Key="RoundButtonTemplate" TargetType="Button">
+                <Setter Property="Background" Value="White"/>
+                <Setter Property="Foreground" Value="Black" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border CornerRadius="15" Background="{TemplateBinding Background}"
+                                BorderThickness="1">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center">
+                                </ContentPresenter>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition Height="80"/>
             <RowDefinition Height="100"/>
@@ -27,14 +44,19 @@
         <!--<Button GRID. Content="Call For Assistance" HorizontalAlignment="Right" Margin="20,10"/>-->
         <Label Content="V = Vegetarian        G = GlutenFree" FontSize="20" HorizontalAlignment="Left" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="0"  Height="60" Margin="10,10,0,0" VerticalAlignment="Top" Width="400"/>
 
-        <Button Content="Specials"   Margin="10" Grid.Row="1" Grid.Column="1" Width="120" Height="60"/>
-        <Button Content="Appetizers" Margin="10" Grid.Row="1" Grid.Column="2" Width="120" Height="60"/>
-        <Button Content="Sushi"      Margin="10" Grid.Row="1" Grid.Column="3" Width="120" Height="60"/>
-        <Button Content="Fried"      Margin="10" Grid.Row="1" Grid.Column="4" Width="120" Height="60"/>
-        <Button Content="Drinks"     Margin="10" Grid.Row="1" Grid.Column="5" Width="120" Height="60"/>
-        <Button Content="Desserts"   Margin="10" Grid.Row="1" Grid.Column="6" Width="120" Height="60"/>
+        <Button Content="Special" Style="{StaticResource RoundButtonTemplate}"  Margin="10" Grid.Row="1" Grid.Column="1" Width="120" Height="60"/>
+        <Button Content="Appetizers" Style="{StaticResource RoundButtonTemplate}" Margin="10" Grid.Row="1" Grid.Column="2" Width="120" Height="60"/>
+        <Button Margin="10,20" Style="{StaticResource RoundButtonTemplate}" Grid.Row="1" Grid.Column="3" Width="120" Height="Auto">
+            <StackPanel Orientation="Horizontal" Height="50">
+                <Label Content="Sushi" FontSize="15" Height="30" />
+                <Image Source="pack://application:,,,/Resources/sushi.png" Margin="2" Width="50                        "/>
+            </StackPanel>
+        </Button>
+        <Button Content="Fried"   Style="{StaticResource RoundButtonTemplate}"   Margin="10" Grid.Row="1" Grid.Column="4" Width="120" Height="60"/>
+        <Button Content="Drinks"   Style="{StaticResource RoundButtonTemplate}"  Margin="10" Grid.Row="1" Grid.Column="5" Width="120" Height="60"/>
+        <Button Content="Desserts" Style="{StaticResource RoundButtonTemplate}"  Margin="10" Grid.Row="1" Grid.Column="6" Width="120" Height="60"/>
         <StackPanel Margin="10" Grid.Row="1" Grid.Column="8">
-            <Button Content="Call For Assistance" Height="60" Margin="10" />
+            <Button Content="Call For Assistance" Style="{StaticResource RoundButtonTemplate}" Height="60" Margin="10" />
             <!-- <Button Content="Finish Meal" Height="20" Margin="2"/> -->
         </StackPanel>
         <ListBox x:Name="MainListView" Margin="0" Grid.Row="2" Grid.Column="1" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.ColumnSpan="6" Height="500" Width="820">
