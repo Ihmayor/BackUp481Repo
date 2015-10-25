@@ -23,7 +23,7 @@
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate >
-                <DataTemplate x:Name="ListBoxTemplate">
+                <DataTemplate>
                      <local:MenuItemControl />
                   </DataTemplate>
             </ItemsControl.ItemTemplate>

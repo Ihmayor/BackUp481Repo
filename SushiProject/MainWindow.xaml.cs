@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -22,9 +23,14 @@ namespace SushiSushi
     /// </summary>
     public partial class MainWindow 
     {
-        private List<MenuItemObject> OrderedItems = new List<MenuItemObject>();
-        private List<MenuItemObject> DeliveredItems = new List<MenuItemObject>();
-        private List<MenuItemObject> SelectedItems = new List<MenuItemObject>();
+        public ObservableCollection<MenuItemObject> OrderedItems { get { return orderedItems; } }
+        private ObservableCollection<MenuItemObject> orderedItems = new ObservableCollection<MenuItemObject>();
+        
+        public ObservableCollection<MenuItemObject> DeliveredItems { get { return deliveredItems; } }
+        private ObservableCollection<MenuItemObject> deliveredItems = new ObservableCollection<MenuItemObject>();
+
+        public ObservableCollection<MenuItemObject> SelectedItems { get { return selectedItems; } }
+        private ObservableCollection<MenuItemObject> selectedItems = new ObservableCollection<MenuItemObject>();
         public MainWindow()
         {
                 InitializeComponent();
@@ -79,7 +85,12 @@ namespace SushiSushi
 
         void MenuItemControl_CompleteClicked(object sender, MenuItemObject addItem)
         {
-            SelectedItems.Add(addItem);
+            selectedItems.Add(addItem);
+        }
+
+        private void StackPanel_Loaded(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine((sender as Grid).DataContext);
         }
 
 
