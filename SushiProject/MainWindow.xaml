@@ -5,20 +5,49 @@
   
         Title="MainWindow" Height="750" Width="1225" ResizeMode="NoResize" WindowState="Maximized" WindowStyle="None">
     <Grid>
-        <Grid Name="MenuItemsGrid" HorizontalAlignment="Left" Height="600" Margin="50,100,0,0" VerticalAlignment="Top" Width="800"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="50,40,0,0" VerticalAlignment="Top" Width="100" Height="60"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="150,40,0,0" VerticalAlignment="Top" Width="100" Height="60"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="250,40,0,0" VerticalAlignment="Top" Width="100" Height="60"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="350,40,0,0" VerticalAlignment="Top" Width="100" Height="60"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="450,40,0,0" VerticalAlignment="Top" Width="100" Height="60"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="550,40,0,0" VerticalAlignment="Top" Width="100" Height="60"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="900,10,0,0" VerticalAlignment="Top" Width="275" Height="60"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="900,65,0,0" VerticalAlignment="Top" Width="275" Height="60"/>
-        <StackPanel HorizontalAlignment="Left" Height="475" Margin="900,150,0,0" VerticalAlignment="Top" Width="275"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="900,640,0,0" VerticalAlignment="Top" Width="275" Height="60"/>
-        <Label Content="Label" HorizontalAlignment="Left" Height="30" Margin="50,10,0,0" VerticalAlignment="Top" Width="400"/>
-       
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <!--<Label Content="INSERT LEGEND HERE MAYBE"/>-->
+        <!--<Button GRID. Content="Call For Assistance" HorizontalAlignment="Right" Margin="20,10"/>
+        <Button Content="Finish Meal" HorizontalAlignment="Right" Margin="20,10"/>-->
         
-        <local:toproveapoint x:Name="PleaseConsider" />
+        <Button Content="Specials"   Margin="10" Grid.Row="1" Grid.Column="1" Width="120" Height="60"/>
+        <Button Content="Appetizers" Margin="10" Grid.Row="1" Grid.Column="2" Width="120" Height="60"/>
+        <Button Content="Sushi"      Margin="10" Grid.Row="1" Grid.Column="3" Width="120" Height="60"/>
+        <Button Content="Fried"      Margin="10" Grid.Row="1" Grid.Column="4" Width="120" Height="60"/>
+        <Button Content="Drinks"     Margin="10" Grid.Row="1" Grid.Column="5" Width="120" Height="60"/>
+        <Button Content="Desserts"   Margin="10" Grid.Row="1" Grid.Column="6" Width="120" Height="60"/>
+        <StackPanel Margin="10" Grid.Row="1" Grid.Column="8">
+            <Button Margin="10" Content="Call For Assistance" Height="60"/>
+        </StackPanel>
+        <!--<Button Content="Button" HorizontalAlignment="Left" Margin="900,640,0,0" VerticalAlignment="Top" Width="275" Height="60"/>
+        <Label Content="Label" HorizontalAlignment="Left" Height="30" Margin="50,10,0,0" VerticalAlignment="Top" Width="400"/>-->
+        <ListBox x:Name="MainListView" Margin="10" Grid.Row="2" Grid.Column="1" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.ColumnSpan="6" Height="500" Width="820">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Background="HotPink" Height="Auto" Width="820">
+                        <Label HorizontalAlignment="Center" Content="{Binding CategoryName}" Foreground="White" Background="Green" Height="40" Width="{Binding ElementName=MainListView, Path=Width}"/>
+                        <local:MenuCategoryControl DataContext="{Binding AssociatedMenuItems}" Background="Blue" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <!--<local:SidebarItemControl Margin="10" Grid.Row="2" Grid.Column="8" />-->
     </Grid>
 </Window>

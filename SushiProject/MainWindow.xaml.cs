@@ -22,58 +22,48 @@ namespace SushiSushi
     {
         public MainWindow()
         {
-            InitializeComponent();
-        }
-
-
-
-        public void PopulateMenu()
-        {
-            var x = 0;
-            var y = 0;
-            MenuItemsGrid.RowDefinitions.Add(new RowDefinition());
-            foreach (var section in MenuData.MenuSections)
+            try
             {
-                foreach (var item in section.MenuItems.Select(item => new MenuItemControl(item)))
-                {
-                    item.CompleteClicked += MenuItemFeedback;
-                    Grid.SetColumn(item, x);
-                    Grid.SetRow(item, y);
-                    MenuItemsGrid.Children.Add(item);
-                    x++;
-                    if (x != 3) continue;
-                    MenuItemsGrid.RowDefinitions.Add(new RowDefinition());
-                    y++;
-                    x = 0;
-                }
+                InitializeComponent();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+            }
+
+            try 
+            {
+                generateMenuItems();
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
             }
         }
 
-        private void MenuItemFeedback(object sender, EventArgs e)
+        public void generateMenuItems()
         {
-            MenuItemControl item = (MenuItemControl)sender;
+            MenuCategory SpecialCategory = new MenuCategory("Special", generateMenuCategoryType(0, "Special", new BitmapImage(), false, false, "These are special Items", null));
+            MenuCategory SushiCategory = new MenuCategory("Sushi", generateMenuCategoryType(0, "Sushi", new BitmapImage(), true, true, "These are sushi Items", null));
+            MenuCategory AppetizerCategory = new MenuCategory("Appetizer", generateMenuCategoryType(0, "Appetizer", new BitmapImage(), true, false, "These are appetizer Items", null));
+            MenuCategory FriedCategory = new MenuCategory("Fried", generateMenuCategoryType(0, "Fried", new BitmapImage(), false, false, "These are fried Items", null));
+            MenuCategory DrinksCategory = new MenuCategory("Drinks", generateMenuCategoryType(0, "Drinks", new BitmapImage(), false, false, "These are drink Items", null));
+            MenuCategory DessertCategory = new MenuCategory("Dessert", generateMenuCategoryType(0, "Desserts", new BitmapImage(), true, false, "These are dessert Items", null));
+            List<MenuCategory> TotalItems = new List<MenuCategory>() { SpecialCategory, SushiCategory, AppetizerCategory, FriedCategory, DrinksCategory, DessertCategory };
+            
+            MainListView.ItemsSource = TotalItems;
         }
-    }
 
-    public class MenuData
-    {
-        public static List<MenuSection> MenuSections;
-    }
+        public List<MenuItemObject> generateMenuCategoryType(int ID, string nameOfItem, BitmapImage imageSource, bool isVegan, bool isGlutenFree, string Description, List<string> optionsList)
+        {
+            List<MenuItemObject> associatedItems = new List<MenuItemObject>();
+            for (int i = 0; i < 20; i++)
+            {
+                associatedItems.Add(new MenuItemObject(ID, nameOfItem, imageSource, isVegan, isGlutenFree, Description, optionsList));
+            }
+            return associatedItems;
+        }
 
-    public class MenuSection
-    {
-        public List<MenuItemInfo> MenuItems;
-    }
 
-    public class MenuItemInfo
-    {
-        public int id;
-        public string name;
-        public float price;
-        public string description;
-        public List<string> mods;
-        public bool gluten;
-        public bool veg;
-        public string picture;
     }
 }

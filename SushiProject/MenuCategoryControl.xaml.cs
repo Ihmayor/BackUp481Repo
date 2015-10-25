@@ -16,14 +16,13 @@ using System.Windows.Shapes;
 namespace SushiSushi
 {
     /// <summary>
-    /// Interaction logic for toproveapoint.xaml
+    /// Interaction logic for MenuCategoryControl.xaml
     /// </summary>
-    public partial class toproveapoint : UserControl
+    public partial class MenuCategoryControl : UserControl
     {
-        public toproveapoint()
+        public MenuCategoryControl()
         {
             InitializeComponent();
         }
-       
     }
 }
