@@ -8,7 +8,7 @@
     <Grid>
         <Button Content="-" HorizontalAlignment="Left" Margin="10,100,0,0" VerticalAlignment="Top" Width="75" Height="40"/>
         <Button Content="+" HorizontalAlignment="Left" Margin="165,100,0,0" VerticalAlignment="Top" Width="75" Height="40"/>
-        <Label Content="Name" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <Label Content="{Binding Name}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
         <Label Content="Qty" HorizontalAlignment="Left" Margin="90,100,0,0" VerticalAlignment="Top" Height="40" Width="70"/>
         <Label Content="PricePer" HorizontalAlignment="Left" Margin="165,10,0,0" VerticalAlignment="Top"/>
         <Label Content="TotalPrice" HorizontalAlignment="Left" Margin="165,41,0,0" VerticalAlignment="Top"/>

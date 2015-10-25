@@ -139,6 +139,7 @@
                 </ItemsControl>
             </StackPanel>
         </ScrollViewer>
-        <Button Content="Confirm Orders" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="3" Grid.Column="8" Style="{StaticResource RoundButtonTemplate}"/>
+        <Button Content="Confirm Order"    Height="40" VerticalAlignment="Top"    HorizontalAlignment="Left"   Grid.Row="3" Grid.Column="8" Style="{StaticResource RoundButtonTemplate}"/>
+        <Label Content="Total Price: 0.00" Height="40" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="3" Grid.Column="8" Background="White" />
     </Grid>
 </Window>
