@@ -69,6 +69,11 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        <!--
+        <ItemsControl  x:Name="DeliveredItemsList"> </ItemsControl>
+        <ItemsControl x:Name="OrderedItemsList"> </ItemsControl>
+        <ItemsControl x:Name="SelectedItemsList"> </ItemsControl>
+        -->
         <local:SidebarItemControl Margin="10" Grid.Row="2" Grid.Column="8" />
     </Grid>
 </Window>
