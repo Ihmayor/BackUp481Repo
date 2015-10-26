@@ -15,15 +15,18 @@ namespace SushiSushi
         public bool isGlutenFree { get; set; }
         public bool hasOptions { get; set; }
         public List<string> options { get; set; }
-        public string selectedOption = "";
+        public string SelectedOption { get { return selectedOption; } }
+        private string selectedOption = "Modified Selection/Blank";
         public int countOfItem { get; set; }
         public int id;
+        public double NumPrice { get; set; }
         public string Price { get; set; }
         public string Description { get; set; }
         
         public MenuItemObject(int ID, double priceOfItem, string nameOfItem , BitmapImage imageSource, bool Vegan, bool GlutenFree, string description, List<string> optionsList)
         {
             id = ID;
+            NumPrice = priceOfItem;
             Price = "Price: "+priceOfItem.ToString("0.00")+"$";
             Name = nameOfItem;
             Image = imageSource;
@@ -37,6 +40,18 @@ namespace SushiSushi
                 hasOptions = true;
                 options = optionsList;
             }
+        }
+        public void setSelectedOption (int optionIndex)
+        {
+            selectedOption = options.ToArray()[optionIndex];
+        }
+
+        public bool isSameMenuItem (MenuItemObject MenuItemObjectToCompare)
+        {
+            bool isSame = false;
+            if (Name == MenuItemObjectToCompare.Name && selectedOption == MenuItemObjectToCompare.selectedOption)
+                isSame = true;
+            return isSame;
         }
 
     }
