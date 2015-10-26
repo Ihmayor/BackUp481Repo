@@ -113,12 +113,12 @@
                     Orientation="Vertical" 
                     Background="BlanchedAlmond"
                     >
-                <Label Content="Delivered" Foreground="White"  Background="Gray" FontSize="12" Height="30" Width="{Binding ElementName=SideBarStackPanel, Path=Width}"/>
-                <ItemsControl  x:Name="DeliveredItemsList" ItemsSource="{Binding ElementName=mainWindow, Path=DeliveredItems}">
+                <Label Content="Selected" Foreground="White" Background="Gray" FontSize="12" Height="30" Width="{Binding ElementName=SideBarStackPanel, Path=Width}"/>
+                <ItemsControl Grid.Row="2" Grid.Column="8" Height="Auto" x:Name="SelectedItemsList" ScrollViewer.CanContentScroll="True" ItemsSource="{Binding ElementName=mainWindow, Path=SelectedItems}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Border BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Left" Height="120" Margin="50,5" VerticalAlignment="Top" Width="180">
-                                <Grid Margin="0,0,0,0" Background="Gray">
+                                <Grid Margin="0,0,0,0" Background="#FFF5D3B0">
                                     <Grid>
                                         <Image HorizontalAlignment="Left" Height="27" Margin="10,10,0,0" VerticalAlignment="Top" Width="28" Source="{Binding Image}"/>
                                         <Label Content="{Binding Name}" HorizontalAlignment="Left" Margin="55,10,0,0" VerticalAlignment="Top" Width="114" FontWeight="Bold"/>
@@ -131,6 +131,7 @@
                                     </Grid>
                                 </Grid>
                             </Border>
+                            <!--<local:SidebarItemControl/>-->
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
@@ -155,12 +156,12 @@
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-                <Label Content="Selected" Foreground="White" Margin="0,5" Background="Gray" FontSize="12" Height="30" Width="{Binding ElementName=SideBarStackPanel, Path=Width}"/>
-                <ItemsControl Grid.Row="2" Grid.Column="8" Height="Auto" x:Name="SelectedItemsList" ScrollViewer.CanContentScroll="True" ItemsSource="{Binding ElementName=mainWindow, Path=SelectedItems}">
+                <Label Content="Delivered" Foreground="White"  Background="Gray" Margin="0,5" FontSize="12" Height="30" Width="{Binding ElementName=SideBarStackPanel, Path=Width}"/>
+                <ItemsControl  x:Name="DeliveredItemsList" ItemsSource="{Binding ElementName=mainWindow, Path=DeliveredItems}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Border BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Left" Height="120" Margin="50,5" VerticalAlignment="Top" Width="180">
-                                <Grid Margin="0,0,0,0" Background="#FFF5D3B0">
+                                <Grid Margin="0,0,0,0" Background="Gray">
                                     <Grid>
                                         <Image HorizontalAlignment="Left" Height="27" Margin="10,10,0,0" VerticalAlignment="Top" Width="28" Source="{Binding Image}"/>
                                         <Label Content="{Binding Name}" HorizontalAlignment="Left" Margin="55,10,0,0" VerticalAlignment="Top" Width="114" FontWeight="Bold"/>
@@ -173,10 +174,10 @@
                                     </Grid>
                                 </Grid>
                             </Border>
-                            <!--<local:SidebarItemControl/>-->
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
+                
             </StackPanel>
         </ScrollViewer>
         <StackPanel Grid.Row="3" Grid.Column="8" Orientation="Vertical"  HorizontalAlignment="Stretch">

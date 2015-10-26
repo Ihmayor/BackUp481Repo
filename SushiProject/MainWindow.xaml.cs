@@ -23,14 +23,14 @@ namespace SushiSushi
     /// </summary>
     public partial class MainWindow 
     {
-        public ObservableCollection<MenuItemObject> OrderedItems { get { return orderedItems; } }
-        private ObservableCollection<MenuItemObject> orderedItems = new ObservableCollection<MenuItemObject>();
-        
-        public ObservableCollection<MenuItemObject> DeliveredItems { get { return deliveredItems; } }
-        private ObservableCollection<MenuItemObject> deliveredItems = new ObservableCollection<MenuItemObject>();
+        public static ObservableCollection<MenuItemObject> OrderedItems { get { return orderedItems; } }
+        private static ObservableCollection<MenuItemObject> orderedItems = new ObservableCollection<MenuItemObject>();
 
-        public ObservableCollection<MenuItemObject> SelectedItems { get { return selectedItems; } }
-        private ObservableCollection<MenuItemObject> selectedItems = new ObservableCollection<MenuItemObject>();
+        public static ObservableCollection<MenuItemObject> DeliveredItems { get { return deliveredItems; } }
+        private static ObservableCollection<MenuItemObject> deliveredItems = new ObservableCollection<MenuItemObject>();
+
+        public static ObservableCollection<MenuItemObject> SelectedItems { get { return selectedItems; } }
+        private static ObservableCollection<MenuItemObject> selectedItems = new ObservableCollection<MenuItemObject>();
         public MainWindow()
         {
                 InitializeComponent();
