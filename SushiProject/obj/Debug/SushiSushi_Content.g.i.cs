@@ -9,5 +9,6 @@
 //------------------------------------------------------------------------------
 
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/fried.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("sushisampleimage.png")]
 
 
