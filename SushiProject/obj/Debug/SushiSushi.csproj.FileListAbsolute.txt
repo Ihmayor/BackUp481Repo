@@ -32,6 +32,9 @@ C:\Users\LastGasp\Documents\Visual Studio 2013\Projects\SushiProject\obj\Debug\S
 C:\Users\LastGasp\Documents\Visual Studio 2013\Projects\SushiProject\obj\Debug\SushiSushi.g.resources
 C:\Users\LastGasp\Documents\Visual Studio 2013\Projects\SushiProject\obj\Debug\SushiSushi.Properties.Resources.resources
 C:\Users\LastGasp\Documents\Visual Studio 2013\Projects\SushiProject\obj\Debug\SushiSushi.csproj.GenerateResource.Cache
+C:\Users\Diljot\Desktop\481Project\CPSC481Project\SushiProject\bin\Debug\SushiSushi.exe.config
+C:\Users\Diljot\Desktop\481Project\CPSC481Project\SushiProject\obj\Debug\SushiSushi.exe
+C:\Users\Diljot\Desktop\481Project\CPSC481Project\SushiProject\obj\Debug\SushiSushi.pdb
 C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\bin\Debug\SushiSushi.exe.config
 C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\bin\Debug\SushiSushi.exe
 C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\bin\Debug\SushiSushi.pdb
@@ -56,6 +59,3 @@ C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiP
 C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\SushiSushi.csproj.GenerateResource.Cache
 C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\SushiSushi.exe
 C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\SushiSushi.pdb
-C:\Users\Diljot\Desktop\481Project\CPSC481Project\SushiProject\bin\Debug\SushiSushi.exe.config
-C:\Users\Diljot\Desktop\481Project\CPSC481Project\SushiProject\obj\Debug\SushiSushi.exe
-C:\Users\Diljot\Desktop\481Project\CPSC481Project\SushiProject\obj\Debug\SushiSushi.pdb
