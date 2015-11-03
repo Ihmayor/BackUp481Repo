@@ -113,8 +113,8 @@
                     Orientation="Vertical" 
                     Background="BlanchedAlmond"
                     >
-                <Label Content="Delivered" Foreground="White"  Background="Gray" FontSize="12" Height="30" Width="{Binding ElementName=SideBarStackPanel, Path=Width}"/>
-                <ItemsControl  x:Name="DeliveredItemsList" ItemsSource="{Binding ElementName=mainWindow, Path=DeliveredItems}">
+                <Label Content="Selected" Foreground="White" Background="Gray" FontSize="12" Height="30" Width="{Binding ElementName=SideBarStackPanel, Path=Width}"/>
+                <ItemsControl Grid.Row="2" Grid.Column="8" Height="Auto" x:Name="SelectedItemsList" ScrollViewer.CanContentScroll="True" ItemsSource="{Binding ElementName=mainWindow, Path=SelectedItems}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <local:SidebarItemControl MainBackground="Gray"/>
@@ -129,14 +129,15 @@
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-                <Label Content="Selected" Foreground="White" Margin="0,5" Background="Gray" FontSize="12" Height="30" Width="{Binding ElementName=SideBarStackPanel, Path=Width}"/>
-                <ItemsControl Grid.Row="2" Grid.Column="8" Height="Auto" x:Name="SelectedItemsList" ScrollViewer.CanContentScroll="True" ItemsSource="{Binding ElementName=mainWindow, Path=SelectedItems}">
+                <Label Content="Delivered" Foreground="White"  Background="Gray" Margin="0,5" FontSize="12" Height="30" Width="{Binding ElementName=SideBarStackPanel, Path=Width}"/>
+                <ItemsControl  x:Name="DeliveredItemsList" ItemsSource="{Binding ElementName=mainWindow, Path=DeliveredItems}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <local:SidebarItemControl MainBackground="#FFF5D3B0"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
+                
             </StackPanel>
         </ScrollViewer>
         <StackPanel Grid.Row="3" Grid.Column="8" Orientation="Vertical"  HorizontalAlignment="Stretch">

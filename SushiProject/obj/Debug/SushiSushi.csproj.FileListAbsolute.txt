@@ -59,6 +59,7 @@ C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiP
 C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\SushiSushi.csproj.GenerateResource.Cache
 C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\SushiSushi.exe
 C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\SushiSushi.pdb
+<<<<<<< HEAD
 C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\SushiSushi.csprojResolveAssemblyReference.cache
 \\cs-fs01\Profiles\ug\ihmayor\Desktop\CPSC481Project\SushiProject\bin\Debug\SushiSushi.exe.config
 \\cs-fs01\Profiles\ug\ihmayor\Desktop\CPSC481Project\SushiProject\bin\Debug\SushiSushi.exe
@@ -85,3 +86,5 @@ C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiP
 \\cs-fs01\Profiles\ug\ihmayor\Desktop\CPSC481Project\SushiProject\obj\Debug\SushiSushi.csproj.GenerateResource.Cache
 \\cs-fs01\Profiles\ug\ihmayor\Desktop\CPSC481Project\SushiProject\obj\Debug\SushiSushi.exe
 \\cs-fs01\Profiles\ug\ihmayor\Desktop\CPSC481Project\SushiProject\obj\Debug\SushiSushi.pdb
+=======
+>>>>>>> f96dc8a0a9f06fbe44fe911cd8c9dc004629f2de
