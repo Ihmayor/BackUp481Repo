@@ -18,8 +18,32 @@ namespace SushiSushi
     /// <summary>
     /// Interaction logic for SidebarItemControl.xaml
     /// </summary>
-    public partial class SidebarItemControl 
+    public partial class SidebarItemControl
     {
+
+        #region Dependency Properties
+        //This is used to set the inner grid property of this suer control
+        //This registers this as property to be accessed inside xaml
+        public static readonly DependencyProperty MainBackgroundProperty = DependencyProperty.Register(
+            "MainBackground", 
+            typeof(Color),   
+            typeof(SidebarItemControl),
+            new UIPropertyMetadata(MyPropertyChangedHandler));
+
+        // .NET Property wrapper necessary for setting the actual property
+        public Color MainBackground
+        {
+            get { return (Color)GetValue(MainBackgroundProperty); }
+            set {SetValue(MainBackgroundProperty, value); }
+        }
+
+        //An event that fires because the setter does not fire at xaml instantation
+        public static void MyPropertyChangedHandler(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            (sender as SidebarItemControl).MainGrid.Background = new BrushConverter().ConvertFromString(e.NewValue.ToString()) as SolidColorBrush;
+        }
+        #endregion
+
         public SidebarItemControl()
         {
             InitializeComponent();

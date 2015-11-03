@@ -1,0 +1,12 @@
+﻿<Window x:Class="MainWindowTest.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:MainWindowTest"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <Button Content="Page1" Click="Button_Click" Width="100" Margin="30,30,387,264"/>
+        <Button Content="Page2" Click="Button_Click_1" Width="100" Margin="360,30,57,264"/>
+        <Button Content="Page3" Click="Button_Click_2" Width="100" Margin="190,30,227,264"/>
+        <StackPanel x:Name="Stackbob" Margin="30,85,57,24"/>
+    </Grid>
+</Window>
