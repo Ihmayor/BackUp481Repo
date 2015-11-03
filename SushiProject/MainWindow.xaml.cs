@@ -35,8 +35,11 @@ namespace SushiSushi
         {
                 InitializeComponent();
                 MenuItemControl.CompleteClicked += MenuItemControl_CompleteClicked;
+                SidebarItemControl.OnMinusButtonPressed += SidebarItemControl_MinusButton;
                 generateMenuItems();
         }
+
+      
 
         
         public void generateMenuItems()
@@ -90,6 +93,12 @@ namespace SushiSushi
             deliveredItems.Add(addItem);
             orderedItems.Add(addItem);
         }
+
+        private void SidebarItemControl_MinusButton(object sender, EventArgs e)
+        {
+            //selectedItems.Remove(e.MenuItem)
+        }
+
 
         private void StackPanel_Loaded(object sender, RoutedEventArgs e)
         {

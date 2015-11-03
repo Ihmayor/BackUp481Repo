@@ -44,9 +44,18 @@ namespace SushiSushi
         }
         #endregion
 
+        public static EventHandler OnMinusButtonPressed;
+
         public SidebarItemControl()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            ((sender as Button).DataContext as MenuItemObject).countOfItem--;
+            if (((sender as Button).DataContext as MenuItemObject).countOfItem == 0)
+               OnMinusButtonPressed(sender,e);
         }
     }
 }
