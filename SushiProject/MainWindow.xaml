@@ -45,7 +45,6 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Label Content="   V = Vegetarian&#x09;  G = Gluten-Free" Background="White" FontSize="20" HorizontalAlignment="Left" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="0"  Height="60" Margin="10,10,0,0" VerticalAlignment="Top" Width="400"/>
         <StackPanel Grid.Row="1" Grid.Column="8" Orientation="Vertical" Margin="90,5">
             <Button Content="Call For Assistance"  Margin="0,10" FontSize="14" Height="30" Width="150" HorizontalAlignment="Left" Style="{StaticResource RoundButtonTemplate}" />
             <Button Content="Finish Meal"          Margin="0,5" FontSize="14" Height="30" Width="150" HorizontalAlignment="Left" Style="{StaticResource RoundButtonTemplate}"/>
@@ -105,6 +104,8 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        <Label Content="   V = Vegetarian&#x09;  G = Gluten-Free" Background="White" FontSize="20" HorizontalAlignment="Left" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="4"  Height="60" Margin="10,0" VerticalAlignment="Top" Width="400"/>
+
         <ScrollViewer HorizontalAlignment="Left" Height="500" Grid.Column="8" Grid.Row="2" HorizontalScrollBarVisibility="Disabled">
             <StackPanel x:Name="SideBarStackPanel"
                     Height="Auto" Width="310"
