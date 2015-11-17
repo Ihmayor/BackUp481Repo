@@ -88,16 +88,48 @@ namespace SushiSushi
 
         void MenuItemControl_CompleteClicked(object sender, MenuItemObject addItem)
         {
-            selectedItems.Add(addItem);
+            MenuItemObject foundItem = selectedItems.FirstOrDefault(x=> x.isSameMenuItem(addItem));
+            if (foundItem == null)
+            {
+                addItem.countOfItem++;
+                selectedItems.Add(addItem);
+            }
+            else
+            {
+                foundItem.countOfItem++;
+                updateMenuItem(foundItem);
+            }
             //temp for generating user controls
-            deliveredItems.Add(addItem);
-            orderedItems.Add(addItem);
+            //deliveredItems.Add(addItem);
+            //orderedItems.Add(addItem);
         }
 
         private void SidebarItemControl_MinusButton(object sender, EventArgs e)
         {
+            MenuItemObject foundItem = selectedItems.FirstOrDefault(x => x.isSameMenuItem(addItem));
+            if (foundItem != null)
+            {
+                foundItem.countOfItem--;
+                if (foundItem.countOfItem == 0)
+                {
+                    selectedItems.Remove(foundItem);
+                }
+                else
+                {
+                    updateMenuItem(foundItem);
+                }
+            }
             //selectedItems.Remove(e.MenuItem)
         }
+
+        //Triggers the item to reload.
+        private void updateMenuItem(MenuItemObject itemToUpdate)
+        {
+            int indexMaintain = selectedItems.IndexOf(itemToUpdate);
+            selectedItems.Remove(itemToUpdate);
+            selectedItems.Insert(indexMaintain, itemToUpdate);
+        }
+
 
 
         private void StackPanel_Loaded(object sender, RoutedEventArgs e)
