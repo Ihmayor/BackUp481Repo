@@ -36,8 +36,11 @@ namespace SushiSushi
                 InitializeComponent();
                 MenuItemControl.CompleteClicked += MenuItemControl_CompleteClicked;
                 SidebarItemControl.OnMinusButtonPressed += SidebarItemControl_MinusButton;
+                SidebarItemControl.OnPlusButtonPressed += SidebarItemControl_PlusButton;
                 generateMenuItems();
         }
+
+
 
       
 
@@ -104,9 +107,9 @@ namespace SushiSushi
             //orderedItems.Add(addItem);
         }
 
-        private void SidebarItemControl_MinusButton(object sender, EventArgs e)
+        private void SidebarItemControl_MinusButton(object sender, MenuItemObject relatedItem)
         {
-            MenuItemObject foundItem = selectedItems.FirstOrDefault(x => x.isSameMenuItem(addItem));
+            MenuItemObject foundItem = selectedItems.FirstOrDefault(x => x.isSameMenuItem(relatedItem));
             if (foundItem != null)
             {
                 foundItem.countOfItem--;
@@ -119,7 +122,17 @@ namespace SushiSushi
                     updateMenuItem(foundItem);
                 }
             }
-            //selectedItems.Remove(e.MenuItem)
+        }
+
+
+        private void SidebarItemControl_PlusButton(object sender, MenuItemObject relatedItem)
+        {
+            MenuItemObject foundItem = selectedItems.FirstOrDefault(x => x.isSameMenuItem(relatedItem));
+            if (foundItem != null)
+            {
+                foundItem.countOfItem++;
+                updateMenuItem(foundItem);
+            }
         }
 
         //Triggers the item to reload.

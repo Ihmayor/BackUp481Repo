@@ -14,8 +14,8 @@
                     <Label Content="Price:" HorizontalAlignment="Left" Margin="55,36,0,0" VerticalAlignment="Top" Height="22" Width="31" FontSize="9" FontWeight="Bold"/>
                     <Label Content="{Binding SelectedOption}" HorizontalAlignment="Left" Margin="10,62,0,0" VerticalAlignment="Top" Width="159" FontSize="10" FontWeight="Bold"/>
                     <TextBox HorizontalAlignment="Left" Height="20" Margin="81,88,0,0" TextWrapping="Wrap" Text="{Binding countOfItem}" VerticalAlignment="Top" Width="18" FontSize="10" FontWeight="Bold" />
-                    <Button Content="+" HorizontalAlignment="Left" Margin="16,88,0,0" VerticalAlignment="Top" Width="32" Height="20" Background="#FF3ABB1D" FontWeight="Bold"/>
-                    <Button Content="-" HorizontalAlignment="Left" Margin="130,88,0,0" VerticalAlignment="Top" Width="32"  Height="20" Background="#FFDE4141" FontWeight="Bold" Click="Button_Click"/>
+                    <Button Content="+" HorizontalAlignment="Left" Margin="16,88,0,0" VerticalAlignment="Top" Width="32" Height="20" Background="#FF3ABB1D" FontWeight="Bold" Click="Plus_Click"/>
+                    <Button Content="-" HorizontalAlignment="Left" Margin="130,88,0,0" VerticalAlignment="Top" Width="32"  Height="20" Background="#FFDE4141" FontWeight="Bold" Click="Minus_Click"/>
                     <TextBox HorizontalAlignment="Left" Height="18" Margin="86,39,0,0" TextWrapping="Wrap" Text="$4.99" VerticalAlignment="Top" Width="36" />
                 </Grid>
             </Grid>
