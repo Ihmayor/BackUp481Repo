@@ -36,8 +36,11 @@ namespace SushiSushi
                 InitializeComponent();
                 MenuItemControl.CompleteClicked += MenuItemControl_CompleteClicked;
                 SidebarItemControl.OnMinusButtonPressed += SidebarItemControl_MinusButton;
+                SidebarItemControl.OnPlusButtonPressed += SidebarItemControl_PlusButton;
                 generateMenuItems();
         }
+
+  
 
       
 
@@ -88,16 +91,58 @@ namespace SushiSushi
 
         void MenuItemControl_CompleteClicked(object sender, MenuItemObject addItem)
         {
-            selectedItems.Add(addItem);
-            //temp for generating user controls
-            deliveredItems.Add(addItem);
-            orderedItems.Add(addItem);
+            MenuItemObject foundItem = selectedItems.FirstOrDefault(x => x.isSameMenuItem(addItem));
+            if (foundItem == null)
+            {
+                addItem.countOfItem++;
+                selectedItems.Add(addItem);
+            }
+            else
+            {
+                foundItem.countOfItem++;
+                updateMenuItem(foundItem);
+            }
+        }
+
+
+        private void SidebarItemControl_PlusButton(object sender, MenuItemObject chosenItem)
+        {
+            chosenItem.countOfItem++;
+            MenuItemObject foundItem = selectedItems.FirstOrDefault(x => x.isSameMenuItem(chosenItem));
+            updateMenuItem(foundItem);
+        }
+
+
+        private void SidebarItemControl_MinusButton(object sender, MenuItemObject chosenItem)
+        {
+            MenuItemObject foundItem = selectedItems.FirstOrDefault(x => x.isSameMenuItem(chosenItem));
+            foundItem.countOfItem--;
+            if (foundItem.countOfItem == 0)
+            {
+                selectedItems.Remove(foundItem);
+            }
+            else
+            {
+                updateMenuItem(foundItem);
+            }
+        
         }
 
         private void SidebarItemControl_MinusButton(object sender, EventArgs e)
         {
+            
             //selectedItems.Remove(e.MenuItem)
         }
+
+        //Trigger update event in list
+        private void updateMenuItem(MenuItemObject updateItem)
+        {
+            int maintainIndex = selectedItems.IndexOf(updateItem);
+            selectedItems.Remove(updateItem);
+            selectedItems.Insert(maintainIndex, updateItem);
+        }
+
+
 
 
         private void StackPanel_Loaded(object sender, RoutedEventArgs e)
