@@ -114,23 +114,7 @@
                     Orientation="Vertical" 
                     Background="BlanchedAlmond"
                     >
-                <Label Content="Selected" Foreground="White" Background="Gray" FontSize="12" Height="30" Width="{Binding ElementName=SideBarStackPanel, Path=Width}"/>
-                <ItemsControl Grid.Row="2" Grid.Column="8" Height="Auto" x:Name="SelectedItemsList" ScrollViewer.CanContentScroll="True" ItemsSource="{Binding ElementName=mainWindow, Path=SelectedItems}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <local:SidebarItemControl MainBackground="Gray"/>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-                <Label Content="Ordered" Foreground="White" Margin="0,5,0,0" Background="Gray" FontSize="12" Height="30" Width="{Binding ElementName=SideBarStackPanel, Path=Width}"/>
-                <ItemsControl x:Name="OrderedItemsList" ItemsSource="{Binding ElementName=mainWindow, Path=OrderedItems}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <local:SidebarItemControl MainBackground="LightGreen"/>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-                <Label Content="Delivered" Foreground="White"  Background="Gray" Margin="0,5" FontSize="12" Height="30" Width="{Binding ElementName=SideBarStackPanel, Path=Width}"/>
+                <Label x:Name="DeliveredLabel" Content="Delivered" Foreground="White"  Background="Gray"  FontSize="12" Height="30" Width="{Binding ElementName=SideBarStackPanel, Path=Width}"/>
                 <ItemsControl  x:Name="DeliveredItemsList" ItemsSource="{Binding ElementName=mainWindow, Path=DeliveredItems}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
@@ -138,7 +122,23 @@
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-                
+                <Label x:Name="OrderedLabel" Content="Ordered" Foreground="White" Margin="0,5,0,0" Background="Gray" FontSize="12" Height="30" Width="{Binding ElementName=SideBarStackPanel, Path=Width}"/>
+                <ItemsControl x:Name="OrderedItemsList" ItemsSource="{Binding ElementName=mainWindow, Path=OrderedItems}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <local:SidebarItemControl MainBackground="LightGreen"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <Label x:Name="SelectedLabel" Content="Selected" Foreground="White" Background="Gray" Margin="0,5" FontSize="12" Height="30" Width="{Binding ElementName=SideBarStackPanel, Path=Width}"/>
+                <ItemsControl Grid.Row="2" Grid.Column="8" Height="Auto" x:Name="SelectedItemsList" ScrollViewer.CanContentScroll="True" ItemsSource="{Binding ElementName=mainWindow, Path=SelectedItems}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <local:SidebarItemControl MainBackground="Gray"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
             </StackPanel>
         </ScrollViewer>
         <StackPanel Grid.Row="3" Grid.Column="8" Orientation="Vertical"  HorizontalAlignment="Stretch">

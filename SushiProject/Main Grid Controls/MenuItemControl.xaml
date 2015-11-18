@@ -26,6 +26,18 @@
         <Label Content="{Binding Price}" Grid.Row="1" Grid.Column="2" Margin="5"/>
         <TextBlock  Text="{Binding Description}" TextWrapping="WrapWithOverflow" Height="40" Grid.Row="3" Grid.Column="0" Margin="10,0" />
         <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="2" Margin="5">
+            <StackPanel.Style>
+                <Style>
+                    <Style.Triggers>
+                        <DataTrigger>
+                            <!--  Put target type here which is label. 
+                            ~ You want to listen to bool of the vegan/gluten
+                            ~ And Bind it to the visibility of vegan/gluten.
+                            -->
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </StackPanel.Style>
             <Label Content="G" Foreground="Green" FontSize="20" Width="40" />
             <Label Content="V" Foreground="Orange" FontSize="20" Width="40" />
         </StackPanel>
