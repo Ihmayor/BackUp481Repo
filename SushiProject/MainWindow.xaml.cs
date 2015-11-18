@@ -12,6 +12,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -127,13 +128,6 @@ namespace SushiSushi
             }
         
         }
-
-        private void SidebarItemControl_MinusButton(object sender, EventArgs e)
-        {
-            
-            //selectedItems.Remove(e.MenuItem)
-        }
-
         //Trigger update event in list
         private void updateMenuItem(MenuItemObject updateItem)
         {
@@ -150,7 +144,11 @@ namespace SushiSushi
             Console.WriteLine((sender as Grid).DataContext);
         }
 
-
+        private void ExpandCollapseElement(FrameworkElement inputElem, double from, double to, double inDurationInMilli = 250) //All duration are set to 1/4 second
+        {
+            DoubleAnimation anim = new DoubleAnimation(from, to, TimeSpan.FromMilliseconds(inDurationInMilli));
+            inputElem.BeginAnimation(FrameworkElement.HeightProperty, anim);
+        }
 
     }
 }
