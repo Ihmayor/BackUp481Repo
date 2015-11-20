@@ -118,7 +118,7 @@
                 <ItemsControl  x:Name="DeliveredItemsList" ItemsSource="{Binding ElementName=mainWindow, Path=DeliveredItems}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <local:SidebarItemControl MainBackground="#FFF5D3B0"/>
+                            <local:SidebarItemControl MainBackground="Gray"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
@@ -134,7 +134,7 @@
                 <ItemsControl Grid.Row="2" Grid.Column="8" Height="Auto" x:Name="SelectedItemsList" ScrollViewer.CanContentScroll="True" ItemsSource="{Binding ElementName=mainWindow, Path=SelectedItems}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <local:SidebarItemControl MainBackground="Gray"/>
+                            <local:SidebarItemControl MainBackground="Salmon"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>

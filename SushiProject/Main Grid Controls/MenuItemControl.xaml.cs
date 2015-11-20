@@ -48,7 +48,47 @@ namespace SushiSushi
 
         private void OptionsAvailable_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+          
+        }
 
+        private void Gluten_Free_Loaded(object sender, RoutedEventArgs e)
+        {
+            MenuItemObject MenuItem = (sender as Label).DataContext as MenuItemObject;
+            if (MenuItem != null)
+            {
+                if (!MenuItem.isGlutenFree)
+                    (sender as Label).Visibility = System.Windows.Visibility.Hidden;
+
+            }
+        }
+
+        private void Vegan_Loaded(object sender, RoutedEventArgs e)
+        {
+            MenuItemObject MenuItem = (sender as Label).DataContext as MenuItemObject;
+            if (MenuItem != null)
+            {
+                if (!MenuItem.isVegan)
+                    (sender as Label).Visibility = System.Windows.Visibility.Hidden;
+
+            }
+        
+        }
+
+        private void OptionsAvailable_Loaded(object sender, RoutedEventArgs e)
+        {
+            MenuItemObject MenuItem = (sender as ComboBox).DataContext as MenuItemObject;
+            if (MenuItem != null)
+            {
+                if (MenuItem.hasOptions)
+                {
+
+                }
+                else
+                {
+                        (sender as ComboBox).Visibility = System.Windows.Visibility.Hidden;
+                }
+            }
+       
         }
 
     
