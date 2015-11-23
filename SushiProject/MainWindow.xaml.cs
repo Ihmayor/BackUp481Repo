@@ -66,11 +66,15 @@ namespace SushiSushi
                }
                EmptySelected();
                OrderDialogWindow.Visibility = System.Windows.Visibility.Hidden;
+               GrayOutWindow.Visibility = System.Windows.Visibility.Hidden;
+      
            }
 
            else
            {
                OrderDialogWindow.Visibility = System.Windows.Visibility.Hidden;
+               GrayOutWindow.Visibility = System.Windows.Visibility.Hidden;
+      
            }
         
         }
@@ -117,6 +121,7 @@ namespace SushiSushi
         private void ConfirmOrder_Click(object sender, RoutedEventArgs e)
         {
             OrderDialogWindow.Visibility = System.Windows.Visibility.Visible;
+            GrayOutWindow.Visibility = System.Windows.Visibility.Visible;
         }
 
         #endregion
