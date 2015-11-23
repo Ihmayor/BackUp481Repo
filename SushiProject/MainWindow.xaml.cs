@@ -56,6 +56,7 @@ namespace SushiSushi
         #endregion
 
         #region Control Click Events Both inside Window and Outside
+        
         private void OrderDialog_DialogButtonClick(object sender, bool confirmed)
         {
            if (confirmed)
@@ -124,6 +125,37 @@ namespace SushiSushi
             GrayOutWindow.Visibility = System.Windows.Visibility.Visible;
         }
 
+        private void SpecialButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void AppetizersButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+
+        private void SushiButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void FriedButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void DrinksButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+
+        private void DessertsButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
         #endregion
 
         #region Data Generation Methods
@@ -200,5 +232,7 @@ namespace SushiSushi
         }
 
         #endregion
+
+        
     }
 }
