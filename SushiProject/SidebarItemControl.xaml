@@ -4,19 +4,22 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="150" d:DesignWidth="250">
+             d:DesignHeight="150" d:DesignWidth="300">
     <Grid>
         <Border BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Left" Height="120" Margin="50,5" VerticalAlignment="Top" Width="180">
             <Grid x:Name="MainGrid" Margin="0,0,0,0" Background="{Binding ElementName=SushiSushi.SidebarItemControl, Path=MainBackgroundProperty}">
                 <Grid>
                     <Image HorizontalAlignment="Left" Height="27" Margin="10,10,0,0" VerticalAlignment="Top" Width="28" Source="{Binding Image}"/>
                     <Label Content="{Binding Name}" HorizontalAlignment="Left" Margin="55,10,0,0" VerticalAlignment="Top" Width="114" FontWeight="Bold"/>
-                    <Label Content="Price:" HorizontalAlignment="Left" Margin="55,36,0,0" VerticalAlignment="Top" Height="22" Width="31" FontSize="9" FontWeight="Bold"/>
+                    <Label x:Name="LabelToHide" Content="Price:" HorizontalAlignment="Left" Margin="55,36,0,0" VerticalAlignment="Top" Height="22" Width="31" FontSize="9" FontWeight="Bold"/>
                     <Label Content="{Binding SelectedOption}" HorizontalAlignment="Left" Margin="10,62,0,0" VerticalAlignment="Top" Width="159" FontSize="10" FontWeight="Bold"/>
                     <TextBox HorizontalAlignment="Left" Height="20" Margin="81,88,0,0" TextWrapping="Wrap" Text="{Binding countOfItem}" VerticalAlignment="Top" Width="18" FontSize="10" FontWeight="Bold" />
                     <Button Content="+" HorizontalAlignment="Left" Margin="16,88,0,0" VerticalAlignment="Top" Width="32" Height="20" Background="#FF3ABB1D" FontWeight="Bold" Click="Plus_Click"/>
                     <Button Content="-" HorizontalAlignment="Left" Margin="130,88,0,0" VerticalAlignment="Top" Width="32"  Height="20" Background="#FFDE4141" FontWeight="Bold" Click="Minus_Click"/>
-                    <TextBox HorizontalAlignment="Left" Height="18" Margin="86,39,0,0" TextWrapping="Wrap" Text="$4.99" VerticalAlignment="Top" Width="36" />
+
+                    <TextBox x:Name="PricePerItemTotal" HorizontalAlignment="Left" Height="18" Margin="86,39,0,0" TextWrapping="Wrap" Text="$4.99" VerticalAlignment="Top" Width="36" />
+                    <Button x:Name="OrderAgainButton" Content="Please Order Again!" Width="150" Height="40" Margin="5" VerticalAlignment="Bottom" FontWeight="Bold"/>
+
                 </Grid>
             </Grid>
         </Border>

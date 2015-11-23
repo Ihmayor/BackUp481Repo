@@ -32,6 +32,7 @@ namespace SushiSushi
 
         public static ObservableCollection<MenuItemObject> SelectedItems { get { return selectedItems; } }
         private static ObservableCollection<MenuItemObject> selectedItems = new ObservableCollection<MenuItemObject>();
+       
         public MainWindow()
         {
                 InitializeComponent();
@@ -41,14 +42,37 @@ namespace SushiSushi
                 generateMenuItems();
         }
 
-  
 
-      
+        private void OrderDialogWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            OrderDialog.onDialogButtonClick += OrderDialog_DialogButtonClick;
+            OrderDialogWindow.SelectedList.ItemsSource = selectedItems;
+     
+        }
+
+        private void OrderDialog_DialogButtonClick(object sender, bool confirmed)
+        {
+           if (confirmed)
+           {
+               foreach (MenuItemObject item in selectedItems)
+               {
+                   orderedItems.Add(item);
+               }
+               EmptySelected();
+               OrderDialogWindow.Visibility = System.Windows.Visibility.Hidden;
+           }
+
+           else
+           {
+               OrderDialogWindow.Visibility = System.Windows.Visibility.Hidden;
+           }
+        
+        }
+
 
         
         public void generateMenuItems()
         {
-          
             MenuCategory SpecialCategory = new MenuCategory("Specials", generateMenuCategoryType(0, "Special",       new BitmapImage(new Uri(@"pack://application:,,,/Resources/SpecialSushi.png")), false, false, "These are special Items", null));
             MenuCategory SushiCategory = new MenuCategory("Sushi", generateMenuCategoryType2(0, "Sushi",             new BitmapImage(new Uri(@"pack://application:,,,/Resources/SalmonSushi.png")), true, true, "These are sushi Items", null));
             MenuCategory AppetizerCategory = new MenuCategory("Appetizers", generateMenuCategoryType(0, "Appetizer", new BitmapImage(new Uri(@"pack://application:,,,/Resources/Gyoza.png")), true, false, "These are appetizer Items", null));
@@ -128,6 +152,7 @@ namespace SushiSushi
             }
         
         }
+
         //Trigger update event in list
         private void updateMenuItem(MenuItemObject updateItem)
         {
@@ -149,6 +174,26 @@ namespace SushiSushi
             DoubleAnimation anim = new DoubleAnimation(from, to, TimeSpan.FromMilliseconds(inDurationInMilli));
             inputElem.BeginAnimation(FrameworkElement.HeightProperty, anim);
         }
+
+        private void ConfirmOrder_Click(object sender, RoutedEventArgs e)
+        {
+            OrderDialogWindow.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        private void EmptySelected()
+        {
+            ObservableCollection<MenuItemObject> toRemove = new ObservableCollection<MenuItemObject>();
+            foreach (MenuItemObject item in selectedItems)
+            {
+                toRemove.Add(item);
+            }
+            
+            foreach(MenuItemObject item in toRemove)
+            {
+                selectedItems.Remove(item);
+            }
+        }
+
 
     }
 }
