@@ -148,6 +148,7 @@
             <Label Content="Total Price: 0.00" FontSize="14" Margin="100,5" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="8"  Grid.RowSpan="2" Background="White" />
             <Button Content="Confirm Order"    FontSize="14" Margin="95,0" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Left"   Grid.Row="2" Grid.Column="8" Background="White" Style="{StaticResource RoundButtonTemplate}" Click="ConfirmOrder_Click"/>
         </StackPanel>
+
         <local:OrderDialog Grid.Row="0" Grid.Column="0" Margin="20" x:Name="OrderDialogWindow" Visibility="Hidden" Loaded="OrderDialogWindow_Loaded" Grid.RowSpan="6" Grid.ColumnSpan="10"></local:OrderDialog>
 
     </Grid>
