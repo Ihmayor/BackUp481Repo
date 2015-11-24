@@ -135,9 +135,27 @@ namespace SushiSushi
             GrayOutWindow.Visibility = System.Windows.Visibility.Visible;
         }
 
+        private MenuCategory FindMenuCategoryControl(string CategoryToFind)
+        {
+            MenuCategory foundItem = null;
+            foreach(MenuCategory item in  MainListView.Items)
+            {
+                if (item.CategoryName == CategoryToFind)
+                    foundItem = item;
+            }
+            return foundItem;
+        }
+
         private void SpecialButton_Click(object sender, RoutedEventArgs e)
         {
-
+            MenuCategory foundItem = FindMenuCategoryControl("Specials");
+            if (foundItem != null)
+            {
+                MainListView.SelectedItem = foundItem;
+          //      MainListView.ScrollViewer.  
+                MainListView.ScrollIntoView(MainListView.Items.GetItemAt(0));
+              //  MainListView.Selected
+            }
         }
 
         private void AppetizersButton_Click(object sender, RoutedEventArgs e)
