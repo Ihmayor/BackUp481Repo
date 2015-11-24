@@ -135,43 +135,7 @@ namespace SushiSushi
             GrayOutWindow.Visibility = System.Windows.Visibility.Visible;
         }
 
-        private MenuCategory FindMenuCategoryControl(string CategoryToFind)
-        {
-            MenuCategory foundItem = null;
-            foreach(MenuCategory item in  MainListView.Items)
-            {
-                if (item.CategoryName == CategoryToFind)
-                    foundItem = item;
-            }
-            return foundItem;
-        }
-        private static Visual GetDescendantByType(Visual element, Type type)
-        {
-            if (element == null)
-            {
-                return null;
-            }
-            if (element.GetType() == type)
-            {
-                return element;
-            }
-            Visual foundElement = null;
-            if (element is FrameworkElement)
-            {
-                (element as FrameworkElement).ApplyTemplate();
-            }
-            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(element); i++)
-            {
-                Visual visual = VisualTreeHelper.GetChild(element, i) as Visual;
-                foundElement = GetDescendantByType(visual, type);
-                if (foundElement != null)
-                {
-                    break;
-                }
-            }
-            return foundElement;
-        }
-
+        
      
 
         private void SpecialButton_Click(object sender, RoutedEventArgs e)
@@ -307,6 +271,45 @@ namespace SushiSushi
                 scrollViewer.ScrollToVerticalOffset(calculateOffset(MainListView.Items.IndexOf(foundItem)));
             }
 
+        }
+
+        private MenuCategory FindMenuCategoryControl(string CategoryToFind)
+        {
+            MenuCategory foundItem = null;
+            foreach (MenuCategory item in MainListView.Items)
+            {
+                if (item.CategoryName == CategoryToFind)
+                    foundItem = item;
+            }
+            return foundItem;
+        }
+
+        //http://stackoverflow.com/questions/10293236/accessing-the-scrollviewer-of-a-listbox-from-c-sharp Author: punker76
+        private static Visual GetDescendantByType(Visual element, Type type)
+        {
+            if (element == null)
+            {
+                return null;
+            }
+            if (element.GetType() == type)
+            {
+                return element;
+            }
+            Visual foundElement = null;
+            if (element is FrameworkElement)
+            {
+                (element as FrameworkElement).ApplyTemplate();
+            }
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(element); i++)
+            {
+                Visual visual = VisualTreeHelper.GetChild(element, i) as Visual;
+                foundElement = GetDescendantByType(visual, type);
+                if (foundElement != null)
+                {
+                    break;
+                }
+            }
+            return foundElement;
         }
 
 
