@@ -43,7 +43,60 @@ namespace SushiSushi
                 SidebarItemControl.OnMinusButtonPressed += SidebarItemControl_MinusButton;
                 SidebarItemControl.OnPlusButtonPressed += SidebarItemControl_PlusButton;
                 generateMenuItems();
+
+                var scrollViewer = GetDescendantByType(MainListView, typeof(ScrollViewer)) as ScrollViewer;
+                scrollViewer.ScrollChanged += scrollViewer_ScrollChanged;
         }
+
+        void scrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            double check = e.VerticalOffset;
+            if (check >= calculateOffset(0) && check < calculateOffset(1))
+            {
+                changeCategoryButtonColor(SpecialsButton);
+            }
+            else if (check >= calculateOffset(1) && check < calculateOffset(2))
+            {
+                changeCategoryButtonColor(AppetizersButton);
+
+            }
+            else if (check >= calculateOffset(2) && check < calculateOffset(3))
+            {
+                changeCategoryButtonColor(SushiButton);
+
+            }
+            else if (check >= calculateOffset(3) && check < calculateOffset(4))
+            {
+                changeCategoryButtonColor(FriedButton);
+
+            }
+
+            else if (check >= calculateOffset(4) && check < calculateOffset(5))
+            {
+                changeCategoryButtonColor(DrinksButton);
+
+            }
+            else if (check >= calculateOffset(5))
+            {
+                changeCategoryButtonColor(DessertsButton);
+            }
+
+        }
+
+        public void changeCategoryButtonColor(Button applyOnlyToThis)
+        {
+            List<Button> buttons = new List<Button>{SpecialsButton,AppetizersButton, SushiButton,FriedButton, DrinksButton,DessertsButton};
+            foreach (Button button in buttons)
+            {
+                if (applyOnlyToThis != button)
+                    button.Background = new SolidColorBrush(Colors.White);
+                else
+                    button.Background = new SolidColorBrush(Colors.Green);
+            }
+           
+        }
+
+
 
 
         private void OrderDialogWindow_Loaded(object sender, RoutedEventArgs e)
