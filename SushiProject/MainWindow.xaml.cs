@@ -145,44 +145,68 @@ namespace SushiSushi
             }
             return foundItem;
         }
+        private static Visual GetDescendantByType(Visual element, Type type)
+        {
+            if (element == null)
+            {
+                return null;
+            }
+            if (element.GetType() == type)
+            {
+                return element;
+            }
+            Visual foundElement = null;
+            if (element is FrameworkElement)
+            {
+                (element as FrameworkElement).ApplyTemplate();
+            }
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(element); i++)
+            {
+                Visual visual = VisualTreeHelper.GetChild(element, i) as Visual;
+                foundElement = GetDescendantByType(visual, type);
+                if (foundElement != null)
+                {
+                    break;
+                }
+            }
+            return foundElement;
+        }
+
+     
 
         private void SpecialButton_Click(object sender, RoutedEventArgs e)
         {
-            MenuCategory foundItem = FindMenuCategoryControl("Specials");
-            if (foundItem != null)
-            {
-                MainListView.SelectedItem = foundItem;
-          //      MainListView.ScrollViewer.  
-                MainListView.ScrollIntoView(MainListView.Items.GetItemAt(0));
-              //  MainListView.Selected
-            }
+            var scrollViewer = GetDescendantByType(MainListView, typeof(ScrollViewer)) as ScrollViewer;
+            scrollViewer.ScrollToTop();
         }
 
         private void AppetizersButton_Click(object sender, RoutedEventArgs e)
         {
-
+            jumpToCategory("Appetizers");
         }
 
-
+      
         private void SushiButton_Click(object sender, RoutedEventArgs e)
         {
-
+            jumpToCategory("Sushi");
         }
 
         private void FriedButton_Click(object sender, RoutedEventArgs e)
         {
+            jumpToCategory("Fried");
 
         }
 
         private void DrinksButton_Click(object sender, RoutedEventArgs e)
         {
 
+            jumpToCategory("Drinks");
         }
 
 
         private void DessertsButton_Click(object sender, RoutedEventArgs e)
         {
-
+            jumpToCategory("Desserts");
         }
         #endregion
 
@@ -195,7 +219,7 @@ namespace SushiSushi
             MenuCategory FriedCategory = new MenuCategory("Fried", generateMenuCategoryType2(0, "Fried",             new BitmapImage(new Uri(@"pack://application:,,,/Resources/ShrimpTempura.png")), false, false, "These are fried Items", null));
             MenuCategory DrinksCategory = new MenuCategory("Drinks", generateMenuCategoryType3(0, "Drinks",          new BitmapImage(new Uri(@"pack://application:,,,/Resources/CocaCola.png")), false, false, "These are drink Items", null));
             MenuCategory DessertCategory = new MenuCategory("Desserts", generateMenuCategoryType(0, "Desserts",      new BitmapImage(new Uri(@"pack://application:,,,/Resources/Mochi.png")), true, false, "These are dessert Items", null));
-            List<MenuCategory> TotalItems = new List<MenuCategory>() { SpecialCategory, SushiCategory, AppetizerCategory, FriedCategory, DrinksCategory, DessertCategory };
+            List<MenuCategory> TotalItems = new List<MenuCategory>() { SpecialCategory, AppetizerCategory,SushiCategory, FriedCategory, DrinksCategory, DessertCategory };
             
             MainListView.ItemsSource = TotalItems;
         }
@@ -261,6 +285,30 @@ namespace SushiSushi
                 selectedItems.Remove(item);
             }
         }
+
+        private double calculateOffset(int indexOfCategory)
+        {
+            double verticalOffset = 0;
+            for (int i = 0; i < indexOfCategory; i++)
+            {
+                MenuCategory currItem = (MenuCategory)MainListView.Items[i];
+                ListBoxItem lbi = MainListView.ItemContainerGenerator.ContainerFromItem(currItem) as ListBoxItem;
+                verticalOffset += lbi.ActualHeight;
+            }
+            return verticalOffset;
+        }
+
+        private void jumpToCategory(string categoryName)
+        {
+            MenuCategory foundItem = FindMenuCategoryControl(categoryName);
+            if (foundItem != null)
+            {
+                var scrollViewer = GetDescendantByType(MainListView, typeof(ScrollViewer)) as ScrollViewer;
+                scrollViewer.ScrollToVerticalOffset(calculateOffset(MainListView.Items.IndexOf(foundItem)));
+            }
+
+        }
+
 
         #endregion
 

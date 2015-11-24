@@ -71,17 +71,16 @@ C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiP
 C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\Main Grid Controls\MenuItemControl.g.cs
 C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\SidebarItemControl.g.cs
 C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\toproveapoint.g.cs
+C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\OrderDialog.g.cs
 C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\App.g.cs
 C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\GeneratedInternalTypeHelper.g.cs
 C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\SushiSushi_MarkupCompile.cache
 C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\SushiSushi_MarkupCompile.lref
 C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\MainWindow.baml
 C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\Main Grid Controls\MenuCategoryControl.baml
+C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\OrderDialog.baml
 C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\SushiSushi.g.resources
 C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\SushiSushi.Properties.Resources.resources
 C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\SushiSushi.csproj.GenerateResource.Cache
 C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\SushiSushi.exe
 C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\SushiSushi.pdb
-C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\OrderDialog.g.cs
-C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\OrderDialog.baml
-C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\SushiSushi.csprojResolveAssemblyReference.cache

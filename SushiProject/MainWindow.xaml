@@ -95,12 +95,14 @@
                  Grid.Row="2"  
                  Grid.Column="1" Grid.ColumnSpan="6"
                  ScrollViewer.CanContentScroll="False" 
+                 ScrollViewer.PanningMode="VerticalOnly"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                  ScrollViewer.VerticalScrollBarVisibility="Hidden"
                  ScrollViewer.PanningRatio="0.9"
                  ScrollViewer.IsDeferredScrollingEnabled="True"
-                 Height="500" Width="820">
-
+                 Height="500" Width="820"
+                 >
+                             
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Height="Auto" Width="820">
