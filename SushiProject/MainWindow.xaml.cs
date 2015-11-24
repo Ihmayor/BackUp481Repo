@@ -72,7 +72,7 @@ namespace SushiSushi
                     else
                     {
                         foundItem.countOfItem++;
-                        updateMenuItem(foundItem);
+                        updateMenuItem(orderedItems,foundItem);
                     }
                }
                EmptySelected();
@@ -101,7 +101,7 @@ namespace SushiSushi
             else
             {
                 foundItem.countOfItem++;
-                updateMenuItem(foundItem);
+                updateMenuItem(selectedItems, foundItem);
             }
         }
 
@@ -110,7 +110,7 @@ namespace SushiSushi
         {
             chosenItem.countOfItem++;
             MenuItemObject foundItem = selectedItems.FirstOrDefault(x => x.isSameMenuItem(chosenItem));
-            updateMenuItem(foundItem);
+            updateMenuItem(selectedItems,foundItem);
         }
 
 
@@ -124,7 +124,7 @@ namespace SushiSushi
             }
             else
             {
-                updateMenuItem(foundItem);
+                updateMenuItem(selectedItems,foundItem);
             }
 
         }
@@ -213,16 +213,14 @@ namespace SushiSushi
         #endregion
 
         #region Misc Helper Methods
-     
 
         //Triggers the item to reload.
-        private void updateMenuItem(MenuItemObject itemToUpdate)
+        private void updateMenuItem(ObservableCollection<MenuItemObject> ListInvolved, MenuItemObject itemToUpdate)
         {
-            int indexMaintain = selectedItems.IndexOf(itemToUpdate);
-            selectedItems.Remove(itemToUpdate);
-            selectedItems.Insert(indexMaintain, itemToUpdate);
+            int indexMaintain = ListInvolved.IndexOf(itemToUpdate);
+            ListInvolved.Remove(itemToUpdate);
+            ListInvolved.Insert(indexMaintain, itemToUpdate);
         }
-
 
 
         private void ExpandCollapseElement(FrameworkElement inputElem, double from, double to, double inDurationInMilli = 250) //All duration are set to 1/4 second
@@ -236,6 +234,7 @@ namespace SushiSushi
             ObservableCollection<MenuItemObject> toRemove = new ObservableCollection<MenuItemObject>();
             foreach (MenuItemObject item in selectedItems)
             {
+                item.countOfItem = 0;
                 toRemove.Add(item);
             }
             
