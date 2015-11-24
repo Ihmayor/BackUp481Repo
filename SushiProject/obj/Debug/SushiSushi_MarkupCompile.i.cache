@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 \\cs-fs01\Profiles\ug\ihmayor\Desktop\CPSC481Project\SushiProject\App.xaml
-656921644
+6-1495699704
 
-16-1782019247
+16-984108282
 141012385901
-MainWindow.xaml;Main Grid Controls\MenuCategoryControl.xaml;Main Grid Controls\MenuItemControl.xaml;OrderConfirmationWindow.xaml;SidebarItemControl.xaml;toproveapoint.xaml;
+MainWindow.xaml;Main Grid Controls\MenuCategoryControl.xaml;Main Grid Controls\MenuItemControl.xaml;SidebarItemControl.xaml;toproveapoint.xaml;OrderDialog.xaml;
 
-False
+True
 

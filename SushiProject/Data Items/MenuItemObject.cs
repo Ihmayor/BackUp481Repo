@@ -33,12 +33,13 @@ namespace SushiSushi
             Description = description;
             isVegan = Vegan;
             isGlutenFree = GlutenFree;
-            if (options == null || options.Count == 0)
+            options = optionsList;
+
+            if (options == null)
                 hasOptions = false;
             else
             {
                 hasOptions = true;
-                options = optionsList;
             }
         }
         public void setSelectedOption (int optionIndex)

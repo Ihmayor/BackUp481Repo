@@ -12,6 +12,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -21,8 +22,9 @@ namespace SushiSushi
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow 
+    public partial class MainWindow
     {
+        #region List Associated with SideBar
         public static ObservableCollection<MenuItemObject> OrderedItems { get { return orderedItems; } }
         private static ObservableCollection<MenuItemObject> orderedItems = new ObservableCollection<MenuItemObject>();
 
@@ -31,6 +33,9 @@ namespace SushiSushi
 
         public static ObservableCollection<MenuItemObject> SelectedItems { get { return selectedItems; } }
         private static ObservableCollection<MenuItemObject> selectedItems = new ObservableCollection<MenuItemObject>();
+        #endregion
+
+        #region Events/Methods Involved with Loaded Items
         public MainWindow()
         {
                 InitializeComponent();
@@ -41,13 +46,131 @@ namespace SushiSushi
         }
 
 
+        private void OrderDialogWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            OrderDialog.onDialogButtonClick += OrderDialog_DialogButtonClick;
+            OrderDialogWindow.SelectedList.ItemsSource = selectedItems;
+     
+        }
 
-      
+        #endregion
 
+        #region Control Click Events Both inside Window and Outside
         
+        private void OrderDialog_DialogButtonClick(object sender, bool confirmed)
+        {
+           if (confirmed)
+           {
+               foreach (MenuItemObject item in selectedItems)
+               {
+                    MenuItemObject foundItem = orderedItems.FirstOrDefault(x => x.isSameMenuItem(item));
+                    if (foundItem == null)
+                    {
+                        item.countOfItem++;
+                        orderedItems.Add(item);
+                    }
+                    else
+                    {
+                        foundItem.countOfItem++;
+                        updateMenuItem(foundItem);
+                    }
+               }
+               EmptySelected();
+               OrderDialogWindow.Visibility = System.Windows.Visibility.Hidden;
+               GrayOutWindow.Visibility = System.Windows.Visibility.Hidden;
+      
+           }
+
+           else
+           {
+               OrderDialogWindow.Visibility = System.Windows.Visibility.Hidden;
+               GrayOutWindow.Visibility = System.Windows.Visibility.Hidden;
+      
+           }
+        
+        }
+
+        void MenuItemControl_CompleteClicked(object sender, MenuItemObject addItem)
+        {
+            MenuItemObject foundItem = selectedItems.FirstOrDefault(x => x.isSameMenuItem(addItem));
+            if (foundItem == null)
+            {
+                addItem.countOfItem++;
+                selectedItems.Add(addItem);
+            }
+            else
+            {
+                foundItem.countOfItem++;
+                updateMenuItem(foundItem);
+            }
+        }
+
+
+        private void SidebarItemControl_PlusButton(object sender, MenuItemObject chosenItem)
+        {
+            chosenItem.countOfItem++;
+            MenuItemObject foundItem = selectedItems.FirstOrDefault(x => x.isSameMenuItem(chosenItem));
+            updateMenuItem(foundItem);
+        }
+
+
+        private void SidebarItemControl_MinusButton(object sender, MenuItemObject chosenItem)
+        {
+            MenuItemObject foundItem = selectedItems.FirstOrDefault(x => x.isSameMenuItem(chosenItem));
+            foundItem.countOfItem--;
+            if (foundItem.countOfItem == 0)
+            {
+                selectedItems.Remove(foundItem);
+            }
+            else
+            {
+                updateMenuItem(foundItem);
+            }
+
+        }
+
+        private void ConfirmOrder_Click(object sender, RoutedEventArgs e)
+        {
+            OrderDialogWindow.Visibility = System.Windows.Visibility.Visible;
+            GrayOutWindow.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        private void SpecialButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void AppetizersButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+
+        private void SushiButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void FriedButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void DrinksButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+
+        private void DessertsButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        #endregion
+
+        #region Data Generation Methods
         public void generateMenuItems()
         {
-          
             MenuCategory SpecialCategory = new MenuCategory("Specials", generateMenuCategoryType(0, "Special",       new BitmapImage(new Uri(@"pack://application:,,,/Resources/SpecialSushi.png")), false, false, "These are special Items", null));
             MenuCategory SushiCategory = new MenuCategory("Sushi", generateMenuCategoryType2(0, "Sushi",             new BitmapImage(new Uri(@"pack://application:,,,/Resources/SalmonSushi.png")), true, true, "These are sushi Items", null));
             MenuCategory AppetizerCategory = new MenuCategory("Appetizers", generateMenuCategoryType(0, "Appetizer", new BitmapImage(new Uri(@"pack://application:,,,/Resources/Gyoza.png")), true, false, "These are appetizer Items", null));
@@ -87,53 +210,10 @@ namespace SushiSushi
             return associatedItems;
         }
 
+        #endregion
 
-
-        void MenuItemControl_CompleteClicked(object sender, MenuItemObject addItem)
-        {
-            MenuItemObject foundItem = selectedItems.FirstOrDefault(x=> x.isSameMenuItem(addItem));
-            if (foundItem == null)
-            {
-                addItem.countOfItem++;
-                selectedItems.Add(addItem);
-            }
-            else
-            {
-                foundItem.countOfItem++;
-                updateMenuItem(foundItem);
-            }
-            //temp for generating user controls
-            //deliveredItems.Add(addItem);
-            //orderedItems.Add(addItem);
-        }
-
-        private void SidebarItemControl_MinusButton(object sender, MenuItemObject relatedItem)
-        {
-            MenuItemObject foundItem = selectedItems.FirstOrDefault(x => x.isSameMenuItem(relatedItem));
-            if (foundItem != null)
-            {
-                foundItem.countOfItem--;
-                if (foundItem.countOfItem == 0)
-                {
-                    selectedItems.Remove(foundItem);
-                }
-                else
-                {
-                    updateMenuItem(foundItem);
-                }
-            }
-        }
-
-
-        private void SidebarItemControl_PlusButton(object sender, MenuItemObject relatedItem)
-        {
-            MenuItemObject foundItem = selectedItems.FirstOrDefault(x => x.isSameMenuItem(relatedItem));
-            if (foundItem != null)
-            {
-                foundItem.countOfItem++;
-                updateMenuItem(foundItem);
-            }
-        }
+        #region Misc Helper Methods
+     
 
         //Triggers the item to reload.
         private void updateMenuItem(MenuItemObject itemToUpdate)
@@ -145,12 +225,28 @@ namespace SushiSushi
 
 
 
-        private void StackPanel_Loaded(object sender, RoutedEventArgs e)
+        private void ExpandCollapseElement(FrameworkElement inputElem, double from, double to, double inDurationInMilli = 250) //All duration are set to 1/4 second
         {
-            Console.WriteLine((sender as Grid).DataContext);
+            DoubleAnimation anim = new DoubleAnimation(from, to, TimeSpan.FromMilliseconds(inDurationInMilli));
+            inputElem.BeginAnimation(FrameworkElement.HeightProperty, anim);
         }
 
+        private void EmptySelected()
+        {
+            ObservableCollection<MenuItemObject> toRemove = new ObservableCollection<MenuItemObject>();
+            foreach (MenuItemObject item in selectedItems)
+            {
+                toRemove.Add(item);
+            }
+            
+            foreach(MenuItemObject item in toRemove)
+            {
+                selectedItems.Remove(item);
+            }
+        }
 
+        #endregion
 
+        
     }
 }
