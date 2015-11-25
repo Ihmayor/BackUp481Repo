@@ -29,7 +29,7 @@
             <Label Content="G" Foreground="Orange" FontSize="20" Width="40" Loaded="Gluten_Free_Loaded" />
             <Label Content="V" Foreground="Green" FontSize="20" Width="40" Loaded="Vegan_Loaded" />
         </StackPanel>
-        <Button Content="Order" Click="Button_Click" Grid.Row="5" Grid.Column="0" Margin="10,5"/>
+        <Button Content="Order" Background="White" FontWeight="Bold" Click="Button_Click" Grid.Row="5" Grid.Column="0" Margin="10,5"/>
         <ComboBox x:Name="OptionsAvailable" ItemsSource="{Binding options}" Text="Options" Grid.Row="5" Grid.Column="2" Margin="5,5,20,5" SelectionChanged="OptionsAvailable_SelectionChanged" Loaded="OptionsAvailable_Loaded"/>
 
     </Grid>
