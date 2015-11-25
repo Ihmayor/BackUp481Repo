@@ -113,7 +113,7 @@
             </TextBlock>
         </Label>
 
-        <ScrollViewer HorizontalAlignment="Left" Height="500" Grid.Column="8" Grid.Row="2" HorizontalScrollBarVisibility="Disabled" >
+        <ScrollViewer HorizontalAlignment="Left" Height="500" Grid.Column="8" Grid.Row="2" HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden">
             <StackPanel x:Name="SideBarStackPanel"
                     Height="Auto" Width="310"
                     HorizontalAlignment="Left"
