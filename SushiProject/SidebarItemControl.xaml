@@ -11,14 +11,13 @@
                 <Grid>
                     <Image HorizontalAlignment="Left" Height="27" Margin="10,10,0,0" VerticalAlignment="Top" Width="28" Source="{Binding Image}"/>
                     <Label Content="{Binding Name}" HorizontalAlignment="Left" Margin="55,10,0,0" VerticalAlignment="Top" Width="114" FontWeight="Bold"/>
-                    <Label x:Name="LabelToHide" Content="Price:" HorizontalAlignment="Left" Margin="55,36,0,0" VerticalAlignment="Top" Height="22" Width="31" FontSize="9" FontWeight="Bold"/>
-                    <Label Content="{Binding SelectedOption}" HorizontalAlignment="Left" Margin="10,62,0,0" VerticalAlignment="Top" Width="159" FontSize="10" FontWeight="Bold"/>
-                    <TextBox HorizontalAlignment="Left" Height="20" Margin="81,88,0,0" TextWrapping="Wrap" Text="{Binding countOfItem}" VerticalAlignment="Top" Width="18" FontSize="10" FontWeight="Bold" />
-                    <Button Content="+" HorizontalAlignment="Left" Margin="16,88,0,0" VerticalAlignment="Top" Width="32" Height="20" Background="#FF3ABB1D" FontWeight="Bold" Click="Plus_Click"/>
-                    <Button Content="-" HorizontalAlignment="Left" Margin="130,88,0,0" VerticalAlignment="Top" Width="32"  Height="20" Background="#FFDE4141" FontWeight="Bold" Click="Minus_Click"/>
-                    <TextBox HorizontalAlignment="Left" Height="18" Margin="86,39,0,0" TextWrapping="Wrap" Text="$4.99" VerticalAlignment="Top" Width="36" />
+                    <Label x:Name="LabelToHide" Content="Price:" HorizontalAlignment="Left" Margin="55,36,0,0" VerticalAlignment="Top" Height="Auto" Width="Auto" FontSize="14" FontWeight="Bold"/>
+                    <TextBox x:Name="PricePerItemTotal" HorizontalAlignment="Left" Height="24" Width="Auto" Margin="100,39,0,0" Text="$4.99"  FontSize="16" VerticalAlignment="Top" />
 
-                    <TextBox x:Name="PricePerItemTotal" HorizontalAlignment="Left" Height="18" Margin="86,39,0,0" TextWrapping="Wrap" Text="$4.99"  FontSize="9" VerticalAlignment="Top" Width="36" />
+                    <Label Content="{Binding SelectedOption}" HorizontalAlignment="Left" Margin="10,62,0,0" VerticalAlignment="Top" Width="159" FontSize="10" FontWeight="Bold"/>
+                    <TextBox HorizontalAlignment="Left" Height="24" Margin="81,88,0,0"  FontSize="14" FontWeight="Bold" TextWrapping="Wrap" Text="{Binding countOfItem}" VerticalAlignment="Top" Width="18"/>
+                    <Button Content="+" HorizontalAlignment="Left" FontSize="16" FontWeight="Bold" Margin="16,88,5,5" VerticalAlignment="Top"  Height="30" Width="30" Background="#FF3ABB1D" Click="Plus_Click"/>
+                    <Button Content="-" HorizontalAlignment="Left" FontSize="16" FontWeight="Bold" Margin="130,88,5,5" VerticalAlignment="Top"  Height="30" Width="30" Background="#FFDE4141" Click="Minus_Click"/>
                     <Button x:Name="OrderAgainButton" Content="Please Order Again!" Width="150" Height="40" Margin="5" VerticalAlignment="Bottom" FontWeight="Bold"/>
 
                 </Grid>
