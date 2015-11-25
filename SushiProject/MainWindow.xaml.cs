@@ -24,7 +24,7 @@ namespace SushiSushi
     /// </summary>
     public partial class MainWindow
     {
-        #region List Associated with SideBar
+        #region Variables Directly  Associated With Controls
         public static ObservableCollection<MenuItemObject> OrderedItems { get { return orderedItems; } }
         private static ObservableCollection<MenuItemObject> orderedItems = new ObservableCollection<MenuItemObject>();
 
@@ -33,6 +33,11 @@ namespace SushiSushi
 
         public static ObservableCollection<MenuItemObject> SelectedItems { get { return selectedItems; } }
         private static ObservableCollection<MenuItemObject> selectedItems = new ObservableCollection<MenuItemObject>();
+        
+        private static int totalCost = 0;
+        public static string CostString { get { return costString; } }
+        public static string costString = "Total Price: " + totalCost;
+        
         #endregion
 
         #region Events/Methods Involved with Loaded Items
@@ -89,9 +94,14 @@ namespace SushiSushi
             foreach (Button button in buttons)
             {
                 if (applyOnlyToThis != button)
+                {
                     button.Background = new SolidColorBrush(Colors.White);
+                }
                 else
-                    button.Background = new SolidColorBrush(Colors.Green);
+                {
+                    button.Background = new SolidColorBrush(Colors.Green) { Opacity = 0.5 };
+                }
+
             }
            
         }
@@ -110,39 +120,9 @@ namespace SushiSushi
 
         #region Control Click Events Both inside Window and Outside
         
-        private void OrderDialog_DialogButtonClick(object sender, bool confirmed)
-        {
-           if (confirmed)
-           {
-               foreach (MenuItemObject item in selectedItems)
-               {
-                    MenuItemObject foundItem = orderedItems.FirstOrDefault(x => x.isSameMenuItem(item));
-                    if (foundItem == null)
-                    {
-                        item.countOfItem++;
-                        orderedItems.Add(item);
-                    }
-                    else
-                    {
-                        foundItem.countOfItem++;
-                        updateMenuItem(orderedItems,foundItem);
-                    }
-               }
-               EmptySelected();
-               OrderDialogWindow.Visibility = System.Windows.Visibility.Hidden;
-               GrayOutWindow.Visibility = System.Windows.Visibility.Hidden;
-      
-           }
-
-           else
-           {
-               OrderDialogWindow.Visibility = System.Windows.Visibility.Hidden;
-               GrayOutWindow.Visibility = System.Windows.Visibility.Hidden;
-      
-           }
         
-        }
 
+        #region Menu Item Control 
         void MenuItemControl_CompleteClicked(object sender, MenuItemObject addItem)
         {
             MenuItemObject foundItem = selectedItems.FirstOrDefault(x => x.isSameMenuItem(addItem));
@@ -182,14 +162,52 @@ namespace SushiSushi
 
         }
 
+        #endregion
+
+        #region Dialog Related
         private void ConfirmOrder_Click(object sender, RoutedEventArgs e)
         {
             OrderDialogWindow.Visibility = System.Windows.Visibility.Visible;
             GrayOutWindow.Visibility = System.Windows.Visibility.Visible;
         }
 
-        
-     
+
+        private void OrderDialog_DialogButtonClick(object sender, bool confirmed)
+        {
+            if (confirmed)
+            {
+                foreach (MenuItemObject item in selectedItems)
+                {
+                    MenuItemObject foundItem = orderedItems.FirstOrDefault(x => x.isSameMenuItem(item));
+                    if (foundItem == null)
+                    {
+                        item.countOfItem++;
+                        orderedItems.Add(item);
+                    }
+                    else
+                    {
+                        foundItem.countOfItem++;
+                        updateMenuItem(orderedItems, foundItem);
+                    }
+                }
+                EmptySelected();
+                OrderDialogWindow.Visibility = System.Windows.Visibility.Hidden;
+                GrayOutWindow.Visibility = System.Windows.Visibility.Hidden;
+
+            }
+
+            else
+            {
+                OrderDialogWindow.Visibility = System.Windows.Visibility.Hidden;
+                GrayOutWindow.Visibility = System.Windows.Visibility.Hidden;
+
+            }
+
+        }
+        #endregion
+
+
+        #region Category Buttons
 
         private void SpecialButton_Click(object sender, RoutedEventArgs e)
         {
@@ -225,6 +243,53 @@ namespace SushiSushi
         {
             jumpToCategory("Desserts");
         }
+        #endregion
+
+        //#region Side bar collapsables
+
+        //private void SelectedLabel_MouseDown(object sender, MouseButtonEventArgs e)
+        //{
+        //    OrderedGrid.Height = 0;
+        //    SelectedGrid.Height = Double.NaN;
+        //    DeliveredGrid.Height = 0;
+        //    OrderedLabel.Background = System.Windows.Media.Brushes.Gray;
+        //    SelectedLabel.Background = System.Windows.Media.Brushes.Gainsboro;
+        //    DeliveredLabel.Background = System.Windows.Media.Brushes.Gray;
+
+        //}
+
+        //private void OrderedLabel_MouseDown(object sender, MouseButtonEventArgs e)
+        //{
+        //    OrderedGrid.Height = Double.NaN;
+        //    SelectedGrid.Height = 0;
+        //    DeliveredGrid.Height = 0;
+        //    OrderedLabel.Background = System.Windows.Media.Brushes.Gainsboro;
+        //    SelectedLabel.Background = System.Windows.Media.Brushes.Gray;
+        //    DeliveredLabel.Background = System.Windows.Media.Brushes.Gray;
+
+        //}
+
+        //private void DeliveredLabel_MouseDown(object sender, MouseButtonEventArgs e)
+        //{
+        //    OrderedGrid.Height = 0;
+        //    SelectedGrid.Height = 0;
+        //    DeliveredGrid.Height = Double.NaN;
+        //    OrderedLabel.Background = System.Windows.Media.Brushes.Gray;
+        //    SelectedLabel.Background = System.Windows.Media.Brushes.Gray;
+        //    DeliveredLabel.Background = System.Windows.Media.Brushes.Gainsboro;
+
+        //}
+
+        //private void AssistButton_Click(object sender, RoutedEventArgs e)
+        //{
+
+        //}
+
+
+        //#endregion
+
+
+
         #endregion
 
         #region Data Generation Methods
