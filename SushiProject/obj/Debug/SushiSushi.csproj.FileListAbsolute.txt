@@ -63,12 +63,10 @@ C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiP
 C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\bin\Debug\SushiSushi.pdb
 C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\Main Grid Controls\MenuItemControl.baml
 C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\SidebarItemControl.baml
-C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\toproveapoint.baml
 C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\MainWindow.g.cs
 C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\Main Grid Controls\MenuCategoryControl.g.cs
 C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\Main Grid Controls\MenuItemControl.g.cs
 C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\SidebarItemControl.g.cs
-C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\toproveapoint.g.cs
 C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\OrderDialog.g.cs
 C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\App.g.cs
 C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\GeneratedInternalTypeHelper.g.cs

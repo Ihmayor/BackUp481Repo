@@ -67,9 +67,6 @@
     <Compile Include="SidebarItemControl.xaml.cs">
       <DependentUpon>SidebarItemControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="toproveapoint.xaml.cs">
-      <DependentUpon>toproveapoint.xaml</DependentUpon>
-    </Compile>
     <Compile Include="OrderDialog.xaml.cs">
       <DependentUpon>OrderDialog.xaml</DependentUpon>
     </Compile>
@@ -94,10 +91,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SidebarItemControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="toproveapoint.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
