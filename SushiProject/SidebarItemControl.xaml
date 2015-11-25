@@ -18,7 +18,7 @@
                     <Button Content="-" HorizontalAlignment="Left" Margin="130,88,0,0" VerticalAlignment="Top" Width="32"  Height="20" Background="#FFDE4141" FontWeight="Bold" Click="Minus_Click"/>
                     <TextBox HorizontalAlignment="Left" Height="18" Margin="86,39,0,0" TextWrapping="Wrap" Text="$4.99" VerticalAlignment="Top" Width="36" />
 
-                    <TextBox x:Name="PricePerItemTotal" HorizontalAlignment="Left" Height="18" Margin="86,39,0,0" TextWrapping="Wrap" Text="$4.99" VerticalAlignment="Top" Width="36" />
+                    <TextBox x:Name="PricePerItemTotal" HorizontalAlignment="Left" Height="18" Margin="86,39,0,0" TextWrapping="Wrap" Text="$4.99"  FontSize="9" VerticalAlignment="Top" Width="36" />
                     <Button x:Name="OrderAgainButton" Content="Please Order Again!" Width="150" Height="40" Margin="5" VerticalAlignment="Bottom" FontWeight="Bold"/>
 
                 </Grid>

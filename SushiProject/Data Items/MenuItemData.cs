@@ -27,7 +27,7 @@ namespace SushiSushi
         {
             id = ID;
             NumPrice = priceOfItem;
-            Price = "Price: "+priceOfItem.ToString("0.00")+"$";
+            Price = "Price: "+"$"+priceOfItem.ToString("0.00");
             Name = nameOfItem;
             Image = imageSource;
             Description = description;
