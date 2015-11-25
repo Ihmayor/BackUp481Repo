@@ -24,7 +24,7 @@ namespace SushiSushi
     /// </summary>
     public partial class MainWindow
     {
-        #region List Associated with SideBar
+        #region Variables Directly  Associated With Controls
         public static ObservableCollection<MenuItemObject> OrderedItems { get { return orderedItems; } }
         private static ObservableCollection<MenuItemObject> orderedItems = new ObservableCollection<MenuItemObject>();
 
@@ -33,6 +33,11 @@ namespace SushiSushi
 
         public static ObservableCollection<MenuItemObject> SelectedItems { get { return selectedItems; } }
         private static ObservableCollection<MenuItemObject> selectedItems = new ObservableCollection<MenuItemObject>();
+        
+        private static int totalCost = 0;
+        public static string CostString { get { return costString; } }
+        public static string costString = "Total Price: " + totalCost;
+        
         #endregion
 
         #region Events/Methods Involved with Loaded Items
@@ -89,9 +94,14 @@ namespace SushiSushi
             foreach (Button button in buttons)
             {
                 if (applyOnlyToThis != button)
+                {
                     button.Background = new SolidColorBrush(Colors.White);
+                }
                 else
-                    button.Background = new SolidColorBrush(Colors.Green);
+                {
+                    button.Background = new SolidColorBrush(Colors.Green) { Opacity = 0.5 };
+                }
+
             }
            
         }

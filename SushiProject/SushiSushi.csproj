@@ -59,11 +59,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Data Items\MenuCategory.cs" />
+    <Compile Include="Data Items\MenuCategoryData.cs" />
     <Compile Include="Main Grid Controls\MenuCategoryControl.xaml.cs">
       <DependentUpon>MenuCategoryControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Data Items\MenuItemObject.cs" />
+    <Compile Include="Data Items\MenuItemData.cs" />
     <Compile Include="SidebarItemControl.xaml.cs">
       <DependentUpon>SidebarItemControl.xaml</DependentUpon>
     </Compile>

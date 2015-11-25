@@ -12,6 +12,9 @@
                 <Setter Property="Width" Value="120" />
                 <Setter Property="Height" Value="80" />
                 <Setter Property="Margin" Value="10"/>
+                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+
             </Style>
         </Grid.Resources>
         <Grid.RowDefinitions>
@@ -101,7 +104,7 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Label Background="White" FontSize="20" HorizontalAlignment="Left" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="4"  Margin="10,10" VerticalAlignment="Top" >
+        <Label Background="White" FontSize="24" HorizontalAlignment="Left" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="4"  Margin="10,10" VerticalAlignment="Top" >
             <TextBlock Text="V = Vegetarian&#x09;  G = Gluten-Free">
                 <TextBlock.TextEffects>
                     <TextEffect PositionStart="0" PositionCount="1" Foreground="Green" />
@@ -150,8 +153,10 @@
                 </StackPanel>
         </ScrollViewer>
         <StackPanel Grid.Row="4" Grid.Column="8" Orientation="Vertical"  HorizontalAlignment="Stretch">
-            <Label Content="Total Price: 0.00" FontSize="14" Margin="100,5" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="8"  Grid.RowSpan="2" Background="White" />
-            <Button Content="Confirm Order"    FontSize="14" Margin="95,0" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Left"   Grid.Row="2" Grid.Column="8" Background="White" Style="{StaticResource RoundButtonTemplate}" Click="ConfirmOrder_Click"/>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="8"  Grid.RowSpan="2"  Margin="100,5" Height="30">
+                <Label Content="{Binding ElementName=mainWindow, Path=CostString}"  FontSize="14" FontWeight="Bold"  Background="White" VerticalAlignment="Bottom"/>
+            </StackPanel>
+            <Button Content="Confirm Order"    FontSize="16" Margin="95,0" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Left"   Grid.Row="2" Grid.Column="8" Background="White" Style="{StaticResource RoundButtonTemplate}" Click="ConfirmOrder_Click"/>
         </StackPanel>
         <Grid x:Name="GrayOutWindow"  Height="Auto"  Width="Auto" Visibility="Hidden" Background="Gray" Opacity="0.5" Grid.RowSpan="6" Grid.ColumnSpan="10"/>
         <local:OrderDialog x:Name="OrderDialogWindow" Grid.Row="0" Grid.Column="0" Margin="20"  Visibility="Hidden" Loaded="OrderDialogWindow_Loaded" Grid.RowSpan="6" Grid.ColumnSpan="10"></local:OrderDialog>
