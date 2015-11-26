@@ -50,7 +50,7 @@ namespace SushiSushi
         public bool isSameMenuItem (MenuItemObject MenuItemObjectToCompare)
         {
             bool isSame = false;
-            if (Name == MenuItemObjectToCompare.Name && selectedOption == MenuItemObjectToCompare.selectedOption)
+            if (id == MenuItemObjectToCompare.id && selectedOption == MenuItemObjectToCompare.selectedOption)
                 isSame = true;
             return isSame;
         }

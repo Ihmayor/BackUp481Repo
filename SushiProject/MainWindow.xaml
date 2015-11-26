@@ -20,8 +20,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="80"/>
             <RowDefinition Height="100"/>
+            <RowDefinition Height="*"/>            
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
@@ -75,7 +75,6 @@
                 <Image Source="pack://application:,,,/Resources/Drink.png" Margin="2" Width="50"/>
             </StackPanel>
         </Button>
-        
         <Button x:Name="DessertsButton" Style="{StaticResource RoundButtonTemplate}"  Grid.Row="1" Grid.Column="6" Click="DessertsButton_Click">
             <StackPanel Orientation="Vertical" Height="80" Width="100">
                 <Label HorizontalAlignment="Center" Content="Desserts" FontSize="15" Height="30" />
@@ -92,7 +91,7 @@
                  ScrollViewer.VerticalScrollBarVisibility="Hidden"
                  ScrollViewer.PanningRatio="0.9"
                  ScrollViewer.IsDeferredScrollingEnabled="True"
-                 Height="500" Width="820"
+                 Width="820"
                  >
                              
             <ListBox.ItemTemplate>
@@ -104,6 +103,8 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        
+        
         <Label Background="White" FontSize="24" HorizontalAlignment="Left" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="4"  Margin="10,10" VerticalAlignment="Top" >
             <TextBlock Text="V = Vegetarian&#x09;  G = Gluten-Free">
                 <TextBlock.TextEffects>
@@ -113,45 +114,63 @@
             </TextBlock>
         </Label>
 
-        <ScrollViewer HorizontalAlignment="Left" Height="500" Grid.Column="8" Grid.Row="2" HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden">
-            <StackPanel x:Name="SideBarStackPanel"
-                    Height="Auto" Width="310"
+
+        <!--<StackPanel x:Name="SideBarStackPanel"
+                    Width="310"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Stretch" 
                     Orientation="Vertical" 
                     Background="BlanchedAlmond"
-                    >
-                <TabControl HorizontalAlignment="Stretch">
-                    <TabItem x:Name="Selected"  Header="   Selected   " HorizontalAlignment="Stretch" VerticalContentAlignment="Stretch" FontSize="18" FontFamily="Calibri" FontWeight="Bold" >
-                        <ItemsControl Height="460" Background="BlanchedAlmond" VerticalAlignment="Stretch" x:Name="SelectedItemsList" ScrollViewer.CanContentScroll="True" ItemsSource="{Binding ElementName=mainWindow, Path=SelectedItems}">
+                    Grid.Column="8" Grid.Row="2"                                
+                    >-->
+            <TabControl x:Name="SideBarTab"
+                        Grid.Column="8" Grid.Row="2" 
+                        VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="Auto" Width="310"  >
+                <TabItem 
+                    x:Name="Selected"  
+                    Header="   Selected   " 
+                    Height="80" 
+                    VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
+                    VerticalContentAlignment="Stretch" 
+                    FontSize="18" FontFamily="Calibri" FontWeight="Bold" >
+                    <ScrollViewer VerticalAlignment="Stretch" Height="410" Width="310">
+                        <ItemsControl 
+                            Background="BlanchedAlmond" 
+                            VerticalAlignment="Stretch" 
+                            x:Name="SelectedItemsList" 
+                            ScrollViewer.CanContentScroll="False"  
+                            ItemsSource="{Binding ElementName=mainWindow, Path=SelectedItems}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                     <local:SidebarItemControl MainBackground="Salmon" AlreadyOrdered="Hidden"/>
+                                    <local:SidebarItemControl MainBackground="Salmon" AlreadyOrdered="Hidden"/>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
-                    </TabItem>
-                    <TabItem x:Name="Ordered" Header="  Ordered  " HorizontalAlignment="Stretch" VerticalContentAlignment="Stretch" FontSize="18" FontFamily="Calibri" FontWeight="Bold">
-                        <ItemsControl Height="460" Background="BlanchedAlmond" VerticalAlignment="Stretch" x:Name="OrderedItemsList" ItemsSource="{Binding ElementName=mainWindow, Path=OrderedItems}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <local:SidebarItemControl MainBackground="LightGreen" AlreadyOrdered="Visible"/>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </TabItem>
-                    <TabItem x:Name="Delivered" Header="   Delivered    " HorizontalAlignment="Stretch"  VerticalContentAlignment="Stretch" FontSize="18" FontFamily="Calibri" FontWeight="Bold">
-                        <ItemsControl Height="460"  Background="BlanchedAlmond" VerticalAlignment="Stretch" x:Name="DeliveredItemsList" ItemsSource="{Binding ElementName=mainWindow, Path=DeliveredItems}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <local:SidebarItemControl MainBackground="Gray" AlreadyOrdered="Visible"/>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </TabItem>
-                </TabControl>
-                </StackPanel>
-        </ScrollViewer>
+                    </ScrollViewer>
+                </TabItem>
+                <TabItem x:Name="Ordered" Header="  Ordered  " HorizontalAlignment="Stretch" VerticalContentAlignment="Stretch" FontSize="18" FontFamily="Calibri" FontWeight="Bold">
+                    <ItemsControl Background="BlanchedAlmond" VerticalAlignment="Stretch" x:Name="OrderedItemsList" ItemsSource="{Binding ElementName=mainWindow, Path=OrderedItems}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <local:SidebarItemControl MainBackground="LightGreen" AlreadyOrdered="Visible"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </TabItem>
+                <TabItem 
+                    x:Name="Delivered" Header="   Delivered    " 
+                    HorizontalAlignment="Stretch"  VerticalContentAlignment="Stretch" 
+                    FontSize="18" FontFamily="Calibri" FontWeight="Bold">
+                    <ItemsControl Background="BlanchedAlmond" VerticalAlignment="Stretch" x:Name="DeliveredItemsList" ItemsSource="{Binding ElementName=mainWindow, Path=DeliveredItems}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <local:SidebarItemControl MainBackground="Gray" AlreadyOrdered="Visible"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </TabItem>
+            </TabControl>
+        <!--</StackPanel>-->
         <StackPanel Grid.Row="4" Grid.Column="8" Orientation="Vertical"  HorizontalAlignment="Stretch">
             <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="8"  Grid.RowSpan="2"  Margin="100,5" Height="30">
                 <Label Content="{Binding ElementName=mainWindow, Path=CostString}"  FontSize="14" FontWeight="Bold"  Background="White" VerticalAlignment="Bottom"/>

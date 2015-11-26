@@ -33,24 +33,24 @@ namespace SushiSushi
 
         public static ObservableCollection<MenuItemObject> SelectedItems { get { return selectedItems; } }
         private static ObservableCollection<MenuItemObject> selectedItems = new ObservableCollection<MenuItemObject>();
-        
+
         private static int totalCost = 0;
         public static string CostString { get { return costString; } }
         public static string costString = "Total Price: " + totalCost;
-        
+
         #endregion
 
         #region Events/Methods Involved with Loaded Items
         public MainWindow()
         {
-                InitializeComponent();
-                MenuItemControl.CompleteClicked += MenuItemControl_CompleteClicked;
-                SidebarItemControl.OnMinusButtonPressed += SidebarItemControl_MinusButton;
-                SidebarItemControl.OnPlusButtonPressed += SidebarItemControl_PlusButton;
-                generateMenuItems();
+            InitializeComponent();
+            MenuItemControl.CompleteClicked += MenuItemControl_CompleteClicked;
+            SidebarItemControl.OnMinusButtonPressed += SidebarItemControl_MinusButton;
+            SidebarItemControl.OnPlusButtonPressed += SidebarItemControl_PlusButton;
+            generateMenuItems();
 
-                var scrollViewer = GetDescendantByType(MainListView, typeof(ScrollViewer)) as ScrollViewer;
-                scrollViewer.ScrollChanged += scrollViewer_ScrollChanged;
+            var scrollViewer = GetDescendantByType(MainListView, typeof(ScrollViewer)) as ScrollViewer;
+            scrollViewer.ScrollChanged += scrollViewer_ScrollChanged;
         }
 
         void scrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
@@ -90,7 +90,7 @@ namespace SushiSushi
 
         public void changeCategoryButtonColor(Button applyOnlyToThis)
         {
-            List<Button> buttons = new List<Button>{SpecialsButton,AppetizersButton, SushiButton,FriedButton, DrinksButton,DessertsButton};
+            List<Button> buttons = new List<Button> { SpecialsButton, AppetizersButton, SushiButton, FriedButton, DrinksButton, DessertsButton };
             foreach (Button button in buttons)
             {
                 if (applyOnlyToThis != button)
@@ -103,26 +103,20 @@ namespace SushiSushi
                 }
 
             }
-           
+
         }
-
-
-
 
         private void OrderDialogWindow_Loaded(object sender, RoutedEventArgs e)
         {
             OrderDialog.onDialogButtonClick += OrderDialog_DialogButtonClick;
             OrderDialogWindow.SelectedList.ItemsSource = selectedItems;
-     
         }
 
         #endregion
 
         #region Control Click Events Both inside Window and Outside
-        
-        
 
-        #region Menu Item Control 
+        #region Menu Item Control
         void MenuItemControl_CompleteClicked(object sender, MenuItemObject addItem)
         {
             MenuItemObject foundItem = selectedItems.FirstOrDefault(x => x.isSameMenuItem(addItem));
@@ -136,6 +130,7 @@ namespace SushiSushi
                 foundItem.countOfItem++;
                 updateMenuItem(selectedItems, foundItem);
             }
+            Selected.IsSelected = true;
         }
 
 
@@ -143,7 +138,7 @@ namespace SushiSushi
         {
             chosenItem.countOfItem++;
             MenuItemObject foundItem = selectedItems.FirstOrDefault(x => x.isSameMenuItem(chosenItem));
-            updateMenuItem(selectedItems,foundItem);
+            updateMenuItem(selectedItems, foundItem);
         }
 
 
@@ -157,7 +152,7 @@ namespace SushiSushi
             }
             else
             {
-                updateMenuItem(selectedItems,foundItem);
+                updateMenuItem(selectedItems, foundItem);
             }
 
         }
@@ -193,7 +188,7 @@ namespace SushiSushi
                 EmptySelected();
                 OrderDialogWindow.Visibility = System.Windows.Visibility.Hidden;
                 GrayOutWindow.Visibility = System.Windows.Visibility.Hidden;
-
+                Ordered.IsSelected = true;
             }
 
             else
@@ -220,7 +215,7 @@ namespace SushiSushi
             jumpToCategory("Appetizers");
         }
 
-      
+
         private void SushiButton_Click(object sender, RoutedEventArgs e)
         {
             jumpToCategory("Sushi");
@@ -245,64 +240,20 @@ namespace SushiSushi
         }
         #endregion
 
-        //#region Side bar collapsables
-
-        //private void SelectedLabel_MouseDown(object sender, MouseButtonEventArgs e)
-        //{
-        //    OrderedGrid.Height = 0;
-        //    SelectedGrid.Height = Double.NaN;
-        //    DeliveredGrid.Height = 0;
-        //    OrderedLabel.Background = System.Windows.Media.Brushes.Gray;
-        //    SelectedLabel.Background = System.Windows.Media.Brushes.Gainsboro;
-        //    DeliveredLabel.Background = System.Windows.Media.Brushes.Gray;
-
-        //}
-
-        //private void OrderedLabel_MouseDown(object sender, MouseButtonEventArgs e)
-        //{
-        //    OrderedGrid.Height = Double.NaN;
-        //    SelectedGrid.Height = 0;
-        //    DeliveredGrid.Height = 0;
-        //    OrderedLabel.Background = System.Windows.Media.Brushes.Gainsboro;
-        //    SelectedLabel.Background = System.Windows.Media.Brushes.Gray;
-        //    DeliveredLabel.Background = System.Windows.Media.Brushes.Gray;
-
-        //}
-
-        //private void DeliveredLabel_MouseDown(object sender, MouseButtonEventArgs e)
-        //{
-        //    OrderedGrid.Height = 0;
-        //    SelectedGrid.Height = 0;
-        //    DeliveredGrid.Height = Double.NaN;
-        //    OrderedLabel.Background = System.Windows.Media.Brushes.Gray;
-        //    SelectedLabel.Background = System.Windows.Media.Brushes.Gray;
-        //    DeliveredLabel.Background = System.Windows.Media.Brushes.Gainsboro;
-
-        //}
-
-        //private void AssistButton_Click(object sender, RoutedEventArgs e)
-        //{
-
-        //}
-
-
-        //#endregion
-
-
 
         #endregion
 
         #region Data Generation Methods
         public void generateMenuItems()
         {
-            MenuCategory SpecialCategory = new MenuCategory("Specials", generateMenuCategoryType(0, "Special",       new BitmapImage(new Uri(@"pack://application:,,,/Resources/SpecialSushi.png")), false, false, "These are special Items", null));
-            MenuCategory SushiCategory = new MenuCategory("Sushi", generateMenuCategoryType2(0, "Sushi",             new BitmapImage(new Uri(@"pack://application:,,,/Resources/SalmonSushi.png")), true, true, "These are sushi Items", null));
-            MenuCategory AppetizerCategory = new MenuCategory("Appetizers", generateMenuCategoryType(0, "Appetizer", new BitmapImage(new Uri(@"pack://application:,,,/Resources/Gyoza.png")), true, false, "These are appetizer Items", null));
-            MenuCategory FriedCategory = new MenuCategory("Fried", generateMenuCategoryType2(0, "Fried",             new BitmapImage(new Uri(@"pack://application:,,,/Resources/ShrimpTempura.png")), false, false, "These are fried Items", null));
-            MenuCategory DrinksCategory = new MenuCategory("Drinks", generateMenuCategoryType3(0, "Drinks",          new BitmapImage(new Uri(@"pack://application:,,,/Resources/CocaCola.png")), false, false, "These are drink Items", null));
-            MenuCategory DessertCategory = new MenuCategory("Desserts", generateMenuCategoryType(0, "Desserts",      new BitmapImage(new Uri(@"pack://application:,,,/Resources/Mochi.png")), true, false, "These are dessert Items", null));
-            List<MenuCategory> TotalItems = new List<MenuCategory>() { SpecialCategory, AppetizerCategory,SushiCategory, FriedCategory, DrinksCategory, DessertCategory };
-            
+            MenuCategory SpecialCategory = new MenuCategory("Specials", generateMenuCategoryType(0, "Special", new BitmapImage(new Uri(@"pack://application:,,,/Resources/SpecialSushi.png")), false, false, "These are special Items", null));
+            MenuCategory SushiCategory = new MenuCategory("Sushi", generateMenuCategoryType2(20, "Sushi", new BitmapImage(new Uri(@"pack://application:,,,/Resources/SalmonSushi.png")), true, true, "These are sushi Items", null));
+            MenuCategory AppetizerCategory = new MenuCategory("Appetizers", generateMenuCategoryType(40, "Appetizer", new BitmapImage(new Uri(@"pack://application:,,,/Resources/Gyoza.png")), true, false, "These are appetizer Items", null));
+            MenuCategory FriedCategory = new MenuCategory("Fried", generateMenuCategoryType2(60, "Fried", new BitmapImage(new Uri(@"pack://application:,,,/Resources/ShrimpTempura.png")), false, false, "These are fried Items", null));
+            MenuCategory DrinksCategory = new MenuCategory("Drinks", generateMenuCategoryType3(80, "Drinks", new BitmapImage(new Uri(@"pack://application:,,,/Resources/CocaCola.png")), false, false, "These are drink Items", null));
+            MenuCategory DessertCategory = new MenuCategory("Desserts", generateMenuCategoryType(100, "Desserts", new BitmapImage(new Uri(@"pack://application:,,,/Resources/Mochi.png")), true, false, "These are dessert Items", null));
+            List<MenuCategory> TotalItems = new List<MenuCategory>() { SpecialCategory, AppetizerCategory, SushiCategory, FriedCategory, DrinksCategory, DessertCategory };
+
             MainListView.ItemsSource = TotalItems;
         }
 
@@ -311,7 +262,7 @@ namespace SushiSushi
             List<MenuItemObject> associatedItems = new List<MenuItemObject>();
             for (int i = 0; i < 9; i++)
             {
-                associatedItems.Add(new MenuItemObject(ID, 5, nameOfItem, imageSource, isVegan, isGlutenFree, Description, optionsList));
+                associatedItems.Add(new MenuItemObject(ID + i, 5, nameOfItem, imageSource, isVegan, isGlutenFree, Description, optionsList));
             }
             return associatedItems;
         }
@@ -320,7 +271,7 @@ namespace SushiSushi
             List<MenuItemObject> associatedItems = new List<MenuItemObject>();
             for (int i = 0; i < 20; i++)
             {
-                associatedItems.Add(new MenuItemObject(ID, 4.20, nameOfItem, imageSource, isVegan, isGlutenFree, Description, optionsList));
+                associatedItems.Add(new MenuItemObject(ID + i, 4.20, nameOfItem, imageSource, isVegan, isGlutenFree, Description, optionsList));
             }
             return associatedItems;
         }
@@ -329,7 +280,7 @@ namespace SushiSushi
             List<MenuItemObject> associatedItems = new List<MenuItemObject>();
             for (int i = 0; i < 6; i++)
             {
-                associatedItems.Add(new MenuItemObject(ID, 4.20, nameOfItem, imageSource, isVegan, isGlutenFree, Description, optionsList));
+                associatedItems.Add(new MenuItemObject(ID + i, 4.20, nameOfItem, imageSource, isVegan, isGlutenFree, Description, optionsList));
             }
             return associatedItems;
         }
@@ -361,8 +312,8 @@ namespace SushiSushi
                 item.countOfItem = 0;
                 toRemove.Add(item);
             }
-            
-            foreach(MenuItemObject item in toRemove)
+
+            foreach (MenuItemObject item in toRemove)
             {
                 selectedItems.Remove(item);
             }
@@ -433,6 +384,6 @@ namespace SushiSushi
 
         #endregion
 
-        
+
     }
 }
