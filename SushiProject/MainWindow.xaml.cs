@@ -25,19 +25,20 @@ namespace SushiSushi
     public partial class MainWindow
     {
         #region Variables Directly  Associated With Controls
-        public static ObservableCollection<MenuItemObject> OrderedItems { get { return orderedItems; } }
-        private static ObservableCollection<MenuItemObject> orderedItems = new ObservableCollection<MenuItemObject>();
+        public static ObservableCollection<MenuItemData> OrderedItems { get { return orderedItems; } }
+        private static ObservableCollection<MenuItemData> orderedItems = new ObservableCollection<MenuItemData>();
 
-        public static ObservableCollection<MenuItemObject> DeliveredItems { get { return deliveredItems; } }
-        private static ObservableCollection<MenuItemObject> deliveredItems = new ObservableCollection<MenuItemObject>();
+        public static ObservableCollection<MenuItemData> DeliveredItems { get { return deliveredItems; } }
+        private static ObservableCollection<MenuItemData> deliveredItems = new ObservableCollection<MenuItemData>();
 
-        public static ObservableCollection<MenuItemObject> SelectedItems { get { return selectedItems; } }
-        private static ObservableCollection<MenuItemObject> selectedItems = new ObservableCollection<MenuItemObject>();
+        public static ObservableCollection<MenuItemData> SelectedItems { get { return selectedItems; } }
+        private static ObservableCollection<MenuItemData> selectedItems = new ObservableCollection<MenuItemData>();
 
-        private static int totalCost = 0;
-        public static string CostString { get { return costString; } }
+        private static double totalCost = 0;
         public static string costString = "Total Price: " + totalCost;
 
+        
+ 
         #endregion
 
         #region Events/Methods Involved with Loaded Items
@@ -47,10 +48,31 @@ namespace SushiSushi
             MenuItemControl.CompleteClicked += MenuItemControl_CompleteClicked;
             SidebarItemControl.OnMinusButtonPressed += SidebarItemControl_MinusButton;
             SidebarItemControl.OnPlusButtonPressed += SidebarItemControl_PlusButton;
+            SecondarySideBarItemControl.OnOrderAgainClicked += SecondarySideBarItemControl_OrderAgainClicked;
             generateMenuItems();
 
             var scrollViewer = GetDescendantByType(MainListView, typeof(ScrollViewer)) as ScrollViewer;
             scrollViewer.ScrollChanged += scrollViewer_ScrollChanged;
+        }
+
+        private void SecondarySideBarItemControl_OrderAgainClicked(object sender, MenuItemData chosenItem)
+        {
+            updateCost(chosenItem.NumPrice);
+
+            MenuItemData foundItem = selectedItems.FirstOrDefault(x => x.isSameMenuItem(chosenItem));
+            if (foundItem == null)
+            {
+                chosenItem.countOfItem++;
+                selectedItems.Add(chosenItem);
+            }
+            else
+            {
+                foundItem.countOfItem++;
+                updateMenuItem(selectedItems, foundItem);
+            }
+            Selected.IsSelected = true;
+        
+        
         }
 
         void scrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
@@ -81,7 +103,7 @@ namespace SushiSushi
                 changeCategoryButtonColor(DrinksButton);
 
             }
-            else if (check >= calculateOffset(5))
+            else if (check >= calculateOffset(5)-40)
             {
                 changeCategoryButtonColor(DessertsButton);
             }
@@ -117,9 +139,11 @@ namespace SushiSushi
         #region Control Click Events Both inside Window and Outside
 
         #region Menu Item Control
-        void MenuItemControl_CompleteClicked(object sender, MenuItemObject addItem)
+        void MenuItemControl_CompleteClicked(object sender, MenuItemData addItem)
         {
-            MenuItemObject foundItem = selectedItems.FirstOrDefault(x => x.isSameMenuItem(addItem));
+            updateCost(addItem.NumPrice);
+
+            MenuItemData foundItem = selectedItems.FirstOrDefault(x => x.isSameMenuItem(addItem));
             if (foundItem == null)
             {
                 addItem.countOfItem++;
@@ -134,17 +158,19 @@ namespace SushiSushi
         }
 
 
-        private void SidebarItemControl_PlusButton(object sender, MenuItemObject chosenItem)
+        private void SidebarItemControl_PlusButton(object sender, MenuItemData chosenItem)
         {
+            updateCost(chosenItem.NumPrice);
             chosenItem.countOfItem++;
-            MenuItemObject foundItem = selectedItems.FirstOrDefault(x => x.isSameMenuItem(chosenItem));
+            MenuItemData foundItem = selectedItems.FirstOrDefault(x => x.isSameMenuItem(chosenItem));
             updateMenuItem(selectedItems, foundItem);
         }
 
 
-        private void SidebarItemControl_MinusButton(object sender, MenuItemObject chosenItem)
+        private void SidebarItemControl_MinusButton(object sender, MenuItemData chosenItem)
         {
-            MenuItemObject foundItem = selectedItems.FirstOrDefault(x => x.isSameMenuItem(chosenItem));
+            updateCost(-chosenItem.NumPrice);
+            MenuItemData foundItem = selectedItems.FirstOrDefault(x => x.isSameMenuItem(chosenItem));
             foundItem.countOfItem--;
             if (foundItem.countOfItem == 0)
             {
@@ -171,9 +197,9 @@ namespace SushiSushi
         {
             if (confirmed)
             {
-                foreach (MenuItemObject item in selectedItems)
+                foreach (MenuItemData item in selectedItems)
                 {
-                    MenuItemObject foundItem = orderedItems.FirstOrDefault(x => x.isSameMenuItem(item));
+                    MenuItemData foundItem = orderedItems.FirstOrDefault(x => x.isSameMenuItem(item));
                     if (foundItem == null)
                     {
                         item.countOfItem++;
@@ -257,30 +283,30 @@ namespace SushiSushi
             MainListView.ItemsSource = TotalItems;
         }
 
-        public List<MenuItemObject> generateMenuCategoryType(int ID, string nameOfItem, BitmapImage imageSource, bool isVegan, bool isGlutenFree, string Description, List<string> optionsList)
+        public List<MenuItemData> generateMenuCategoryType(int ID, string nameOfItem, BitmapImage imageSource, bool isVegan, bool isGlutenFree, string Description, List<string> optionsList)
         {
-            List<MenuItemObject> associatedItems = new List<MenuItemObject>();
+            List<MenuItemData> associatedItems = new List<MenuItemData>();
             for (int i = 0; i < 9; i++)
             {
-                associatedItems.Add(new MenuItemObject(ID + i, 5, nameOfItem, imageSource, isVegan, isGlutenFree, Description, optionsList));
+                associatedItems.Add(new MenuItemData(ID + i, 5, nameOfItem, imageSource, isVegan, isGlutenFree, Description, optionsList));
             }
             return associatedItems;
         }
-        public List<MenuItemObject> generateMenuCategoryType2(int ID, string nameOfItem, BitmapImage imageSource, bool isVegan, bool isGlutenFree, string Description, List<string> optionsList)
+        public List<MenuItemData> generateMenuCategoryType2(int ID, string nameOfItem, BitmapImage imageSource, bool isVegan, bool isGlutenFree, string Description, List<string> optionsList)
         {
-            List<MenuItemObject> associatedItems = new List<MenuItemObject>();
+            List<MenuItemData> associatedItems = new List<MenuItemData>();
             for (int i = 0; i < 20; i++)
             {
-                associatedItems.Add(new MenuItemObject(ID + i, 4.20, nameOfItem, imageSource, isVegan, isGlutenFree, Description, optionsList));
+                associatedItems.Add(new MenuItemData(ID + i, 4.20, nameOfItem, imageSource, isVegan, isGlutenFree, Description, optionsList));
             }
             return associatedItems;
         }
-        public List<MenuItemObject> generateMenuCategoryType3(int ID, string nameOfItem, BitmapImage imageSource, bool isVegan, bool isGlutenFree, string Description, List<string> optionsList)
+        public List<MenuItemData> generateMenuCategoryType3(int ID, string nameOfItem, BitmapImage imageSource, bool isVegan, bool isGlutenFree, string Description, List<string> optionsList)
         {
-            List<MenuItemObject> associatedItems = new List<MenuItemObject>();
+            List<MenuItemData> associatedItems = new List<MenuItemData>();
             for (int i = 0; i < 6; i++)
             {
-                associatedItems.Add(new MenuItemObject(ID + i, 4.20, nameOfItem, imageSource, isVegan, isGlutenFree, Description, optionsList));
+                associatedItems.Add(new MenuItemData(ID + i, 4.20, nameOfItem, imageSource, isVegan, isGlutenFree, Description, optionsList));
             }
             return associatedItems;
         }
@@ -289,8 +315,17 @@ namespace SushiSushi
 
         #region Misc Helper Methods
 
+        private void updateCost(double change)
+        {
+            totalCost += change;
+            TotalCostField.Content = "Total Price: " +"$"+ totalCost.ToString("0.00");
+            OrderDialogWindow.updateTotalCost("$"+totalCost.ToString("0.00"));
+        }
+
+
+
         //Triggers the item to reload.
-        private void updateMenuItem(ObservableCollection<MenuItemObject> ListInvolved, MenuItemObject itemToUpdate)
+        private void updateMenuItem(ObservableCollection<MenuItemData> ListInvolved, MenuItemData itemToUpdate)
         {
             int indexMaintain = ListInvolved.IndexOf(itemToUpdate);
             ListInvolved.Remove(itemToUpdate);
@@ -306,14 +341,14 @@ namespace SushiSushi
 
         private void EmptySelected()
         {
-            ObservableCollection<MenuItemObject> toRemove = new ObservableCollection<MenuItemObject>();
-            foreach (MenuItemObject item in selectedItems)
+            ObservableCollection<MenuItemData> toRemove = new ObservableCollection<MenuItemData>();
+            foreach (MenuItemData item in selectedItems)
             {
                 item.countOfItem = 0;
                 toRemove.Add(item);
             }
 
-            foreach (MenuItemObject item in toRemove)
+            foreach (MenuItemData item in toRemove)
             {
                 selectedItems.Remove(item);
             }

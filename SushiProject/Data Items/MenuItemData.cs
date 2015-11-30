@@ -7,7 +7,7 @@ using System.Windows.Media.Imaging;
 
 namespace SushiSushi
 {
-    public class MenuItemObject
+    public class MenuItemData
     {
         public string Name { get; set; }
         public BitmapImage Image { get; set; }
@@ -16,14 +16,14 @@ namespace SushiSushi
         public bool hasOptions { get; set; }
         public List<string> options { get; set; }
         public string SelectedOption { get { return selectedOption; } }
-        private string selectedOption = "Modified Selection/Blank";
+        private string selectedOption = "";
         public int countOfItem { get; set; }
         public int id;
         public double NumPrice { get; set; }
         public string Price { get; set; }
         public string Description { get; set; }
         
-        public MenuItemObject(int ID, double priceOfItem, string nameOfItem , BitmapImage imageSource, bool Vegan, bool GlutenFree, string description, List<string> optionsList)
+        public MenuItemData(int ID, double priceOfItem, string nameOfItem , BitmapImage imageSource, bool Vegan, bool GlutenFree, string description, List<string> optionsList)
         {
             id = ID;
             NumPrice = priceOfItem;
@@ -47,7 +47,7 @@ namespace SushiSushi
             selectedOption = options.ToArray()[optionIndex];
         }
 
-        public bool isSameMenuItem (MenuItemObject MenuItemObjectToCompare)
+        public bool isSameMenuItem (MenuItemData MenuItemObjectToCompare)
         {
             bool isSame = false;
             if (id == MenuItemObjectToCompare.id && selectedOption == MenuItemObjectToCompare.selectedOption)

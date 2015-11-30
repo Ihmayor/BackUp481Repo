@@ -20,9 +20,41 @@ namespace SushiSushi
     /// </summary>
     public partial class SecondarySideBarItemControl : UserControl
     {
+        #region Dependency Properties
+        public static readonly DependencyProperty MainBackgroundProperty = DependencyProperty.Register(
+        "MainBackgroundSecond",
+        typeof(Color),
+        typeof(SidebarItemControl),
+        new UIPropertyMetadata(BackgroundPropertyChanged));
+
+        // .NET Property wrapper necessary for setting the actual property
+        public Color MainBackgroundSecond
+        {
+            get { return (Color)GetValue(MainBackgroundProperty); }
+            set { SetValue(MainBackgroundProperty, value); }
+        }
+
+        //An event that fires because the setter does not fire at xaml instantation
+        public static void BackgroundPropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            (sender as SidebarItemControl).MainGrid.Background = new BrushConverter().ConvertFromString(e.NewValue.ToString()) as SolidColorBrush;
+        }
+
+
+        #endregion
+
+        public static EventHandler<MenuItemData> OnOrderAgainClicked;
+
         public SecondarySideBarItemControl()
         {
             InitializeComponent();
         }
+
+        private void OrderAgainButton_Click(object sender, RoutedEventArgs e)
+        {
+            OnOrderAgainClicked(sender, ((sender as Button).DataContext as MenuItemData));
+        }
+
+
     }
 }

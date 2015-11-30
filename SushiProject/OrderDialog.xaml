@@ -18,7 +18,7 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <local:SidebarItemControl MainBackground="Salmon" AlreadyOrdered="Hidden"/>
+                            <local:SidebarItemControl MainBackground="Salmon" />
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
@@ -37,9 +37,9 @@
                 <Button Content="Cancel"  Grid.Column="3" HorizontalAlignment="Right" Margin="50,10" Width="120"  Height="50" FontWeight="Bold" Background="White" Click="CancelButton_Click"/>
                 <Button Content="Confirm Order" Grid.Column="3" HorizontalAlignment="Left" Margin="70,10" Width="120" Height="50" FontWeight="Bold" Background="White" Click="ConfirmButton_Click"/>
                 <Label Content="Your total for this order is:" HorizontalAlignment="Left" Margin="50,10" VerticalAlignment="Top" FontSize="20" FontWeight="Bold"/>
-                <TextBox Width="70" Height="30"  FontSize="20" HorizontalAlignment="Left" Grid.Column="1" Margin="0,14"  TextWrapping="Wrap" Text="$10.97" VerticalAlignment="Top" />
+                <Label x:Name="SelectedCost" FontSize="20" HorizontalAlignment="Left" Grid.Column="1" Margin="0,14"  Content="$0.00" VerticalAlignment="Top" />
                 <Label  Content="Overall total:" FontSize="20" HorizontalAlignment="Left" Margin="50,10" Grid.Row="1" VerticalAlignment="Top" FontWeight="Bold"/>
-                <TextBox  Width="70" Height="30" FontSize="20" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1" Margin="0,14" TextWrapping="Wrap" Text="$10.97" VerticalAlignment="Top"/>
+                <Label x:Name="TotalMealCost" FontSize="20" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1" Margin="0,14" Content="$0.00" VerticalAlignment="Top"/>
             </Grid>
         </StackPanel>
             

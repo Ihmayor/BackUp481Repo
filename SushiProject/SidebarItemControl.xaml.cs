@@ -42,57 +42,35 @@ namespace SushiSushi
             (sender as SidebarItemControl).MainGrid.Background = new BrushConverter().ConvertFromString(e.NewValue.ToString()) as SolidColorBrush;
         }
 
-
-        //
-        public static readonly DependencyProperty AlreadyOrderedProperty = DependencyProperty.Register(
-            "AlreadyOrdered",
-            typeof(Visibility),
-            typeof(SidebarItemControl),
-            new UIPropertyMetadata(AlreadyOrderedPropertyHandler));
-
-        // .NET Property wrapper necessary for setting the actual property
-        public Visibility AlreadyOrdered
-        {
-            get { return (Visibility)GetValue(AlreadyOrderedProperty); }
-            set { SetValue(AlreadyOrderedProperty, value); }
-        }
-
-        //An event that fires because the setter does not fire at xaml instantation
-        public static void AlreadyOrderedPropertyHandler(DependencyObject sender, DependencyPropertyChangedEventArgs e)
-        {
-            if (((System.Windows.Visibility)e.NewValue) == System.Windows.Visibility.Visible)
-            {
-                (sender as SidebarItemControl).OrderAgainButton.Visibility = System.Windows.Visibility.Visible;
-                (sender as SidebarItemControl).LabelToHide.Visibility = System.Windows.Visibility.Hidden;
-                (sender as SidebarItemControl).PricePerItemTotal.Visibility = System.Windows.Visibility.Hidden;
-            }
-
-            else
-            {
-                (sender as SidebarItemControl).OrderAgainButton.Visibility = System.Windows.Visibility.Hidden;
-                (sender as SidebarItemControl).LabelToHide.Visibility = System.Windows.Visibility.Visible;
-                (sender as SidebarItemControl).PricePerItemTotal.Visibility = System.Windows.Visibility.Visible;
-            }
-        }
-        
         #endregion
 
-        public static EventHandler<MenuItemObject> OnMinusButtonPressed;
-        public static EventHandler<MenuItemObject> OnPlusButtonPressed;
+        public static EventHandler<MenuItemData> OnMinusButtonPressed;
+        public static EventHandler<MenuItemData> OnPlusButtonPressed;
+        
+
+
 
         public SidebarItemControl()
         {
             InitializeComponent();
+
+
         }
 
         private void Minus_Click(object sender, RoutedEventArgs e)
         {
-            OnMinusButtonPressed(sender, ((sender as Button).DataContext as MenuItemObject));
+            OnMinusButtonPressed(sender, ((sender as Button).DataContext as MenuItemData));
         }
 
         private void Plus_Click(object sender, RoutedEventArgs e)
         {
-            OnPlusButtonPressed(sender, ((sender as Button).DataContext as MenuItemObject));
+            OnPlusButtonPressed(sender, ((sender as Button).DataContext as MenuItemData));
+        }
+
+        private void PriceLabel_Loaded(object sender, RoutedEventArgs e)
+        {
+
+            PriceLabel.Content = ((sender as Label).DataContext as MenuItemData).Price;
         }
     }
 }

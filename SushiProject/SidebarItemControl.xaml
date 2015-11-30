@@ -7,21 +7,22 @@
              d:DesignHeight="150" d:DesignWidth="300">
     <Grid>
         <Grid.Resources>
-            
+
         </Grid.Resources>
         <Border BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Left" Height="120" Margin="50,5" VerticalAlignment="Top" Width="180">
             <Grid x:Name="MainGrid" Margin="0,0,0,0" Background="{Binding ElementName=SushiSushi.SidebarItemControl, Path=MainBackgroundProperty}">
                 <Grid>
-                    <Image HorizontalAlignment="Left"  Margin="15,15,0,0" VerticalAlignment="Top" Width="40" Height="40" Source="{Binding Image}"/>
-                    <Label Content="{Binding Name}" HorizontalAlignment="Left" Margin="55,10,0,0" VerticalAlignment="Top" Width="114" FontWeight="Bold"/>
-                    <Label x:Name="LabelToHide" Content="Price:" HorizontalAlignment="Left" Margin="55,36,0,0" VerticalAlignment="Top" Height="Auto" Width="Auto" FontSize="14" FontWeight="Bold"/>
-                    <TextBox x:Name="PricePerItemTotal" HorizontalAlignment="Left" Height="24" Width="Auto" Margin="100,39,0,0" Text="$4.99"  FontSize="16" VerticalAlignment="Top" />
+                    <Image HorizontalAlignment="Left"  Margin="10,22,0,0" VerticalAlignment="Top" Width="35" Height="40" Source="{Binding Image}"/>
+                    <Label Content="{Binding Name}" HorizontalAlignment="Left" Margin="45,7,-12,0" VerticalAlignment="Top" Width="143" FontWeight="Bold"/>
 
-                    <Label Content="{Binding SelectedOption}" HorizontalAlignment="Left" Margin="10,62,0,0" VerticalAlignment="Top" Width="159" FontSize="10" FontWeight="Bold"/>
-                    <TextBox HorizontalAlignment="Left" Height="24" Margin="81,88,0,0"  FontSize="14" FontWeight="Bold" TextWrapping="Wrap" Text="{Binding countOfItem}" VerticalAlignment="Top" Width="18"/>
-                    <Button Content="+" HorizontalAlignment="Left" FontSize="16" FontWeight="Bold" Margin="16,88,5,5" VerticalAlignment="Top"  Height="30" Width="30" Background="#FF3ABB1D" Click="Plus_Click"/>
-                    <Button Content="-" HorizontalAlignment="Left" FontSize="16" FontWeight="Bold" Margin="130,88,5,5" VerticalAlignment="Top"  Height="30" Width="30" Background="#FFDE4141" Click="Minus_Click"/>
-                    <Button x:Name="OrderAgainButton" Content="Please Order Again!" Width="150" Height="40" Margin="5" VerticalAlignment="Bottom" FontWeight="Bold"/>
+                    <StackPanel Orientation="Horizontal" Margin="47,33,3,54">
+                        <Label x:Name="PriceLabel" Loaded="PriceLabel_Loaded" Content="Price: $4.99" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" Margin="0,2,0,0"/>
+                        <Label Content="X" FontWeight="ExtraBold" Margin="0,2,0,0" VerticalAlignment="Top" Height="27"/>
+                        <Label HorizontalAlignment="Left"  FontSize="16" FontWeight="Bold" Content="{Binding countOfItem}" VerticalAlignment="Top" RenderTransformOrigin="7.2,-3.5" Width="27" Height="29"/>
+                    </StackPanel>
+
+                    <Button Content="+" HorizontalAlignment="Left" FontSize="16" FontWeight="Bold" Margin="10,77,0,0" VerticalAlignment="Top"  Height="30" Width="53" Background="#FF3ABB1D" Click="Plus_Click"/>
+                    <Button Content="-" HorizontalAlignment="Left" FontSize="16" FontWeight="Bold" Margin="108,77,0,0" VerticalAlignment="Top"  Height="30" Width="50" Background="#FFDE4141" Click="Minus_Click"/>
 
                 </Grid>
             </Grid>

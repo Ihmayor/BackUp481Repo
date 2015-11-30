@@ -8,10 +8,10 @@ namespace SushiSushi
 {
     public class MenuCategory
     {
-        public List<MenuItemObject> AssociatedMenuItems { set; get ;  }
+        public List<MenuItemData> AssociatedMenuItems { set; get ;  }
         public string CategoryName { set; get; }
 
-        public MenuCategory(string name, List<MenuItemObject> setMenuItems)
+        public MenuCategory(string name, List<MenuItemData> setMenuItems)
         {
             CategoryName = name;
             AssociatedMenuItems = setMenuItems;

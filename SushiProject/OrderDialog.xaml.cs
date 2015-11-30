@@ -22,17 +22,49 @@ namespace SushiSushi
     public partial class OrderDialog : UserControl
     {
 
-        public static ObservableCollection<MenuItemObject> Selected { get { return selected; } }
-        private static ObservableCollection<MenuItemObject> selected;
+        public static ObservableCollection<MenuItemData> Selected { get { return selected; } }
+        private static ObservableCollection<MenuItemData> selected;
 
+                                              
         public static EventHandler<bool> onDialogButtonClick;
 
 
 
+                                           
+
         public OrderDialog()
         {
             InitializeComponent();
+            SelectedList.Items.CurrentChanged += Items_CurrentChanged;
         }
+
+        void Items_CurrentChanged(object sender, EventArgs e)
+        {
+            updateCurrOrderCost();
+        }
+
+
+        public void updateTotalCost(string newCost)
+        {
+            TotalMealCost.Content = newCost;
+            updateCurrOrderCost();
+        
+        }
+
+        private void updateCurrOrderCost()
+        {
+
+            double calcCost = 0;
+            foreach (MenuItemData item in SelectedList.Items)
+            {
+                    calcCost += item.NumPrice;
+            }
+
+
+            SelectedCost.Content = "$"+calcCost.ToString("0.00"); 
+
+        }
+
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
@@ -44,11 +76,13 @@ namespace SushiSushi
             onDialogButtonClick(sender, false);
         }
 
-        public static void AddSelected(ObservableCollection<MenuItemObject> currSelected)
+        public static void AddSelected(ObservableCollection<MenuItemData> currSelected)
         {
             selected = currSelected;
         }
 
+
+        
 
 
 

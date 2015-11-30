@@ -64,6 +64,9 @@
       <DependentUpon>MenuCategoryControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Data Items\MenuItemData.cs" />
+    <Compile Include="SecondarySideBarItemControl.xaml.cs">
+      <DependentUpon>SecondarySideBarItemControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SidebarItemControl.xaml.cs">
       <DependentUpon>SidebarItemControl.xaml</DependentUpon>
     </Compile>
@@ -89,6 +92,10 @@
     <Page Include="Main Grid Controls\MenuItemControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SecondarySideBarItemControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="SidebarItemControl.xaml">
       <SubType>Designer</SubType>

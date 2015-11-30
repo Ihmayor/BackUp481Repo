@@ -25,7 +25,7 @@ namespace SushiSushi
         {
             InitializeComponent();
         }
-        public static event EventHandler<MenuItemObject> CompleteClicked;
+        public static event EventHandler<MenuItemData> CompleteClicked;
 
 
         // Passes the information associated with the item. Item itself contains the count. NOT THE CONTROL.
@@ -53,7 +53,7 @@ namespace SushiSushi
 
         private void Gluten_Free_Loaded(object sender, RoutedEventArgs e)
         {
-            MenuItemObject MenuItem = (sender as Label).DataContext as MenuItemObject;
+            MenuItemData MenuItem = (sender as Label).DataContext as MenuItemData;
             if (MenuItem != null)
             {
                 if (!MenuItem.isGlutenFree)
@@ -64,7 +64,7 @@ namespace SushiSushi
 
         private void Vegan_Loaded(object sender, RoutedEventArgs e)
         {
-            MenuItemObject MenuItem = (sender as Label).DataContext as MenuItemObject;
+            MenuItemData MenuItem = (sender as Label).DataContext as MenuItemData;
             if (MenuItem != null)
             {
                 if (!MenuItem.isVegan)
@@ -76,7 +76,7 @@ namespace SushiSushi
 
         private void OptionsAvailable_Loaded(object sender, RoutedEventArgs e)
         {
-            MenuItemObject MenuItem = (sender as ComboBox).DataContext as MenuItemObject;
+            MenuItemData MenuItem = (sender as ComboBox).DataContext as MenuItemData;
             if (MenuItem != null)
             {
                 if (MenuItem.hasOptions)

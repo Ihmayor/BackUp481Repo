@@ -133,7 +133,7 @@
                     VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
                     VerticalContentAlignment="Stretch" 
                     FontSize="18" FontFamily="Calibri" FontWeight="Bold" >
-                    <ScrollViewer VerticalAlignment="Stretch" Height="410" Width="310">
+                <ScrollViewer VerticalAlignment="Stretch" Height="{Binding ElementName=MainListView, Path=Height }" Width="310">
                         <ItemsControl 
                             Background="BlanchedAlmond" 
                             VerticalAlignment="Stretch" 
@@ -142,38 +142,43 @@
                             ItemsSource="{Binding ElementName=mainWindow, Path=SelectedItems}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <local:SidebarItemControl MainBackground="Salmon" AlreadyOrdered="Hidden"/>
+                                <local:SidebarItemControl MainBackground="Salmon"/>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
                     </ScrollViewer>
                 </TabItem>
                 <TabItem x:Name="Ordered" Header="  Ordered  " HorizontalAlignment="Stretch" VerticalContentAlignment="Stretch" FontSize="18" FontFamily="Calibri" FontWeight="Bold">
+                <ScrollViewer VerticalAlignment="Stretch" Height="{Binding ElementName=MainListView, Path=Height }" Width="310">
                     <ItemsControl Background="BlanchedAlmond" VerticalAlignment="Stretch" x:Name="OrderedItemsList" ItemsSource="{Binding ElementName=mainWindow, Path=OrderedItems}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <local:SidebarItemControl MainBackground="LightGreen" AlreadyOrdered="Visible"/>
+                                <local:SecondarySideBarItemControl MainBackgroundSecond="LightGreen"/>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-                </TabItem>
+                </ScrollViewer>
+            </TabItem>
                 <TabItem 
                     x:Name="Delivered" Header="   Delivered    " 
                     HorizontalAlignment="Stretch"  VerticalContentAlignment="Stretch" 
                     FontSize="18" FontFamily="Calibri" FontWeight="Bold">
+                <ScrollViewer VerticalAlignment="Stretch" Height="{Binding ElementName=MainListView, Path=Height }" Width="310">
+
                     <ItemsControl Background="BlanchedAlmond" VerticalAlignment="Stretch" x:Name="DeliveredItemsList" ItemsSource="{Binding ElementName=mainWindow, Path=DeliveredItems}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <local:SidebarItemControl MainBackground="Gray" AlreadyOrdered="Visible"/>
+                                <local:SecondarySideBarItemControl MainBackgroundSecond="Gray"/>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-                </TabItem>
+                </ScrollViewer>
+            </TabItem>
             </TabControl>
         <!--</StackPanel>-->
         <StackPanel Grid.Row="4" Grid.Column="8" Orientation="Vertical"  HorizontalAlignment="Stretch">
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="8"  Grid.RowSpan="2"  Margin="100,5" Height="30">
-                <Label Content="{Binding ElementName=mainWindow, Path=CostString}"  FontSize="14" FontWeight="Bold"  Background="White" VerticalAlignment="Bottom"/>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="8"  Grid.RowSpan="2"  Margin="94,5" Width="250" Height="30">
+                <Label x:Name="TotalCostField" Content="Total Price: 0.00" FontSize="14" FontWeight="Bold" VerticalAlignment="Bottom"/>
             </StackPanel>
             <Button Content="Confirm Order"    FontSize="16" Margin="95,0" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Left"   Grid.Row="2" Grid.Column="8" Background="White" Style="{StaticResource RoundButtonTemplate}" Click="ConfirmOrder_Click"/>
         </StackPanel>
