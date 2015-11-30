@@ -142,7 +142,7 @@
                             ItemsSource="{Binding ElementName=mainWindow, Path=SelectedItems}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                <local:SidebarItemControl MainBackground="Salmon"/>
+                                <local:SidebarItemControl MainBackground="Salmon" HorizontalAlignment="Center"/>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>

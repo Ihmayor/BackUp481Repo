@@ -57,7 +57,8 @@ namespace SushiSushi
             double calcCost = 0;
             foreach (MenuItemData item in SelectedList.Items)
             {
-                    calcCost += item.NumPrice;
+                    double itemPrice = item.NumPrice * item.countOfItem;
+                    calcCost += itemPrice;
             }
 
 
