@@ -57,8 +57,7 @@ namespace SushiSushi
 
         private void SecondarySideBarItemControl_OrderAgainClicked(object sender, MenuItemData chosenItem)
         {
-            updateCost(chosenItem.NumPrice);
-
+       
             MenuItemData foundItem = selectedItems.FirstOrDefault(x => x.isSameMenuItem(chosenItem));
             if (foundItem == null)
             {
@@ -71,7 +70,8 @@ namespace SushiSushi
                 updateMenuItem(selectedItems, foundItem);
             }
             Selected.IsSelected = true;
-        
+            updateCost(chosenItem.NumPrice);
+ 
         
         }
 
@@ -141,8 +141,7 @@ namespace SushiSushi
         #region Menu Item Control
         void MenuItemControl_CompleteClicked(object sender, MenuItemData addItem)
         {
-            updateCost(addItem.NumPrice);
-
+       
             MenuItemData foundItem = selectedItems.FirstOrDefault(x => x.isSameMenuItem(addItem));
             if (foundItem == null)
             {
@@ -155,21 +154,23 @@ namespace SushiSushi
                 updateMenuItem(selectedItems, foundItem);
             }
             Selected.IsSelected = true;
+            updateCost(addItem.NumPrice);
+
         }
 
 
         private void SidebarItemControl_PlusButton(object sender, MenuItemData chosenItem)
         {
-            updateCost(chosenItem.NumPrice);
             chosenItem.countOfItem++;
             MenuItemData foundItem = selectedItems.FirstOrDefault(x => x.isSameMenuItem(chosenItem));
             updateMenuItem(selectedItems, foundItem);
+            updateCost(chosenItem.NumPrice);
+      
         }
 
 
         private void SidebarItemControl_MinusButton(object sender, MenuItemData chosenItem)
         {
-            updateCost(-chosenItem.NumPrice);
             MenuItemData foundItem = selectedItems.FirstOrDefault(x => x.isSameMenuItem(chosenItem));
             foundItem.countOfItem--;
             if (foundItem.countOfItem == 0)
@@ -180,7 +181,8 @@ namespace SushiSushi
             {
                 updateMenuItem(selectedItems, foundItem);
             }
-
+            updateCost(-chosenItem.NumPrice);
+            
         }
 
         #endregion
