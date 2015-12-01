@@ -78,11 +78,7 @@ namespace SushiSushi
         void scrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
         {
             double check = e.VerticalOffset;
-            MenuCategory currItem = (MenuCategory)MainListView.Items[4];
-            ListBoxItem lbi = MainListView.ItemContainerGenerator.ContainerFromItem(currItem) as ListBoxItem;
-
-            double dessertOffset = lbi.ActualHeight / 2;
-
+         
             if (check >= calculateOffset(0) && check < calculateOffset(1))
             {
                 changeCategoryButtonColor(SpecialsButton);
@@ -103,12 +99,12 @@ namespace SushiSushi
 
             }
 
-            else if (check >= calculateOffset(4) && check < (calculateOffset(5) -dessertOffset))
+            else if (check >= calculateOffset(4) && check < calculateOffset(5)-10)
             {
                 changeCategoryButtonColor(DrinksButton);
 
             }
-            else if (check >= calculateOffset(5) - dessertOffset)
+            else if (check >= calculateOffset(5)-10)
             {
                 changeCategoryButtonColor(DessertsButton);
             }
@@ -286,7 +282,7 @@ namespace SushiSushi
             MenuCategory AppetizerCategory = new MenuCategory("Appetizers", generateMenuCategoryType(40, "Appetizer", new BitmapImage(new Uri(@"pack://application:,,,/Resources/Gyoza.png")), true, false, "These are appetizer Items", null));
             MenuCategory FriedCategory = new MenuCategory("Fried", generateMenuCategoryType2(60, "Fried", new BitmapImage(new Uri(@"pack://application:,,,/Resources/ShrimpTempura.png")), false, false, "These are fried Items", null));
             MenuCategory DrinksCategory = new MenuCategory("Drinks", generateMenuCategoryType3(80, "Drinks", new BitmapImage(new Uri(@"pack://application:,,,/Resources/CocaCola.png")), false, false, "These are drink Items", null));
-            MenuCategory DessertCategory = new MenuCategory("Desserts", generateMenuCategoryType(100, "Desserts", new BitmapImage(new Uri(@"pack://application:,,,/Resources/Mochi.png")), true, false, "These are dessert Items", null));
+            MenuCategory DessertCategory = new MenuCategory("Desserts", generateMenuCategoryType4(100, "Desserts", new BitmapImage(new Uri(@"pack://application:,,,/Resources/Mochi.png")), true, false, "These are dessert Items", null));
             List<MenuCategory> TotalItems = new List<MenuCategory>() { SpecialCategory, AppetizerCategory, SushiCategory, FriedCategory, DrinksCategory, DessertCategory };
 
             MainListView.ItemsSource = TotalItems;
@@ -301,6 +297,7 @@ namespace SushiSushi
             }
             return associatedItems;
         }
+
         public List<MenuItemData> generateMenuCategoryType2(int ID, string nameOfItem, BitmapImage imageSource, bool isVegan, bool isGlutenFree, string Description, List<string> optionsList)
         {
             List<MenuItemData> associatedItems = new List<MenuItemData>();
@@ -320,6 +317,17 @@ namespace SushiSushi
             return associatedItems;
         }
 
+
+
+        public List<MenuItemData> generateMenuCategoryType4(int ID, string nameOfItem, BitmapImage imageSource, bool isVegan, bool isGlutenFree, string Description, List<string> optionsList)
+        {
+            List<MenuItemData> associatedItems = new List<MenuItemData>();
+            for (int i = 0; i < 12; i++)
+            {
+                associatedItems.Add(new MenuItemData(ID + i, 5, nameOfItem, imageSource, isVegan, isGlutenFree, Description, optionsList));
+            }
+            return associatedItems;
+        }
         #endregion
 
         #region Misc Helper Methods
@@ -426,7 +434,7 @@ namespace SushiSushi
         //Method used to mock up the delivery
         private void mainWindow_KeyUp(object sender, KeyEventArgs e)
         {
-            if (OrderDialogWindow.Visibility == System.Windows.Visibility.Hidden && e.Key == Key.D)
+            if (OrderDialogWindow.Visibility == System.Windows.Visibility.Hidden && e.Key == Key.D && orderedItems.Count > 0)
             {
                 foreach (MenuItemData item in orderedItems)
                 {
