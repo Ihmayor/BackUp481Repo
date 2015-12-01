@@ -78,6 +78,11 @@ namespace SushiSushi
         void scrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
         {
             double check = e.VerticalOffset;
+            MenuCategory currItem = (MenuCategory)MainListView.Items[4];
+            ListBoxItem lbi = MainListView.ItemContainerGenerator.ContainerFromItem(currItem) as ListBoxItem;
+
+            double dessertOffset = lbi.ActualHeight / 2;
+
             if (check >= calculateOffset(0) && check < calculateOffset(1))
             {
                 changeCategoryButtonColor(SpecialsButton);
@@ -98,12 +103,12 @@ namespace SushiSushi
 
             }
 
-            else if (check >= calculateOffset(4) && check < calculateOffset(5))
+            else if (check >= calculateOffset(4) && check < (calculateOffset(5) -dessertOffset))
             {
                 changeCategoryButtonColor(DrinksButton);
 
             }
-            else if (check >= calculateOffset(5)-40)
+            else if (check >= calculateOffset(5) - dessertOffset)
             {
                 changeCategoryButtonColor(DessertsButton);
             }
@@ -192,6 +197,8 @@ namespace SushiSushi
         {
             OrderDialogWindow.Visibility = System.Windows.Visibility.Visible;
             GrayOutWindow.Visibility = System.Windows.Visibility.Visible;
+            updateCost(0);
+
         }
 
 
@@ -213,7 +220,7 @@ namespace SushiSushi
                         updateMenuItem(orderedItems, foundItem);
                     }
                 }
-                EmptySelected();
+                EmptyObservableCollection(selectedItems);
                 OrderDialogWindow.Visibility = System.Windows.Visibility.Hidden;
                 GrayOutWindow.Visibility = System.Windows.Visibility.Hidden;
                 Ordered.IsSelected = true;
@@ -335,16 +342,10 @@ namespace SushiSushi
         }
 
 
-        private void ExpandCollapseElement(FrameworkElement inputElem, double from, double to, double inDurationInMilli = 250) //All duration are set to 1/4 second
-        {
-            DoubleAnimation anim = new DoubleAnimation(from, to, TimeSpan.FromMilliseconds(inDurationInMilli));
-            inputElem.BeginAnimation(FrameworkElement.HeightProperty, anim);
-        }
-
-        private void EmptySelected()
+        private void EmptyObservableCollection(ObservableCollection<MenuItemData> listToClear)
         {
             ObservableCollection<MenuItemData> toRemove = new ObservableCollection<MenuItemData>();
-            foreach (MenuItemData item in selectedItems)
+            foreach (MenuItemData item in listToClear)
             {
                 item.countOfItem = 0;
                 toRemove.Add(item);
@@ -352,7 +353,7 @@ namespace SushiSushi
 
             foreach (MenuItemData item in toRemove)
             {
-                selectedItems.Remove(item);
+                listToClear.Remove(item);
             }
         }
 
@@ -420,6 +421,32 @@ namespace SushiSushi
 
 
         #endregion
+
+
+        //Method used to mock up the delivery
+        private void mainWindow_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (OrderDialogWindow.Visibility == System.Windows.Visibility.Hidden && e.Key == Key.D)
+            {
+                foreach (MenuItemData item in orderedItems)
+                {
+                    MenuItemData foundItem = deliveredItems.FirstOrDefault(x => x.isSameMenuItem(item));
+                    if (foundItem == null)
+                    {
+                        item.countOfItem++;
+                        deliveredItems.Add(item);
+                    }
+                    else
+                    {
+                        foundItem.countOfItem++;
+                        updateMenuItem(deliveredItems, foundItem);
+                    }
+                }
+                EmptyObservableCollection(orderedItems);
+                Delivered.IsSelected = true;
+            }
+        
+        }
 
 
     }
