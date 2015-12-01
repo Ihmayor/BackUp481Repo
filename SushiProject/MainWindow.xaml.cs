@@ -443,7 +443,7 @@ namespace SushiSushi
                     if (foundItem == null)
                     {
                         MenuItemData newItem = item.clone();
-                        newItem.countOfItem++;
+                        newItem.countOfItem = item.countOfItem;
                         deliveredItems.Add(newItem);
                     }
                     else
