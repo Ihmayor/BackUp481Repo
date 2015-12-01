@@ -55,5 +55,12 @@ namespace SushiSushi
             return isSame;
         }
 
+
+        public MenuItemData clone()
+        {
+            return new MenuItemData(id, NumPrice, Name, Image, isVegan, isGlutenFree, Description, options);
+        }
+
+
     }
 }

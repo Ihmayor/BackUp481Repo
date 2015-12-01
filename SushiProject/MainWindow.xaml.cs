@@ -207,8 +207,9 @@ namespace SushiSushi
                     MenuItemData foundItem = orderedItems.FirstOrDefault(x => x.isSameMenuItem(item));
                     if (foundItem == null)
                     {
-                        item.countOfItem++;
-                        orderedItems.Add(item);
+                        MenuItemData newItem = item.clone();
+                        newItem.countOfItem = item.countOfItem;
+                        orderedItems.Add(newItem);
                     }
                     else
                     {
@@ -441,8 +442,9 @@ namespace SushiSushi
                     MenuItemData foundItem = deliveredItems.FirstOrDefault(x => x.isSameMenuItem(item));
                     if (foundItem == null)
                     {
-                        item.countOfItem++;
-                        deliveredItems.Add(item);
+                        MenuItemData newItem = item.clone();
+                        newItem.countOfItem++;
+                        deliveredItems.Add(newItem);
                     }
                     else
                     {

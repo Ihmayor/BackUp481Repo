@@ -131,9 +131,6 @@ C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiP
 C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\SushiSushi.exe
 C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\SushiSushi.pdb
 C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\SushiSushi.csprojResolveAssemblyReference.cache
-\\cs-fs01\Profiles\ug\ihmayor\Desktop\CPSC481Project\SushiProject\bin\Debug\SushiSushi.exe.config
-\\cs-fs01\Profiles\ug\ihmayor\Desktop\CPSC481Project\SushiProject\bin\Debug\SushiSushi.exe
-\\cs-fs01\Profiles\ug\ihmayor\Desktop\CPSC481Project\SushiProject\bin\Debug\SushiSushi.pdb
 \\cs-fs01\Profiles\ug\ihmayor\Desktop\CPSC481Project\SushiProject\obj\Debug\Main Grid Controls\MenuItemControl.baml
 \\cs-fs01\Profiles\ug\ihmayor\Desktop\CPSC481Project\SushiProject\obj\Debug\SecondarySideBarItemControl.baml
 \\cs-fs01\Profiles\ug\ihmayor\Desktop\CPSC481Project\SushiProject\obj\Debug\SidebarItemControl.baml
@@ -147,6 +144,9 @@ C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiP
 \\cs-fs01\Profiles\ug\ihmayor\Desktop\CPSC481Project\SushiProject\obj\Debug\GeneratedInternalTypeHelper.g.cs
 \\cs-fs01\Profiles\ug\ihmayor\Desktop\CPSC481Project\SushiProject\obj\Debug\SushiSushi_MarkupCompile.cache
 \\cs-fs01\Profiles\ug\ihmayor\Desktop\CPSC481Project\SushiProject\obj\Debug\SushiSushi_MarkupCompile.lref
+\\cs-fs01\Profiles\ug\ihmayor\Desktop\CPSC481Project\SushiProject\bin\Debug\SushiSushi.exe.config
+\\cs-fs01\Profiles\ug\ihmayor\Desktop\CPSC481Project\SushiProject\bin\Debug\SushiSushi.exe
+\\cs-fs01\Profiles\ug\ihmayor\Desktop\CPSC481Project\SushiProject\bin\Debug\SushiSushi.pdb
 \\cs-fs01\Profiles\ug\ihmayor\Desktop\CPSC481Project\SushiProject\obj\Debug\MainWindow.baml
 \\cs-fs01\Profiles\ug\ihmayor\Desktop\CPSC481Project\SushiProject\obj\Debug\Main Grid Controls\MenuCategoryControl.baml
 \\cs-fs01\Profiles\ug\ihmayor\Desktop\CPSC481Project\SushiProject\obj\Debug\OrderDialog.baml
