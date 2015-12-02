@@ -10,11 +10,13 @@
         <Border BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Left" Height="120" Margin="50,5" VerticalAlignment="Top" Width="180">
             <Grid x:Name="MainGrid" Margin="0,0,0,0" Background="{Binding ElementName=SushiSushi.SecondarySideBarItemControl, Path=MainBackgroundProperty}">
                 <Grid>
-                    <Image HorizontalAlignment="Left"  Margin="10,20,0,0"   VerticalAlignment="Top"  Width="100" Height="50" Source="{Binding Image}"/>
-                    <Label HorizontalAlignment="Left"  Margin="100,15,0,0"   VerticalAlignment="Top"  FontWeight="Bold" Content="{Binding Name}"/>
-                    <Label HorizontalAlignment="Left"  Margin="100,40,35,0"  VerticalAlignment="Top"  Content="{Binding countOfItem}"/>
-                 
-                    <Label Content="{Binding SelectedOption}" HorizontalAlignment="Left" Margin="15,65,0,0" VerticalAlignment="Top" FontSize="10" FontWeight="Bold"/>
+                    <Image HorizontalAlignment="Left"  VerticalAlignment="Top"  Margin="10,20,0,0"     Width="35" Height="40" Source="{Binding Image}"/>
+                    <Label HorizontalAlignment="Left"  VerticalAlignment="Top"  Margin="45,7,-12,0"    FontWeight="Bold" Content="{Binding Name}"/>
+                    <StackPanel HorizontalAlignment="Left"  VerticalAlignment="Top" Orientation="Horizontal" Margin="47,30,3,54"   >
+                        <Label Margin="2" Content="{Binding countOfItem}"/>
+                        <Label Margin="2" Content="Order"/>
+                    </StackPanel>
+                    <Label x:Name="SelectedOptionLabel"  Content="{Binding SelectedOption}" HorizontalAlignment="Left" Margin="47,45,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold"/>
                     <Button x:Name="OrderAgainButton" Background="White" Content="Please Order Again!" Width="165" Height="28" Margin="5,0,0,5" VerticalAlignment="Bottom" HorizontalAlignment="Left" FontWeight="Bold" Click="OrderAgainButton_Click"/>
                 </Grid>
             </Grid>

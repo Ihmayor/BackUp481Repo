@@ -278,7 +278,7 @@ namespace SushiSushi
         #region Data Generation Methods
         public void generateMenuItems()
         {
-            MenuCategory SpecialCategory = new MenuCategory("Specials", generateMenuCategoryType(0, "Special", new BitmapImage(new Uri(@"pack://application:,,,/Resources/SpecialSushi.png")), false, false, "These are special Items", new List<string> { "Available Options","Gluten Free"}));
+            MenuCategory SpecialCategory = new MenuCategory("Specials", generateMenuCategoryType(0, "Special", new BitmapImage(new Uri(@"pack://application:,,,/Resources/SpecialSushi.png")), false, false, "4 pieces per set", new List<string> { "Select Option","Gluten Free"}));
             MenuCategory SushiCategory = new MenuCategory("Sushi", generateMenuCategoryType2(20, "Sushi", new BitmapImage(new Uri(@"pack://application:,,,/Resources/SalmonSushi.png")), true, true, "These are sushi Items", null));
             MenuCategory AppetizerCategory = new MenuCategory("Appetizers", generateMenuCategoryType(40, "Appetizer", new BitmapImage(new Uri(@"pack://application:,,,/Resources/Gyoza.png")), true, false, "These are appetizer Items", null));
             MenuCategory FriedCategory = new MenuCategory("Fried", generateMenuCategoryType2(60, "Fried", new BitmapImage(new Uri(@"pack://application:,,,/Resources/ShrimpTempura.png")), false, false, "These are fried Items", null));
@@ -294,7 +294,7 @@ namespace SushiSushi
             List<MenuItemData> associatedItems = new List<MenuItemData>();
             for (int i = 0; i < 9; i++)
             {
-                associatedItems.Add(new MenuItemData(ID + i, 5, nameOfItem + " " + i, imageSource, isVegan, isGlutenFree, Description, optionsList));
+                associatedItems.Add(new MenuItemData(ID + i, 5, nameOfItem + "_" + i, imageSource, isVegan, isGlutenFree, Description, optionsList));
             }
             return associatedItems;
         }
@@ -304,7 +304,7 @@ namespace SushiSushi
             List<MenuItemData> associatedItems = new List<MenuItemData>();
             for (int i = 0; i < 20; i++)
             {
-                associatedItems.Add(new MenuItemData(ID + i, 4.20, nameOfItem + " " + i, imageSource, isVegan, isGlutenFree, Description, optionsList));
+                associatedItems.Add(new MenuItemData(ID + i, 4.20, nameOfItem + "_" + i, imageSource, isVegan, isGlutenFree, Description, optionsList));
             }
             return associatedItems;
         }
@@ -313,7 +313,7 @@ namespace SushiSushi
             List<MenuItemData> associatedItems = new List<MenuItemData>();
             for (int i = 0; i < 6; i++)
             {
-                associatedItems.Add(new MenuItemData(ID + i, 4.20, nameOfItem + " " + i, imageSource, isVegan, isGlutenFree, Description, optionsList));
+                associatedItems.Add(new MenuItemData(ID + i, 4.20, nameOfItem + "_" + i, imageSource, isVegan, isGlutenFree, Description, optionsList));
             }
             return associatedItems;
         }
@@ -325,7 +325,7 @@ namespace SushiSushi
             List<MenuItemData> associatedItems = new List<MenuItemData>();
             for (int i = 0; i < 12; i++)
             {
-                associatedItems.Add(new MenuItemData(ID + i, 5, nameOfItem + " " + i, imageSource, isVegan, isGlutenFree, Description, optionsList));
+                associatedItems.Add(new MenuItemData(ID + i, 5, nameOfItem + "-" + i, imageSource, isVegan, isGlutenFree, Description, optionsList));
             }
             return associatedItems;
         }

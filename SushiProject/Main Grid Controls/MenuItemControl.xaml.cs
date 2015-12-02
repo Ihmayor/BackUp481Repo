@@ -31,9 +31,9 @@ namespace SushiSushi
         // Passes the information associated with the item. Item itself contains the count. NOT THE CONTROL.
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            dynamic MenuItemInfo = (sender as Button).DataContext;
-            if (OptionsAvailable.HasItems)
-                MenuItemInfo.selectedOption = OptionsAvailable.SelectedItem;
+            MenuItemData MenuItemInfo = ((MenuItemData)(sender as Button).DataContext).clone();
+            if (OptionsAvailable.HasItems && OptionsAvailable.SelectedIndex != 0)
+                MenuItemInfo.setSelectedOption(OptionsAvailable.SelectedIndex);
             try
             {
                 CompleteClicked(sender, MenuItemInfo);

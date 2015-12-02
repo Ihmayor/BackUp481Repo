@@ -143,7 +143,7 @@
                     VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
                     VerticalContentAlignment="Stretch" 
                     FontSize="18" FontFamily="Calibri" FontWeight="Bold" >
-                <ScrollViewer VerticalAlignment="Stretch" VerticalScrollBarVisibility="Auto" Height="{Binding ElementName=MainListView, Path=Height }" Width="310">
+                <ScrollViewer VerticalAlignment="Stretch" VerticalScrollBarVisibility="Hidden" Height="{Binding ElementName=MainListView, Path=Height }" Width="310" PanningMode="VerticalOnly">
                         <ItemsControl 
                             Background="BlanchedAlmond" 
                             VerticalAlignment="Stretch" 

@@ -44,7 +44,8 @@ namespace SushiSushi
         }
         public void setSelectedOption (int optionIndex)
         {
-            selectedOption = options.ToArray()[optionIndex];
+            if (optionIndex != 0 || optionIndex != -1)
+                selectedOption = options.ToArray()[optionIndex];
         }
 
         public bool isSameMenuItem (MenuItemData MenuItemObjectToCompare)
