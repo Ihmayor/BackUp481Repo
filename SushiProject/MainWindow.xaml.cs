@@ -131,7 +131,7 @@ namespace SushiSushi
 
         private void OrderDialogWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            OrderDialog.onDialogButtonClick += OrderDialog_DialogButtonClick;
+            OrderDialog.onDialogButtonClick += OrderDialog_ConfirmedOrderButtonClick;
             OrderDialogWindow.SelectedList.ItemsSource = selectedItems;
         }
 
@@ -198,24 +198,16 @@ namespace SushiSushi
         }
 
 
-        private void OrderDialog_DialogButtonClick(object sender, bool confirmed)
+        private void OrderDialog_ConfirmedOrderButtonClick(object sender, bool confirmed)
         {
             if (confirmed)
             {
                 foreach (MenuItemData item in selectedItems)
                 {
-                    MenuItemData foundItem = orderedItems.FirstOrDefault(x => x.isSameMenuItem(item));
-                    if (foundItem == null)
-                    {
+                   
                         MenuItemData newItem = item.clone();
                         newItem.countOfItem = item.countOfItem;
                         orderedItems.Add(newItem);
-                    }
-                    else
-                    {
-                        foundItem.countOfItem++;
-                        updateMenuItem(orderedItems, foundItem);
-                    }
                 }
                 EmptyObservableCollection(selectedItems);
                 OrderDialogWindow.Visibility = System.Windows.Visibility.Hidden;
