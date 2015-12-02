@@ -470,7 +470,7 @@ namespace SushiSushi
                 //buttonToaffect.BeginStoryboard = anim;
                 buttonToaffect.BeginAnimation(FrameworkElement.OpacityProperty, anim);
                 called = true;
-                (sender as Button).Content = "Assistance is coming :)"; 
+                (sender as Button).Content = "Cancel Assistance Call"; 
        
             }
             else
@@ -478,7 +478,7 @@ namespace SushiSushi
                 called = false;
                 buttonToaffect.BeginAnimation(FrameworkElement.OpacityProperty, null);
                 (sender as Button).Opacity = 1;
-                (sender as Button).Content = "Call for assistance"; 
+                (sender as Button).Content = "Call for Assistance"; 
               
             }
             

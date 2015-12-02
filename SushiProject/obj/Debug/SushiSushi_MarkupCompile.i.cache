@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\obj\Debug\
+\\cs-fs01\Profiles\ug\ihmayor\Desktop\CPSC481Project\SushiProject\obj\Debug\
 SushiSushi
 none
 false
 DEBUG;TRACE
-C:\Users\Irene Mayor\Documents\Visual Studio 2013\Projects\CPSC481Project\SushiProject\App.xaml
+\\cs-fs01\Profiles\ug\ihmayor\Desktop\CPSC481Project\SushiProject\App.xaml
 7-221058682
 
-17-256000259
-15-883547868
+17-192891073
+15252648946
 MainWindow.xaml;Main Grid Controls\MenuCategoryControl.xaml;Main Grid Controls\MenuItemControl.xaml;SecondarySideBarItemControl.xaml;SidebarItemControl.xaml;OrderDialog.xaml;UserControl1.xaml;
 
 False
