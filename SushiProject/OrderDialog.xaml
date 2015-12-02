@@ -14,7 +14,7 @@
                     <ItemsControl Margin="10" Height="Auto" x:Name="SelectedList" ScrollViewer.CanContentScroll="True" ItemsSource="{Binding ElementName=mainWindow, Path=SelectedItems}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <WrapPanel IsItemsHost="True" Width="{Binding ElementName=ItemsListBox, Path=Width}" Height="{Binding ElementName=ItemsListBox, Path=Height}" Orientation="Horizontal"/>
+                                <WrapPanel IsItemsHost="True" Width="{Binding ElementName=SelectedList, Path=Width}" Height="{Binding ElementName=SelectedList, Path=Height}" Orientation="Horizontal"/>
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>

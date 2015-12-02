@@ -16,6 +16,38 @@
                 <Setter Property="FontWeight" Value="Bold"/>
 
             </Style>
+
+           
+            <Style x:Key="AssistanceButton" TargetType="Button">
+                <Setter Property="Background" Value="White"/>
+                <Setter Property="Foreground" Value="Black" />
+                <Setter Property="Width" Value="120" />
+                <Setter Property="Height" Value="80" />
+                <Setter Property="Margin" Value="10"/>
+                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+
+                <Style.Triggers>
+                    <DataTrigger Value="{Binding ElementName=mainWindow,Path=CalledForAssistance}">
+                        
+                    </DataTrigger>
+                    <EventTrigger RoutedEvent="Click">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation
+                                Storyboard.TargetProperty="Opacity"
+                                From="1.0" To="0.1" Duration="0:0:0.5"
+                                AutoReverse="True" RepeatBehavior="Forever"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                    
+                </Style.Triggers>
+                
+            </Style>
+
+
+
         </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition Height="80"/>
@@ -37,13 +69,26 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        
+
+        <!--<added:PulseButton  Grid.Row="1" Grid.Column="8"
+                            IsEllipsis="True"
+                              Margin=""
+                              FontSize="14" 
+                              Pulses="3" 
+                              PulseScale="1.5" 
+                              PulseSpeed="0:0:3" 
+                              PulseWidth="2" 
+                              Content="START" 
+                              ButtonBrush="White" 
+                              ButtonHighlightBrush="Gold" 
+                              ButtonPressedBrush="LightGreen"
+                              Foreground="Black"/>-->
 
 
-        <StackPanel Grid.Row="1" Grid.Column="8" Orientation="Vertical" Margin="90,5">
-            <Button Content="Call For Assistance"  Margin="0,10" FontSize="14" Height="60" Width="150" HorizontalAlignment="Left" Style="{StaticResource RoundButtonTemplate}" />
-        </StackPanel>
 
+
+        <Button Grid.Row="1" Grid.Column="8"  Content="Call For Assistance"  Margin="0,10" FontSize="14" Height="60" Width="160" HorizontalAlignment="Left" Style="{StaticResource RoundButtonTemplate}" Click="Button_Click"/>
+      
         <!-- Start of buttons across the top-->
         <Button x:Name="SpecialsButton" Style="{StaticResource RoundButtonTemplate}" Grid.Row="1" Grid.Column="1" Click="SpecialButton_Click">
             <StackPanel Orientation="Vertical" Height="80" Width="100">

@@ -458,6 +458,32 @@ namespace SushiSushi
         
         }
 
+        bool called = false;
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            FrameworkElement buttonToaffect = (sender as FrameworkElement);
+            if (!called)
+            {
+                DoubleAnimation anim = new DoubleAnimation(1.0, 0.1, TimeSpan.FromMilliseconds(750)) { RepeatBehavior = RepeatBehavior.Forever,AutoReverse=true };
+                Storyboard sb = new Storyboard();
+                //buttonToaffect.BeginStoryboard = anim;
+                buttonToaffect.BeginAnimation(FrameworkElement.OpacityProperty, anim);
+                called = true;
+                (sender as Button).Content = "Assistance is coming :)"; 
+       
+            }
+            else
+            {
+                called = false;
+                buttonToaffect.BeginAnimation(FrameworkElement.OpacityProperty, null);
+                (sender as Button).Opacity = 1;
+                (sender as Button).Content = "Call for assistance"; 
+              
+            }
+            
+        }
+
 
     }
 }
