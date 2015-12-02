@@ -10,7 +10,7 @@
         <StackPanel>
             <Grid>
                 <Border BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Center" Height="400" Margin="10" VerticalAlignment="Top" Width="940"  Background="#FFF3EFEA" CornerRadius="5"/>
-                <ScrollViewer Height="380" Width="920" VerticalScrollBarVisibility="Auto">
+                <ScrollViewer Height="380" Width="920" VerticalScrollBarVisibility="Hidden" PanningMode="VerticalOnly">
                     <ItemsControl Margin="10" Height="Auto" x:Name="SelectedList" ScrollViewer.CanContentScroll="True" ItemsSource="{Binding ElementName=mainWindow, Path=SelectedItems}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
