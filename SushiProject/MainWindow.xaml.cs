@@ -61,7 +61,7 @@ namespace SushiSushi
             MenuItemData foundItem = selectedItems.FirstOrDefault(x => x.isSameMenuItem(chosenItem));
             if (foundItem == null)
             {
-                chosenItem.countOfItem++;
+                chosenItem.countOfItem = 1;
                 selectedItems.Add(chosenItem);
             }
             else
@@ -146,7 +146,7 @@ namespace SushiSushi
             MenuItemData foundItem = selectedItems.FirstOrDefault(x => x.isSameMenuItem(addItem));
             if (foundItem == null)
             {
-                addItem.countOfItem++;
+                addItem.countOfItem = 1;
                 selectedItems.Add(addItem);
             }
             else
