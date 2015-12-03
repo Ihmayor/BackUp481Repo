@@ -17,7 +17,8 @@ namespace SushiSushi
         public List<string> options { get; set; }
         public string SelectedOption { get { return selectedOption; } }
         private string selectedOption = "";
-        public int countOfItem { get; set; }
+        private int _countOfItem;
+        public int countOfItem { get { return _countOfItem; } set { if (value > 25) _countOfItem = 25; else _countOfItem = value; } }
         public int id;
         public double NumPrice { get; set; }
         public string Price { get; set; }
