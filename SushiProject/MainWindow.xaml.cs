@@ -287,7 +287,10 @@ namespace SushiSushi
         #region Data Generation Methods
         public void generateMenuItems()
         {
-            MenuCategory SpecialCategory = new MenuCategory("Specials", generateMenuCategoryType(0, "Special", new BitmapImage(new Uri(@"pack://application:,,,/Resources/SpecialSushi.png")), false, false, "4 pieces per set", new List<string> { "Select Option","Gluten Free"}));
+            var names = new List<string> {"Inari","Twinari","Double Happiness Roll" };
+            var desc =  new List<string> { "Fried beancurd","Double fried beancurd","Mystic Sushi will make you happy."};
+            var options = new List<List<string>> {new List<string>{"Select Option","Gluten Free"},null,null };
+            MenuCategory SpecialCategory = new MenuCategory("Specials", generateMenuCategoryCust(0, names, new BitmapImage(new Uri(@"pack://application:,,,/Resources/SpecialSushi.png")), desc, options));
             MenuCategory SushiCategory = new MenuCategory("Sushi", generateMenuCategoryType2(20, "Sushi", new BitmapImage(new Uri(@"pack://application:,,,/Resources/SalmonSushi.png")), true, true, "These are sushi Items", null));
             MenuCategory AppetizerCategory = new MenuCategory("Appetizers", generateMenuCategoryType(40, "Appetizer", new BitmapImage(new Uri(@"pack://application:,,,/Resources/Gyoza.png")), true, false, "These are appetizer Items", null));
             MenuCategory FriedCategory = new MenuCategory("Fried", generateMenuCategoryType2(60, "Fried", new BitmapImage(new Uri(@"pack://application:,,,/Resources/ShrimpTempura.png")), false, false, "These are fried Items", null));
@@ -296,6 +299,20 @@ namespace SushiSushi
             List<MenuCategory> TotalItems = new List<MenuCategory>() { SpecialCategory, AppetizerCategory, SushiCategory, FriedCategory, DrinksCategory, DessertCategory };
 
             MainListView.ItemsSource = TotalItems;
+        }
+
+        public List<MenuItemData> generateMenuCategoryCust(int ID, List<string> namesOfItems, BitmapImage imageSource, List<string> Description, List<List<string>> optionsList)
+        {
+            List<MenuItemData> associatedItems = new List<MenuItemData>();
+            int i = 0;
+            foreach (var name in namesOfItems)
+            {
+                bool isVegan = (i % 2 == 1);
+                bool isGlutenFree = (i % 3 == 2);
+                associatedItems.Add(new MenuItemData(ID + i, ((i+1)*2+((i*.7)%1)), name, imageSource, isVegan, isGlutenFree, Description[i], optionsList[i]));
+                i++;
+            }
+            return associatedItems;
         }
 
         public List<MenuItemData> generateMenuCategoryType(int ID, string nameOfItem, BitmapImage imageSource, bool isVegan, bool isGlutenFree, string Description, List<string> optionsList)
