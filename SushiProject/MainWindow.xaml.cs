@@ -61,8 +61,9 @@ namespace SushiSushi
             MenuItemData foundItem = selectedItems.FirstOrDefault(x => x.isSameMenuItem(chosenItem));
             if (foundItem == null)
             {
-                chosenItem.countOfItem = 1;
-                selectedItems.Add(chosenItem);
+                MenuItemData newItem = chosenItem.clone();
+                newItem.countOfItem++;
+                selectedItems.Add(newItem);
             }
             else
             {
@@ -142,7 +143,7 @@ namespace SushiSushi
         #region Menu Item Control
         void MenuItemControl_CompleteClicked(object sender, MenuItemData addItem)
         {
-       
+            bool limitReached = false;
             MenuItemData foundItem = selectedItems.FirstOrDefault(x => x.isSameMenuItem(addItem));
             if (foundItem == null)
             {
@@ -151,22 +152,30 @@ namespace SushiSushi
             }
             else
             {
-                foundItem.countOfItem++;
-                updateMenuItem(selectedItems, foundItem);
+                if (foundItem.countOfItem == 25)
+                    limitReached = true;
+                else
+                {
+                    foundItem.countOfItem++;
+                    updateMenuItem(selectedItems, foundItem);
+                }
             }
             Selected.IsSelected = true;
-            updateCost(addItem.NumPrice);
+            if (!limitReached)
+                updateCost(addItem.NumPrice);
 
         }
 
 
         private void SidebarItemControl_PlusButton(object sender, MenuItemData chosenItem)
         {
-            chosenItem.countOfItem++;
-            MenuItemData foundItem = selectedItems.FirstOrDefault(x => x.isSameMenuItem(chosenItem));
-            updateMenuItem(selectedItems, foundItem);
-            updateCost(chosenItem.NumPrice);
-      
+            if (chosenItem.countOfItem < 25)
+            {
+                chosenItem.countOfItem++;
+                MenuItemData foundItem = selectedItems.FirstOrDefault(x => x.isSameMenuItem(chosenItem));
+                updateMenuItem(selectedItems, foundItem);
+                updateCost(chosenItem.NumPrice);
+            }
         }
 
 
@@ -431,19 +440,12 @@ namespace SushiSushi
             {
                 foreach (MenuItemData item in orderedItems)
                 {
-                    MenuItemData foundItem = deliveredItems.FirstOrDefault(x => x.isSameMenuItem(item));
-                    if (foundItem == null)
-                    {
-                        MenuItemData newItem = item.clone();
-                        newItem.countOfItem = item.countOfItem;
-                        deliveredItems.Add(newItem);
-                    }
-                    else
-                    {
-                        foundItem.countOfItem++;
-                        updateMenuItem(deliveredItems, foundItem);
-                    }
+                   
+                    MenuItemData newItem = item.clone();
+                    newItem.countOfItem = item.countOfItem;
+                    deliveredItems.Add(newItem);
                 }
+
                 EmptyObservableCollection(orderedItems);
                 Delivered.IsSelected = true;
             }

@@ -18,9 +18,9 @@
                     <Label x:Name="PriceLabel" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="47,30,3,54" Loaded="PriceLabel_Loaded" Content="Price: $4.99"  FontSize="14" FontWeight="Bold" />
                     <Label x:Name="SelectedOptionLabel"  Content="{Binding SelectedOption}" HorizontalAlignment="Left" Margin="47,45,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold"/>
 
-                    <Button Content="+" HorizontalAlignment="Right" FontSize="16" FontWeight="Bold" Margin="10,77,10,0" VerticalAlignment="Top"  Height="30" Width="53" Background="#FF3ABB1D" Click="Plus_Click"/>
+                    <Button Content="+" HorizontalAlignment="Right" FontSize="24" FontWeight="Bold" Margin="10,77,10,0" VerticalAlignment="Top"  Height="30" Width="53"  Background="#FF3ABB1D" Click="Plus_Click"/>
                     <Label HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="16" FontWeight="Bold" Margin="0,0,0,10" Content="{Binding countOfItem}"  RenderTransformOrigin="0.498,0.474"/>
-                    <Button Content="-" HorizontalAlignment="Left" FontSize="16" FontWeight="Bold" Margin="10,77,0,0" VerticalAlignment="Top"  Height="30" Width="50" Background="#FFDE4141" Click="Minus_Click"/>
+                    <Button Content="-" HorizontalAlignment="Left" HorizontalContentAlignment="Center" FontSize="25" FontWeight="ExtraBold" Margin="10,77,0,0" VerticalAlignment="Top"  Height="30" Width="50"  Background="#FFDE4141" Click="Minus_Click"/>
 
                 </Grid>
             </Grid>
