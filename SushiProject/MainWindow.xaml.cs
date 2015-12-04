@@ -216,6 +216,10 @@ namespace SushiSushi
                    
                         MenuItemData newItem = item.clone();
                         newItem.countOfItem = item.countOfItem;
+                        if(item.SelectedOption != "")
+                        {
+                            newItem.setSelectedOption( item.options.FindIndex(x => x == item.SelectedOption));
+                        }
                         orderedItems.Add(newItem);
                 }
                 EmptyObservableCollection(selectedItems);
@@ -441,6 +445,11 @@ namespace SushiSushi
                
                 MenuItemData item = orderedItems[0];
                 MenuItemData newItem = item.clone();
+                if (item.SelectedOption != "")
+                {
+                    newItem.setSelectedOption(item.options.FindIndex(x => x == item.SelectedOption));
+                }
+            
                 newItem.countOfItem = item.countOfItem;
                 deliveredItems.Add(newItem);
                 orderedItems.Remove(item); 
