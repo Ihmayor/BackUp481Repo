@@ -39,6 +39,27 @@ namespace SushiSushi
         {
             (sender as SecondarySideBarItemControl).MainGrid.Background = new BrushConverter().ConvertFromString(e.NewValue.ToString()) as SolidColorBrush;
         }
+        public static readonly DependencyProperty ForegroundTextProperty = DependencyProperty.Register(
+        "ForegroundText",
+        typeof(Color),
+        typeof(SecondarySideBarItemControl),
+        new UIPropertyMetadata(ForegroundTextPropertyChanged));
+
+        // .NET Property wrapper necessary for setting the actual property
+        public Color ForegroundText
+        {
+            get { return (Color)GetValue(ForegroundTextProperty); }
+            set { SetValue(ForegroundTextProperty, value); }
+        }
+
+        //An event that fires because the setter does not fire at xaml instantation
+        public static void ForegroundTextPropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            (sender as SecondarySideBarItemControl).CountOfItemLabel.Foreground = new BrushConverter().ConvertFromString(e.NewValue.ToString()) as SolidColorBrush;
+            (sender as SecondarySideBarItemControl).NameLabel.Foreground = new BrushConverter().ConvertFromString(e.NewValue.ToString()) as SolidColorBrush;
+            (sender as SecondarySideBarItemControl).OrderLabel.Foreground = new BrushConverter().ConvertFromString(e.NewValue.ToString()) as SolidColorBrush;
+            (sender as SecondarySideBarItemControl).SelectedOptionLabel.Foreground = new BrushConverter().ConvertFromString(e.NewValue.ToString()) as SolidColorBrush;
+        }
 
 
         #endregion

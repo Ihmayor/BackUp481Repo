@@ -295,7 +295,7 @@ namespace SushiSushi
             List<MenuItemData> associatedItems = new List<MenuItemData>();
             for (int i = 0; i < 9; i++)
             {
-                associatedItems.Add(new MenuItemData(ID + i, 5, nameOfItem + "_" + i, imageSource, isVegan, isGlutenFree, Description, optionsList));
+                associatedItems.Add(new MenuItemData(ID + i, 5, nameOfItem + "" + i, imageSource, isVegan, isGlutenFree, Description, optionsList));
             }
             return associatedItems;
         }
@@ -305,7 +305,7 @@ namespace SushiSushi
             List<MenuItemData> associatedItems = new List<MenuItemData>();
             for (int i = 0; i < 20; i++)
             {
-                associatedItems.Add(new MenuItemData(ID + i, 4.20, nameOfItem + "_" + i, imageSource, isVegan, isGlutenFree, Description, optionsList));
+                associatedItems.Add(new MenuItemData(ID + i, 4.20, nameOfItem + "" + i, imageSource, isVegan, isGlutenFree, Description, optionsList));
             }
             return associatedItems;
         }
@@ -314,7 +314,7 @@ namespace SushiSushi
             List<MenuItemData> associatedItems = new List<MenuItemData>();
             for (int i = 0; i < 6; i++)
             {
-                associatedItems.Add(new MenuItemData(ID + i, 4.20, nameOfItem + "_" + i, imageSource, isVegan, isGlutenFree, Description, optionsList));
+                associatedItems.Add(new MenuItemData(ID + i, 4.20, nameOfItem + "" + i, imageSource, isVegan, isGlutenFree, Description, optionsList));
             }
             return associatedItems;
         }
@@ -326,7 +326,7 @@ namespace SushiSushi
             List<MenuItemData> associatedItems = new List<MenuItemData>();
             for (int i = 0; i < 12; i++)
             {
-                associatedItems.Add(new MenuItemData(ID + i, 5, nameOfItem + "-" + i, imageSource, isVegan, isGlutenFree, Description, optionsList));
+                associatedItems.Add(new MenuItemData(ID + i, 5, nameOfItem + "" + i, imageSource, isVegan, isGlutenFree, Description, optionsList));
             }
             return associatedItems;
         }
@@ -438,15 +438,12 @@ namespace SushiSushi
         {
             if (OrderDialogWindow.Visibility == System.Windows.Visibility.Hidden && e.Key == Key.D && orderedItems.Count > 0)
             {
-                foreach (MenuItemData item in orderedItems)
-                {
-                   
-                    MenuItemData newItem = item.clone();
-                    newItem.countOfItem = item.countOfItem;
-                    deliveredItems.Add(newItem);
-                }
-
-                EmptyObservableCollection(orderedItems);
+               
+                MenuItemData item = orderedItems[0];
+                MenuItemData newItem = item.clone();
+                newItem.countOfItem = item.countOfItem;
+                deliveredItems.Add(newItem);
+                orderedItems.Remove(item); 
                 Delivered.IsSelected = true;
             }
         

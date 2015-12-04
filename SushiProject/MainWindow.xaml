@@ -163,7 +163,7 @@
                     <ItemsControl Background="BlanchedAlmond" VerticalAlignment="Stretch" x:Name="OrderedItemsList" ItemsSource="{Binding ElementName=mainWindow, Path=OrderedItems}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <local:SecondarySideBarItemControl MainBackgroundSecond="LightGreen" />
+                                <local:SecondarySideBarItemControl MainBackgroundSecond="LightGreen" ForegroundText="Black" />
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
@@ -178,7 +178,7 @@
                     <ItemsControl Background="BlanchedAlmond" VerticalAlignment="Stretch" x:Name="DeliveredItemsList" ItemsSource="{Binding ElementName=mainWindow, Path=DeliveredItems}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <local:SecondarySideBarItemControl MainBackgroundSecond="Gray"/>
+                                <local:SecondarySideBarItemControl MainBackgroundSecond="Gray" ForegroundText="White"/>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
