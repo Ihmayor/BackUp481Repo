@@ -63,6 +63,10 @@ namespace SushiSushi
             {
                 MenuItemData newItem = chosenItem.clone();
                 newItem.countOfItem++;
+                if (chosenItem.SelectedOption != "")
+                {
+                    newItem.setSelectedOption(chosenItem.options.FindIndex(x => x == chosenItem.SelectedOption));
+                }
                 selectedItems.Add(newItem);
             }
             else
@@ -448,7 +452,7 @@ namespace SushiSushi
                 if (item.SelectedOption != "")
                 {
                     newItem.setSelectedOption(item.options.FindIndex(x => x == item.SelectedOption));
-                }
+                }                    
             
                 newItem.countOfItem = item.countOfItem;
                 deliveredItems.Add(newItem);
