@@ -14,7 +14,7 @@
                 <Grid>
                     <StackPanel Orientation="Horizontal" Margin="5">
                         <Image HorizontalAlignment="Left" VerticalAlignment="Top" Width="35" Height="40" Source="{Binding Image}"/>
-                        <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Vertical" Margin="20,0">
                             <TextBlock  HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" Width="120" TextWrapping="WrapWithOverflow" Text="{Binding Name}"/>
                             <TextBlock x:Name="PriceLabel" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding Price}"  FontSize="14" FontWeight="Bold" />
                             <TextBlock x:Name="SelectedOptionLabel"  Text="{Binding SelectedOption}" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold"/>

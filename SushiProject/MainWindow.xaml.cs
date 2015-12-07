@@ -124,10 +124,12 @@ namespace SushiSushi
                 if (applyOnlyToThis != button)
                 {
                     button.Background = new SolidColorBrush(Colors.White);
+                    button.Foreground = new SolidColorBrush(Colors.Black);
                 }
                 else
                 {
-                    button.Background = new SolidColorBrush(Colors.Green) { Opacity = 0.5 };
+                    button.Background = new SolidColorBrush(Colors.Green);
+                    button.Foreground = new SolidColorBrush(Colors.White);
                 }
 
             }
@@ -288,11 +290,16 @@ namespace SushiSushi
         public void generateMenuItems()
         {
             var names = new List<string> {"Inari","Twinari","Double Happiness Roll" };
-            var desc =  new List<string> { "Fried beancurd","Double fried beancurd","Mystic Sushi will make you happy."};
+            var desc =  new List<string> { "Fried beancurd","Double fried beancurd","This sushi will make you smile."};
             var options = new List<List<string>> {new List<string>{"Select Option","Gluten Free"},null,null };
-            MenuCategory SpecialCategory = new MenuCategory("Specials", generateMenuCategoryCust(0, names, new BitmapImage(new Uri(@"pack://application:,,,/Resources/SpecialSushi.png")), desc, options));
+            List<BitmapImage> images = new List<BitmapImage> 
+                {new BitmapImage(new Uri(@"pack://application:,,,/Resources/Inari.png")),
+                 new BitmapImage(new Uri(@"pack://application:,,,/Resources/Twinari.jpg")),
+                 new BitmapImage(new Uri(@"pack://application:,,,/Resources/HappinessRoll.png"))
+                };
+            MenuCategory SpecialCategory = new MenuCategory("Specials", generateMenuCategoryCust(0, names, images, desc, options));
             MenuCategory SushiCategory = new MenuCategory("Sushi", generateMenuCategoryType2(20, "Sushi", new BitmapImage(new Uri(@"pack://application:,,,/Resources/SalmonSushi.png")), true, true, "These are sushi Items", null));
-            MenuCategory AppetizerCategory = new MenuCategory("Appetizers", generateMenuCategoryType(40, "Appetizer", new BitmapImage(new Uri(@"pack://application:,,,/Resources/Gyoza.png")), true, false, "These are appetizer Items", null));
+            MenuCategory AppetizerCategory = new MenuCategory("Appetizers", generateMenuCategoryType(40, "Gyoza Set", new BitmapImage(new Uri(@"pack://application:,,,/Resources/Gyoza.png")), true, false, "These are appetizer Items", null));
             MenuCategory FriedCategory = new MenuCategory("Fried", generateMenuCategoryType2(60, "Fried", new BitmapImage(new Uri(@"pack://application:,,,/Resources/ShrimpTempura.png")), false, false, "These are fried Items", null));
             MenuCategory DrinksCategory = new MenuCategory("Drinks", generateMenuCategoryType3(80, "Drinks", new BitmapImage(new Uri(@"pack://application:,,,/Resources/CocaCola.png")), false, false, "These are drink Items", null));
             MenuCategory DessertCategory = new MenuCategory("Desserts", generateMenuCategoryType4(100, "Desserts", new BitmapImage(new Uri(@"pack://application:,,,/Resources/Mochi.png")), true, false, "These are dessert Items", null));
@@ -301,15 +308,17 @@ namespace SushiSushi
             MainListView.ItemsSource = TotalItems;
         }
 
-        public List<MenuItemData> generateMenuCategoryCust(int ID, List<string> namesOfItems, BitmapImage imageSource, List<string> Description, List<List<string>> optionsList)
+        public List<MenuItemData> generateMenuCategoryCust(int ID, List<string> namesOfItems, List<BitmapImage> imageSource, List<string> Description, List<List<string>> optionsList)
         {
             List<MenuItemData> associatedItems = new List<MenuItemData>();
             int i = 0;
             foreach (var name in namesOfItems)
             {
                 bool isVegan = (i % 2 == 1);
+                if (i == 0)
+                    isVegan = true;
                 bool isGlutenFree = (i % 3 == 2);
-                associatedItems.Add(new MenuItemData(ID + i, ((i+1)*2+((i*.7)%1)), name, imageSource, isVegan, isGlutenFree, Description[i], optionsList[i]));
+                associatedItems.Add(new MenuItemData(ID + i, ((i+1)*2+((i*.7)%1)), name, imageSource[i], isVegan, isGlutenFree, Description[i], optionsList[i]));
                 i++;
             }
             return associatedItems;

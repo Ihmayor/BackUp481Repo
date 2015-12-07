@@ -57,7 +57,7 @@ namespace SushiSushi
             if (MenuItem != null)
             {
                 if (!MenuItem.isGlutenFree)
-                    (sender as Label).Visibility = System.Windows.Visibility.Hidden;
+                    (sender as Label).Visibility = System.Windows.Visibility.Collapsed;
 
             }
         }
@@ -68,7 +68,7 @@ namespace SushiSushi
             if (MenuItem != null)
             {
                 if (!MenuItem.isVegan)
-                    (sender as Label).Visibility = System.Windows.Visibility.Hidden;
+                    (sender as Label).Visibility = System.Windows.Visibility.Collapsed;
 
             }
         

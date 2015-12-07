@@ -57,37 +57,37 @@
         <!-- Start of buttons across the top-->
         <Button x:Name="SpecialsButton" Style="{StaticResource RoundButtonTemplate}" Grid.Row="1" Grid.Column="1" Click="SpecialButton_Click">
             <StackPanel Orientation="Vertical" Height="80" Width="100">
-                <Label HorizontalAlignment="Center" Content="Specials" FontSize="15" Height="30" />
+                <Label HorizontalAlignment="Center" Foreground="{Binding ElementName=SpecialsButton, Path=Foreground}" Content="Specials" FontSize="15" Height="30" />
                 <Image Source="pack://application:,,,/Resources/special.png" Margin="2" Width="50"/>
             </StackPanel>
         </Button>
         <Button x:Name="AppetizersButton" Style="{StaticResource RoundButtonTemplate}" Grid.Row="1" Grid.Column="2" Click="AppetizersButton_Click">
             <StackPanel Orientation="Vertical" Height="80" Width="100">
-                <Label HorizontalAlignment="Center" Content="Appetizers" FontSize="15" Height="30" />
+                <Label HorizontalAlignment="Center" Foreground="{Binding ElementName=AppetizersButton, Path=Foreground}" Content="Appetizers" FontSize="15" Height="30" />
                 <Image Source="pack://application:,,,/Resources/Appetizer1.png" Margin="2" Width="50"/>
             </StackPanel>
         </Button>
         <Button x:Name="SushiButton" Style="{StaticResource RoundButtonTemplate}" Grid.Row="1" Grid.Column="3" Click="SushiButton_Click">
             <StackPanel Orientation="Vertical" Height="80" Width="100">
-                <Label HorizontalAlignment="Center" Content="Sushi" FontSize="15" Height="30" />
+                <Label HorizontalAlignment="Center" Foreground="{Binding ElementName=SushiButton, Path=Foreground}" Content="Sushi" FontSize="15" Height="30" />
                 <Image Source="pack://application:,,,/Resources/sushi.png" Margin="2" Width="50"/>
             </StackPanel>
         </Button>
         <Button x:Name="FriedButton" Style="{StaticResource RoundButtonTemplate}"   Grid.Row="1" Grid.Column="4" Click="FriedButton_Click">
             <StackPanel Orientation="Vertical" Height="80" Width="100">
-                <Label HorizontalAlignment="Center" Content="Fried" FontSize="15" Height="30" />
+                <Label HorizontalAlignment="Center" Foreground="{Binding ElementName=FriedButton, Path=Foreground}" Content="Fried" FontSize="15" Height="30" />
                 <Image Source="pack://application:,,,/Resources/Fried.png" Margin="2" Width="50"/>
             </StackPanel>
         </Button>
         <Button x:Name="DrinksButton" Style="{StaticResource RoundButtonTemplate}"  Grid.Row="1" Grid.Column="5" Click="DrinksButton_Click" >
             <StackPanel Orientation="Vertical" Height="80" Width="100">
-                <Label HorizontalAlignment="Center" Content="Drinks" FontSize="15" Height="30" />
+                <Label HorizontalAlignment="Center" Foreground="{Binding ElementName=DrinksButton, Path=Foreground}" Content="Drinks" FontSize="15" Height="30" />
                 <Image Source="pack://application:,,,/Resources/Drink.png" Margin="2" Width="50"/>
             </StackPanel>
         </Button>
         <Button x:Name="DessertsButton" Style="{StaticResource RoundButtonTemplate}"  Grid.Row="1" Grid.Column="6" Click="DessertsButton_Click">
             <StackPanel Orientation="Vertical" Height="80" Width="100">
-                <Label HorizontalAlignment="Center" Content="Desserts" FontSize="15" Height="30" />
+                <Label HorizontalAlignment="Center" Foreground="{Binding ElementName=DessertsButton, Path=Foreground}" Content="Desserts" FontSize="15" Height="30" />
                 <Image Source="pack://application:,,,/Resources/Danjo.png" Margin="2" Width="50"/>
             </StackPanel>
         </Button>

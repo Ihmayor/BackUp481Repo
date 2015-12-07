@@ -10,11 +10,15 @@
         <Border BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Left" Height="120" Margin="50,5" VerticalAlignment="Top" Width="180">
             <Grid x:Name="MainGrid" Margin="0,0,0,0">
                 <Grid>
-                    <Image HorizontalAlignment="Left"  VerticalAlignment="Top"  Margin="10,20,0,0"     Width="35" Height="40" Source="{Binding Image}"/>
-                    <TextBlock x:Name="NameLabel" HorizontalAlignment="Left"  VerticalAlignment="Top"  Margin="45,2,12,0" TextWrapping="WrapWithOverflow" FontWeight="Bold" Text="{Binding Name}"/>
-                    <StackPanel HorizontalAlignment="Left"  VerticalAlignment="Top" Orientation="Horizontal" Margin="43,22,3,54"   >
-                        <Label x:Name="CountOfItemLabel" Margin="2" Content="{Binding countOfItem}"/>
-                        <Label x:Name="OrderLabel" Margin="2" Content="Order(s)"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Image HorizontalAlignment="Left"  VerticalAlignment="Top"  Margin="10,20,0,0"     Width="35" Height="40" Source="{Binding Image}"/>
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock x:Name="NameLabel" HorizontalAlignment="Left" Width="120"  VerticalAlignment="Top" TextWrapping="WrapWithOverflow" FontWeight="Bold" Text="{Binding Name}"/>
+                            <StackPanel HorizontalAlignment="Left"  VerticalAlignment="Top" Orientation="Horizontal"  >
+                                <TextBlock x:Name="CountOfItemLabel" Text="{Binding countOfItem}"/>
+                                <TextBlock x:Name="OrderLabel" Margin="2" Text="Order(s) ✓"/>
+                            </StackPanel>
+                        </StackPanel>
                     </StackPanel>
                     <Label x:Name="SelectedOptionLabel"  Content="{Binding SelectedOption}" HorizontalAlignment="Left" Margin="45,48,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold"/>
                     <Button x:Name="OrderAgainButton" Background="White" Content="Please Order Again!" Width="165" Height="28" Margin="5,0,0,5" VerticalAlignment="Bottom" HorizontalAlignment="Left" FontWeight="Bold" Click="OrderAgainButton_Click"/>
