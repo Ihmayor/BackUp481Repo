@@ -206,6 +206,7 @@ namespace SushiSushi
         #region Dialog Related
         private void ConfirmOrder_Click(object sender, RoutedEventArgs e)
         {
+            if (selectedItems.Count==0)return;
             OrderDialogWindow.Visibility = System.Windows.Visibility.Visible;
             GrayOutWindow.Visibility = System.Windows.Visibility.Visible;
             updateCost(0);
