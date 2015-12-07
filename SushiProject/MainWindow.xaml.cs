@@ -300,7 +300,7 @@ namespace SushiSushi
             MenuCategory SpecialCategory = new MenuCategory("Specials", generateMenuCategoryCust(0, names, images, desc, options));
             MenuCategory SushiCategory = new MenuCategory("Sushi", generateMenuCategoryType2(20, "Sushi", new BitmapImage(new Uri(@"pack://application:,,,/Resources/SalmonSushi.png")), true, true, "These are sushi Items", null));
             MenuCategory AppetizerCategory = new MenuCategory("Appetizers", generateMenuCategoryType(40, "Gyoza Set", new BitmapImage(new Uri(@"pack://application:,,,/Resources/Gyoza.png")), true, false, "These are appetizer Items", null));
-            MenuCategory FriedCategory = new MenuCategory("Fried", generateMenuCategoryType2(60, "Fried", new BitmapImage(new Uri(@"pack://application:,,,/Resources/ShrimpTempura.png")), false, false, "These are fried Items", null));
+            MenuCategory FriedCategory = new MenuCategory("fFried", generateMenuCategoryType2(60, "Fried", new BitmapImage(new Uri(@"pack://application:,,,/Resources/ShrimpTempura.png")), false, false, "These are fried Items", null));
             MenuCategory DrinksCategory = new MenuCategory("Drinks", generateMenuCategoryType3(80, "Drinks", new BitmapImage(new Uri(@"pack://application:,,,/Resources/CocaCola.png")), false, false, "These are drink Items", null));
             MenuCategory DessertCategory = new MenuCategory("Desserts", generateMenuCategoryType4(100, "Desserts", new BitmapImage(new Uri(@"pack://application:,,,/Resources/Mochi.png")), true, false, "These are dessert Items", null));
             List<MenuCategory> TotalItems = new List<MenuCategory>() { SpecialCategory, AppetizerCategory, SushiCategory, FriedCategory, DrinksCategory, DessertCategory };
