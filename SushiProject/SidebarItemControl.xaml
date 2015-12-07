@@ -12,16 +12,17 @@
         <Border BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Center" Height="120" Margin="20" VerticalAlignment="Top" Width="180">
             <Grid x:Name="MainGrid" Margin="0" Background="{Binding ElementName=SushiSushi.SidebarItemControl, Path=MainBackgroundProperty}">
                 <Grid>
-                    <Image HorizontalAlignment="Left"  Margin="10,22,0,0" VerticalAlignment="Top" Width="35" Height="40" Source="{Binding Image}"/>
-                    <Label  HorizontalAlignment="Left" Margin="45,7,-12,0" VerticalAlignment="Top" FontWeight="Bold" Content="{Binding Name}"/>
-
-                    <Label x:Name="PriceLabel" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="47,30,3,54" Loaded="PriceLabel_Loaded" Content="Price: $4.99"  FontSize="14" FontWeight="Bold" />
-                    <Label x:Name="SelectedOptionLabel"  Content="{Binding SelectedOption}" HorizontalAlignment="Left" Margin="47,45,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold"/>
-
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <Image HorizontalAlignment="Left" VerticalAlignment="Top" Width="35" Height="40" Source="{Binding Image}"/>
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock  HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" Width="120" TextWrapping="WrapWithOverflow" Text="{Binding Name}"/>
+                            <TextBlock x:Name="PriceLabel" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding Price}"  FontSize="14" FontWeight="Bold" />
+                            <TextBlock x:Name="SelectedOptionLabel"  Text="{Binding SelectedOption}" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold"/>
+                        </StackPanel>
+                    </StackPanel>
                     <Button Content="+" HorizontalAlignment="Right" FontSize="24" FontWeight="Bold" Margin="10,77,10,0" VerticalAlignment="Top"  Height="30" Width="53"  Background="#FF3ABB1D" Click="Plus_Click"/>
                     <Label HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="16" FontWeight="Bold" Margin="0,0,0,10" Content="{Binding countOfItem}"  RenderTransformOrigin="0.498,0.474"/>
                     <Button Content="-" HorizontalAlignment="Left" HorizontalContentAlignment="Center" FontSize="25" FontWeight="ExtraBold" Margin="10,77,0,0" VerticalAlignment="Top"  Height="30" Width="50"  Background="#FFDE4141" Click="Minus_Click"/>
-
                 </Grid>
             </Grid>
         </Border>

@@ -22,8 +22,8 @@
             <ColumnDefinition Width="0.5*"/>
         </Grid.ColumnDefinitions>
         <Image Source="{Binding Image}" HorizontalAlignment="Left" Height="70" Width="110" Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Margin="10" />
-        <Label Content="{Binding Name}" FontSize="18" FontWeight="Bold"  Grid.Row="0" Grid.Column="2" Margin="5"/>
-        <Label Content="{Binding Price}" FontSize="16" FontWeight="Bold"  Grid.Row="1" Grid.Column="2" Margin="5"/>
+        <TextBlock Text="{Binding Name}" FontSize="14" FontWeight="Bold" TextWrapping="WrapWithOverflow"  Grid.Row="0" Grid.Column="2" Margin="5"/>
+        <TextBlock Text="{Binding Price}" FontSize="16" FontWeight="Bold"  Grid.Row="1" Grid.Column="2" Margin="5"/>
         <TextBlock FontSize="14" Text="{Binding Description}" TextWrapping="WrapWithOverflow" Height="40" Grid.Row="3" Grid.Column="0" Margin="10,0" />
         <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="2" Margin="5">
             <Label Content="G" FontWeight="Bold" Foreground="Orange" FontSize="20" Width="40" Loaded="Gluten_Free_Loaded" />

@@ -67,10 +67,6 @@ namespace SushiSushi
             OnPlusButtonPressed(sender, ((sender as Button).DataContext as MenuItemData));
         }
 
-        private void PriceLabel_Loaded(object sender, RoutedEventArgs e)
-        {
-
-            PriceLabel.Content = ((sender as Label).DataContext as MenuItemData).Price;
-        }
+        
     }
 }
