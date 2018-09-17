@@ -1,0 +1,1491 @@
+Adam Saroka: 10135483
+
+Irene Mayor: 10126658
+
+Answer to 3b)
+
+We chose to use an AVL tree over a red-black tree as the implementation is much simpler. While a red-black tree might have
+been slightly quicker for some insertions, the difference is minor and not worth the effort. Both have similar Big O run 
+times: insertion, deletion, and search time are all O(log n). Search for an AVL tree is sometimes slightly faster, but 
+again the difference is minor. The AVL tree is more rigidly balanced and so depth is guaranteed to be slightly less than Red-Black-Trees so getting the min node will also require less. 
+
+
+
+diff --git a/src/Assignment4PartA b/src/Assignment4PartA
+new file mode 100644
+index 0000000..bc43ecc
+--- /dev/null
++++ b/src/Assignment4PartA
+@@ -0,0 +1,1710 @@
++From 807de529c3ba5ed5fd217fe926e2ebf51a7aa9c3 Mon Sep 17 00:00:00 2001
++From: ihmayor <ihmayor@ucalgary.ca>
++Date: Fri, 20 Nov 2015 14:55:14 -0700
++Subject: [PATCH] Assignment 4 submission
++
++---
++ src/Makefile.dep                         |   0
++ src/Makefile.state                       |   2 +
++ src/Scheduler.h                          |  62 ++++++
++ src/extern/cdi/Makefile.dep              |  35 +++
++ src/extern/lwip/Makefile.dep             | 355 +++++++++++++++++++++++++++++
++ src/generic/AVLTree.h                    | 369 +++++++++++++++++++++++++++++++
++ src/generic/Information about Submission | 364 ++++++++++++++++++++++++++++++
++ src/kernel/Kernel.cc                     |  33 ++-
++ src/machine/Machine.cc                   |   6 +-
++ src/main/InitProcess.cc                  |   3 +-
++ src/main/UserMain.h                      |  11 +
++ src/runtime/Scheduler.cc                 |  37 ++++
++ src/runtime/Scheduler.h                  |   6 +
++ src/ulib/Makefile.dep                    |   8 +
++ src/unit/avltree.cc                      | 153 +++++++++++++
++ src/unit/test.sh                         |   5 +
++ src/user/Makefile                        |  11 +-
++ src/user/Makefile.dep                    |  16 ++
++ 18 files changed, 1472 insertions(+), 4 deletions(-)
++ create mode 100644 src/Makefile.dep
++ create mode 100644 src/Makefile.state
++ create mode 100644 src/Scheduler.h
++ create mode 100644 src/extern/cdi/Makefile.dep
++ create mode 100644 src/extern/lwip/Makefile.dep
++ create mode 100644 src/generic/AVLTree.h
++ create mode 100644 src/generic/Information about Submission
++ create mode 100644 src/main/UserMain.h
++ create mode 100644 src/ulib/Makefile.dep
++ create mode 100644 src/unit/avltree.cc
++ create mode 100644 src/user/Makefile.dep
++
++diff --git a/src/Makefile.dep b/src/Makefile.dep
++new file mode 100644
++index 0000000..e69de29
++diff --git a/src/Makefile.state b/src/Makefile.state
++new file mode 100644
++index 0000000..8cbfe61
++--- /dev/null
+++++ b/src/Makefile.state
++@@ -0,0 +1,2 @@
+++CC_SAVE=/usr/local/kos/cross/gcc/bin/x86_64-pc-elf-gcc
+++RGDB_SAVE=
++diff --git a/src/Scheduler.h b/src/Scheduler.h
++new file mode 100644
++index 0000000..125ea4c
++--- /dev/null
+++++ b/src/Scheduler.h
++@@ -0,0 +1,62 @@
+++/******************************************************************************
+++    Copyright © 2012-2015 Martin Karsten
+++
+++    This program is free software: you can redistribute it and/or modify
+++    it under the terms of the GNU General Public License as published by
+++    the Free Software Foundation, either version 3 of the License, or
+++    (at your option) any later version.
+++
+++    This program is distributed in the hope that it will be useful,
+++    but WITHOUT ANY WARRANTY; without even the implied warranty of
+++    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+++    GNU General Public License for more details.
+++
+++    You should have received a copy of the GNU General Public License
+++    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+++******************************************************************************/
+++#ifndef _Scheduler_h_
+++#define _Scheduler_h_ 1
+++
+++#include "generic/EmbeddedContainers.h"
+++#include "runtime/Runtime.h"
+++
+++class Thread;
+++
+++class Scheduler {
+++  friend void Runtime::idleLoop(Scheduler*);
+++  bufptr_t idleStack[minimumStack];
+++
+++  // very simple N-class prio scheduling
+++  BasicLock readyLock;
+++  volatile mword readyCount; 
+++  EmbeddedList<Thread> readyQueue[maxPriority];
+++  volatile mword preemption;
+++  volatile mword resumption;
+++
+++
+++  Scheduler* partner;
+++
+++  template<typename... Args>
+++  inline void switchThread(Scheduler* target, Args&... a);
+++
+++  inline void enqueue(Thread& t);
+++
+++  Scheduler(const Scheduler&) = delete;                  // no copy
+++  const Scheduler& operator=(const Scheduler&) = delete; // no assignment
+++
+++public:
+++  Scheduler();
+++  static mword schedMinGranularityTicks;
+++  static mword defaultEpochLegnthTicks;
+++  static void setTicks();
+++  static void setTicks(int grain, int epoch);
+++  void setPartner(Scheduler& s) { partner = &s; }
+++  static void resume(Thread& t);
+++  void preempt();
+++  void suspend(BasicLock& lk);
+++  void suspend(BasicLock& lk1, BasicLock& lk2);
+++  void terminate() __noreturn;
+++};
+++
+++
+++#endif /* _Scheduler_h_ */
++diff --git a/src/kernel/Kernel.cc b/src/kernel/Kernel.cc
++index 5a64aea..1ae25e2 100644
++--- a/src/kernel/Kernel.cc
+++++ b/src/kernel/Kernel.cc
++@@ -21,6 +21,8 @@
++ #include "world/Access.h"
++ #include "machine/Machine.h"
++ #include "devices/Keyboard.h"
+++#include <sstream>
+++#include <stdlib.h>
++ 
++ #include "main/UserMain.h"
++ 
++@@ -50,8 +52,37 @@ void kosMain() {
++       if (f.read(&c, 1) == 0) break;
++       KOUT::out1(c);
++     }
++-    KOUT::outl();
+++   KOUT::outl();
+++
+++  auto schedIter = kernelFS.find("schedparam");
+++  if (iter == kernelFS.end()){
+++    KOUT::outl("schedparam not found");
+++   } 
+++   else {
+++ KOUT::outl("Retrieving Schedparams from file");
+++     FileAccess f(schedIter -> second);
+++     string s;
+++     int values [2];
+++     for (int i = 0; i < 2;) {
+++        char c;
+++		if (f.read(&c, 1) == 0) break;
+++		if (c == '\n') { 
+++            values[i] = atoi(s.c_str());            
+++            s="";
+++            i++;
+++        }
+++		s += c;
+++        KOUT::out1(c);
+++      } 
+++     KOUT::outl("Setting Schedparams from file",values[0]);
+++	 Scheduler::setTicks(values[0], values[1]);
+++     KOUT::outl();
+++   }
++   }
+++
+++
+++
+++
++ #if TESTING_TIMER_TEST
++   StdErr.print(" timer test, 3 secs...");
++   for (int i = 0; i < 3; i++) {
++diff --git a/src/machine/Machine.cc b/src/machine/Machine.cc
++index d10deb0..3984b89 100644
++--- a/src/machine/Machine.cc
+++++ b/src/machine/Machine.cc
++@@ -344,7 +344,7 @@ void Machine::initBSP2() {
++   // start up APs one by one (on boot stack): APs go into long mode and halt
++   StdOut.print("AP init (", FmtHex(BOOTAP16 / 0x1000), "):");
++   for (mword idx = 0; idx < processorCount; idx += 1) {
++-    if (idx != bspIndex) {
+++    if (idx != bspIndex) {  
++       apIndex = idx;
++       for (;;) {
++         mword ai = processorTable[idx].apicID;
++@@ -370,6 +370,9 @@ apDone:
++   }
++   StdOut.print(kendl);
++ 
+++  //set min garin and epoch in scheduler
+++  Scheduler::setTicks();
+++
++   DBG::outl(DBG::Boot, "Building kernel filesystem...");
++   // initialize kernel file system with boot modules
++   Multiboot::readModules(kernelBase);
++@@ -397,6 +400,7 @@ apDone:
++   // start irq thread after cdi init -> avoid interference from device irqs
++   DBG::outl(DBG::Boot, "Creating IRQ thread...");
++   Thread::create()->setPriority(topPriority)->setAffinity(processorTable[0].scheduler)->start((ptr_t)asyncIrqLoop);
+++
++ }
++ 
++ void Machine::bootCleanup() {
++diff --git a/src/main/InitProcess.cc b/src/main/InitProcess.cc
++index 053e8d5..f4f4626 100644
++--- a/src/main/InitProcess.cc
+++++ b/src/main/InitProcess.cc
++@@ -17,7 +17,7 @@
++ #include "kernel/Process.h"
++ 
++ int InitProcess() {
++-  Process* p0 = knew<Process>();
+++/*  Process* p0 = knew<Process>();
++   p0->exec("systest");
++ #if !TESTING_KEYCODE_LOOP
++   Process* p1 = knew<Process>();
++@@ -27,5 +27,6 @@ int InitProcess() {
++   p2->exec("threadtest");
++   Process* p3 = knew<Process>();
++   p3->exec("manythread");
+++*/
++   return 0;
++ }
++diff --git a/src/main/UserMain.h b/src/main/UserMain.h
++new file mode 100644
++index 0000000..04c9994
++--- /dev/null
+++++ b/src/main/UserMain.h
++@@ -0,0 +1,11 @@
+++extern int LockTest();
+++extern int TcpTest();
+++extern int Experiments();
+++extern int InitProcess();
+++
+++static void UserMain() {
+++  LockTest();
+++  TcpTest();
+++  Experiments();
+++  InitProcess();
+++}
++diff --git a/src/runtime/Scheduler.cc b/src/runtime/Scheduler.cc
++index 7d760c3..c854253 100644
++--- a/src/runtime/Scheduler.cc
+++++ b/src/runtime/Scheduler.cc
++@@ -19,8 +19,16 @@
++ #include "runtime/Stack.h"
++ #include "runtime/Thread.h"
++ #include "kernel/Output.h"
+++#include "kernel/Clock.h"
+++
+++
+++int defaultMinGranularity=4;
+++int defaultEpochLength=20;
+++mword Scheduler::schedMinGranularityTicks;
+++mword Scheduler::defaultEpochLengthTicks;
++ 
++ Scheduler::Scheduler() : readyCount(0), preemption(0), resumption(0), partner(this) {
+++  
++   Thread* idleThread = Thread::create((vaddr)idleStack, minimumStack);
++   idleThread->setAffinity(this)->setPriority(idlePriority);
++   // use low-level routines, since runtime context might not exist
++@@ -31,6 +39,35 @@ Scheduler::Scheduler() : readyCount(0), preemption(0), resumption(0), partner(th
++ 
++ static inline void unlock() {}
++ 
+++void Scheduler::setTicks(int grainInt, int epochInt){
+++    //convert ints to mwords (there is no atomword function so we used ints)
+++    mword grain = grainInt;     
+++    mword epoch = epochInt;
+++
+++    //find ticks per second
+++	mword startTSC = CPU::readTSC();
+++	Clock::wait(1000);
+++	mword endTSC = CPU::readTSC();
+++    mword total = endTSC - startTSC;
+++	
+++	mword mgTicks = (total*grain) / 1000;
+++    mword epTicks = (total*epoch) / 1000;
+++	StdOut.printl("Cycles per second: ", total,"\n");
+++	StdOut.printl("Epoch Length in ms: ", epoch,"\n");
+++	StdOut.printl("Epoch Length in ticks: ", mgTicks,"\n");
+++	StdOut.printl("Min Granularity in ms: ", grain,"\n");
+++	StdOut.printl("Min Granularity in ticks: ", epTicks,"\n");
+++
+++    Scheduler::schedMinGranularityTicks = mgTicks;
+++	Scheduler::defaultEpochLengthTicks = epTicks;
+++}
+++
+++void Scheduler::setTicks(){
+++     KOUT::outl("Setting Schedparams from default");
+++	Scheduler::setTicks(defaultMinGranularity, defaultEpochLength);
+++}
+++
+++
++ template<typename... Args>
++ static inline void unlock(BasicLock &l, Args&... a) {
++   l.release();
++diff --git a/src/runtime/Scheduler.h b/src/runtime/Scheduler.h
++index bc86000..afe25c7 100644
++--- a/src/runtime/Scheduler.h
+++++ b/src/runtime/Scheduler.h
++@@ -33,6 +33,7 @@ class Scheduler {
++   volatile mword preemption;
++   volatile mword resumption;
++ 
+++
++   Scheduler* partner;
++ 
++   template<typename... Args>
++@@ -45,12 +46,17 @@ class Scheduler {
++ 
++ public:
++   Scheduler();
+++  static mword schedMinGranularityTicks;
+++  static mword defaultEpochLengthTicks;
++   void setPartner(Scheduler& s) { partner = &s; }
++   static void resume(Thread& t);
++   void preempt();
++   void suspend(BasicLock& lk);
++   void suspend(BasicLock& lk1, BasicLock& lk2);
++   void terminate() __noreturn;
+++  static void setTicks();
+++  static void setTicks(int grain, int epoch);
++ };
++ 
+++
++ #endif /* _Scheduler_h_ */
++diff --git a/src/ulib/Makefile.dep b/src/ulib/Makefile.dep
++new file mode 100644
++index 0000000..c7d63d5
++--- /dev/null
+++++ b/src/ulib/Makefile.dep
++@@ -0,0 +1,8 @@
+++libKOS.o: libKOS.cc /home/ugd/ihmayor/kos/src/ulib/../testoptions.h \
+++ /home/ugd/ihmayor/kos/src/ulib/../include/syscalls.h \
+++ /home/ugd/ihmayor/kos/src/ulib/../include/kostypes.h
+++pthread.o: pthread.cc /home/ugd/ihmayor/kos/src/ulib/../testoptions.h \
+++ /home/ugd/ihmayor/kos/src/ulib/../include/syscalls.h \
+++ /home/ugd/ihmayor/kos/src/ulib/../include/kostypes.h \
+++ /home/ugd/ihmayor/kos/src/ulib/../include/pthread.h \
+++ /home/ugd/ihmayor/kos/src/ulib/../include/syscalls.h
++diff --git a/src/unit/avltree.cc b/src/unit/avltree.cc
++new file mode 100644
++index 0000000..64e7bfb
++--- /dev/null
+++++ b/src/unit/avltree.cc
++@@ -0,0 +1,153 @@
+++#include "generic/AVLTree.h"
+++#include <iostream> 
+++using namespace std;
+++
+++
++diff --git a/src/unit/test.sh b/src/unit/test.sh
++index e33f978..b3097b0 100644
++--- a/src/unit/test.sh
+++++ b/src/unit/test.sh
++@@ -18,3 +18,8 @@ echo "region - expected vs actual:
++ g++ $CXXFLAGS -mpopcnt region.cc || exit 1
++ echo $(echo i 10 20 i 30 40 i 50 60 r 10 15 r 25 45 r 30 40 r 55 60 o 10 20 o 70 80 i 18 55| ./a.out)
++ rm a.out
+++echo "AVLTreeInsert - expected vs actual"
+++g++  $CXXFLAGS avltree.cc -g
+++./a.out
+++rm a.out
+++
++diff --git a/src/user/Makefile b/src/user/Makefile
++index d86949a..3965764 100644
++--- a/src/user/Makefile
+++++ b/src/user/Makefile
++@@ -11,7 +11,7 @@ SRC=$(wildcard *.cc)
++ OBJ=$(SRC:%.cc=%.o)
++ EXE=$(SRC:%.cc=exec/%)
++ 
++-all: $(EXE) exec/motb
+++all: $(EXE) exec/motb  exec/schedparam
++ 
++ .PHONY: .FORCE
++ 
++@@ -34,6 +34,15 @@ exec/motb: .FORCE
++ 	@date >> $@
++ 	@echo >> $@
++ 
+++exec/schedparam: .FORCE
+++	@echo creating $@
+++	@mkdir -p exec
+++	@echo "4 -> schedMinGranularity" >> $@
+++	@echo -n "20 -> defaultEpochLength" >> $@
+++	@echo >> $@
+++	@echo >> $@
+++
+++
++ echo:
++ 	@echo SRC: $(SRC)
++ 	@echo OBJ: $(OBJ)
++diff --git a/src/user/Makefile.dep b/src/user/Makefile.dep
++new file mode 100644
++index 0000000..f6b065d
++--- /dev/null
+++++ b/src/user/Makefile.dep
++@@ -0,0 +1,16 @@
+++threadtest.o: threadtest.cc \
+++ /home/ugd/ihmayor/kos/src/user/../testoptions.h \
+++ /home/ugd/ihmayor/kos/src/user/../include/syscalls.h \
+++ /home/ugd/ihmayor/kos/src/user/../include/kostypes.h \
+++ /home/ugd/ihmayor/kos/src/user/../include/pthread.h \
+++ /home/ugd/ihmayor/kos/src/user/../include/syscalls.h
+++systest.o: systest.cc /home/ugd/ihmayor/kos/src/user/../testoptions.h \
+++ /home/ugd/ihmayor/kos/src/user/../include/syscalls.h \
+++ /home/ugd/ihmayor/kos/src/user/../include/kostypes.h
+++manythread.o: manythread.cc \
+++ /home/ugd/ihmayor/kos/src/user/../testoptions.h \
+++ /home/ugd/ihmayor/kos/src/user/../include/syscalls.h \
+++ /home/ugd/ihmayor/kos/src/user/../include/kostypes.h \
+++ /home/ugd/ihmayor/kos/src/user/../include/pthread.h \
+++ /home/ugd/ihmayor/kos/src/user/../include/syscalls.h
+++kbloop.o: kbloop.cc /home/ugd/ihmayor/kos/src/user/../testoptions.h
++-- 
++2.4.3
++
+diff --git a/src/Makefile.dep b/src/Makefile.dep
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/Makefile.state b/src/Makefile.state
+new file mode 100644
+index 0000000..8cbfe61
+--- /dev/null
++++ b/src/Makefile.state
+@@ -0,0 +1,2 @@
++CC_SAVE=/usr/local/kos/cross/gcc/bin/x86_64-pc-elf-gcc
++RGDB_SAVE=
+diff --git a/src/Scheduler.h b/src/Scheduler.h
+new file mode 100644
+index 0000000..125ea4c
+--- /dev/null
++++ b/src/Scheduler.h
+@@ -0,0 +1,62 @@
++/******************************************************************************
++    Copyright © 2012-2015 Martin Karsten
++
++    This program is free software: you can redistribute it and/or modify
++    it under the terms of the GNU General Public License as published by
++    the Free Software Foundation, either version 3 of the License, or
++    (at your option) any later version.
++
++    This program is distributed in the hope that it will be useful,
++    but WITHOUT ANY WARRANTY; without even the implied warranty of
++    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++    GNU General Public License for more details.
++
++    You should have received a copy of the GNU General Public License
++    along with this program.  If not, see <http://www.gnu.org/licenses/>.
++******************************************************************************/
++#ifndef _Scheduler_h_
++#define _Scheduler_h_ 1
++
++#include "generic/EmbeddedContainers.h"
++#include "runtime/Runtime.h"
++
++class Thread;
++
++class Scheduler {
++  friend void Runtime::idleLoop(Scheduler*);
++  bufptr_t idleStack[minimumStack];
++
++  // very simple N-class prio scheduling
++  BasicLock readyLock;
++  volatile mword readyCount; 
++  EmbeddedList<Thread> readyQueue[maxPriority];
++  volatile mword preemption;
++  volatile mword resumption;
++
++
++  Scheduler* partner;
++
++  template<typename... Args>
++  inline void switchThread(Scheduler* target, Args&... a);
++
++  inline void enqueue(Thread& t);
++
++  Scheduler(const Scheduler&) = delete;                  // no copy
++  const Scheduler& operator=(const Scheduler&) = delete; // no assignment
++
++public:
++  Scheduler();
++  static mword schedMinGranularityTicks;
++  static mword defaultEpochLegnthTicks;
++  static void setTicks();
++  static void setTicks(int grain, int epoch);
++  void setPartner(Scheduler& s) { partner = &s; }
++  static void resume(Thread& t);
++  void preempt();
++  void suspend(BasicLock& lk);
++  void suspend(BasicLock& lk1, BasicLock& lk2);
++  void terminate() __noreturn;
++};
++
++
++#endif /* _Scheduler_h_ */
+diff --git a/src/devices/RTC.cc b/src/devices/RTC.cc
+index d3c083e..8e2958e 100644
+--- a/src/devices/RTC.cc
++++ b/src/devices/RTC.cc
+@@ -17,6 +17,8 @@
+ #include "machine/APIC.h"
+ #include "machine/Machine.h"
+ #include "devices/RTC.h"
++#include "kernel/Output.h"
++#include "math.h"
+ 
+ void RTC::init() { // see http://wiki.osdev.org/RTC
+   Machine::registerIrqSync(PIC::RTC, 0xf8);
+@@ -26,7 +28,11 @@ void RTC::init() { // see http://wiki.osdev.org/RTC
+   CPU::out8(0x70, 0x0A);             // select Status Register A
+   uint8_t prev = CPU::in8(0x71);     // read current value
+   CPU::out8(0x70, 0x0A);             // select Status Register A
+-  CPU::out8(0x71, prev | 0x06);      // set rate to 32768 / (2^(6-1)) = 1024 Hz
++
++  int rate = 3;
++  CPU::out8(0x71, prev | rate);      // set rate to 32768 / (2^(rate-1)) = 1024 Hz
++  int freq = 32768 >> (rate-1);
++  KOUT::outl("Interrupt rate set to ", freq);
+ 
+   CPU::out8(0x70, 0x0B);             // select Status Register B
+   prev = CPU::in8(0x71);             // read current value
+diff --git a/src/extern/cdi/Makefile.dep b/src/extern/cdi/Makefile.dep
+new file mode 100644
+index 0000000..aa818ce
+--- /dev/null
++++ b/src/extern/cdi/Makefile.dep
+@@ -0,0 +1,35 @@
++++ b/src/generic/AVLTree.h
+@@ -0,0 +1,427 @@
++#ifndef _AVLTree_h_
++#define _AVLTree_h_ 1
++
++#include "kernel/Clock.h"
++#include "generic/basics.h"
++#include "generic/EmbeddedContainers.h"
++#include "kernel/Output.h"
++#include <stdlib.h>
++#define max2(A, B) ((A) > (B) ? (A) :(B)); //Only used for comparing integer subtree heights so does not need new comparator
++
++template<typename T>
++class AVLTree {
++    struct AVLNode
++    {
++        AVLNode* leftChild;
++        AVLNode* rightChild;
++        AVLNode* parent;
++        T data;	
++    };
++	
++	int (*compare)(T data1, T data2);
++	
++public:
++    AVLNode* treeRoot = NULL;
++	
++	//Passes some outside defined comparator function
++	void setComparator(int (newCompare)(T data,T data1))
++	{
++		compare = newCompare;
++	} 
++	
++	//Used for generic comparision from T
++	bool greaterThan (T data1,T data2)
++	{
++		if (compare(data1,data2) > 0)
++			return true;
++		else
++			return false;
++	}
++
++    bool equalTo(T data1, T data2)
++    {
++        if (compare(data1,data2) == 0)
++            return true;
++        else
++            return false;
++    }
++	
++	bool isEmpty()
++	{
++
++		if (treeRoot == NULL)	
++			return true;
++		else
++			return false;
++
++	}
++	
++    void insert(T obj)
++    {
++        if (treeRoot == NULL){    	
++            treeRoot = (AVLNode*)malloc(sizeof(struct AVLNode));
++            treeRoot->data = obj; 
++            treeRoot->leftChild = NULL; // Clear any old pointers
++            treeRoot->rightChild = NULL;
++            treeRoot->parent = NULL;
++            }
++        else
++            {
++                insertHelper(obj, treeRoot);
++            }
++    }
++
++    void deleteNode(T obj)
++    {
++        if (treeRoot == NULL)
++            return;
++        else
++            {
++                AVLNode* foundNode = find(obj, treeRoot);
++                if (foundNode == NULL)
++                    cout << "OBJ NOT IN TREE"<<endl;
++                else
++                    {
++                    if (foundNode->leftChild == NULL && foundNode->rightChild == NULL)
++                        {
++                            if(foundNode->parent == NULL)
++                                {
++                                treeRoot->leftChild = NULL;
++                                treeRoot->rightChild = NULL;
++                                treeRoot = NULL;
++                                }
++                            else
++                                {
++                                if (foundNode->parent->leftChild == foundNode)
++                                    foundNode->parent->leftChild = NULL;
++                                if (foundNode->parent->rightChild == foundNode)
++                                    foundNode->parent->rightChild = NULL;
++                                balance(foundNode->parent);
++                                foundNode->rightChild = NULL;
++                                foundNode->leftChild = NULL;
++                                foundNode=NULL;
++                                free(foundNode);
++                                }                                
++                                
++                        }
++                    else
++                         deleteHelper(foundNode);
++                    }
++            free(foundNode);
++            }
++    }
++
++ 
++    T* readMinNode()
++    {
++        if (isEmpty()){
++            KOUT::outl("min node not found");
++            return NULL;
++            }   
++        else
++            {
++            AVLNode* foundNode = treeRoot;
++            while (foundNode->leftChild != NULL)
++                foundNode = foundNode->leftChild;
++            T* result = &foundNode->data;
++            return result;
++            }
++    }
++
++    T* popMinNode()
++    {
++        if (isEmpty())
++            {
++            KOUT::outl("pop from empty tree");
++            return NULL;
++            }   
++        else
++            {
++                AVLNode* foundNode = treeRoot;
++                while (foundNode->leftChild != NULL)
++                    foundNode = foundNode->leftChild;
++                T* result = &foundNode->data;
++                deleteNode(foundNode->data);
++                return result;
++            }         
++    }
++
++
++    void displayTree(AVLNode* root)
++    {
++        if (root == NULL)
++            {
++            cout<<"None"<<endl;
++            return;
++            }
++            
++        else
++            {
++                cout << root->data<<endl;
++                if (root->leftChild!= NULL)
++                    {
++                        cout << "LeftChild: "<< root->leftChild->data<<endl;
++                    }
++
++                if (root->rightChild!=NULL)
++                    {
++                        cout << "RightChild: "<< root->rightChild->data<<endl;
++                    }
++                displayTree(root->leftChild);
++                displayTree(root->rightChild);
++                
++            }
++    }
++
++    
++private:
++    AVLNode* find(T obj, AVLNode* curr)
++    {
++        if (curr == NULL)
++            return curr;
++        if (equalTo(curr->data, obj))
++            return curr;
++        else
++            {
++            if(greaterThan(obj,curr->data))
++                return find(obj, curr->rightChild);
++            else
++                return find(obj, curr->leftChild);
++            }
++    }
++
++    void insertHelper(T obj, AVLNode* root)
++    {
++        AVLNode* nodeToInsert;		
++     
++        if (greaterThan(obj,root->data))
++        {
++        if (root->rightChild != NULL)
++                {
++                    insertHelper(obj,root->rightChild);
++                }
++            else
++                {
++                    nodeToInsert = makeNode(obj, root);
++                    root->rightChild = nodeToInsert;
++//                    balance(nodeToInsert);
++    
++                }
++        }
++        else
++        {
++            if (root->leftChild != NULL)
++                {
++                    insertHelper(obj,root->leftChild);
++                }
++            else
++                {
++                    nodeToInsert = makeNode(obj, root);
++                    root->leftChild = nodeToInsert;
++                    //balance(nodeToInsert);
++      
++                }
++
++        }
++    }
++    
++    void deleteHelper(AVLNode* nodeToDelete)
++    {
++        if (nodeToDelete->leftChild != NULL && nodeToDelete->rightChild !=NULL)        
++            {
++                AVLNode* successor = nodeToDelete->rightChild;
++                
++
++                while (successor->leftChild != NULL)
++                {
++                    successor = successor->leftChild;
++                }
++                
++                               
++                if (successor->rightChild != NULL)
++                {
++                    successor->rightChild->parent = successor->parent;
++                    updateParent(successor,successor->rightChild);
++                }
++
++                //Ensure that we separate the link between sucessor and its parent
++                updateParent(successor, NULL);       
++                successor->parent = NULL;         
++                successor->parent = nodeToDelete->parent;
++
++                //In the case the sucessor is nodeToDelete's rightChild    
++                if (nodeToDelete->rightChild!=NULL)
++                    {
++                    successor->rightChild = nodeToDelete->rightChild;
++                    nodeToDelete->rightChild->parent = successor;
++                    }
++
++                successor->leftChild = nodeToDelete->leftChild;
++                nodeToDelete->leftChild->parent = successor;
++
++                updateParent(nodeToDelete,successor);
++              
++                nodeToDelete= NULL;        
++                free(nodeToDelete); 
++
++                if (successor != treeRoot) 
++                {           
++                     balance(successor->parent);        
++                }
++                
++            }
++        else
++        {
++            if (nodeToDelete->leftChild !=NULL)
++            {
++                
++                nodeToDelete->leftChild->parent = nodeToDelete->parent;
++                updateParent(nodeToDelete, nodeToDelete->leftChild);
++                balance(nodeToDelete->leftChild);
++                nodeToDelete = NULL;
++                free(nodeToDelete);
++            }
++            else if (nodeToDelete->rightChild !=NULL)
++            {
++                nodeToDelete->rightChild->parent = nodeToDelete->parent;
++                updateParent(nodeToDelete, nodeToDelete->rightChild);
++                balance(nodeToDelete->rightChild);
++                nodeToDelete = NULL;
++                free(nodeToDelete);
++            }
++        
++        }            
++
++    }
++ 
++    void updateParent(AVLNode* old, AVLNode* newNode)
++    {
++        if (old->parent == NULL)
++            treeRoot = newNode;
++        else if (old->parent->leftChild == old)
++            old->parent->leftChild = newNode;
++        else if (old->parent->rightChild == old)
++            old->parent->rightChild = newNode;
++    }
++
++
++    //Balance from leaf upwards
++    void balance(AVLNode* nodeToBalance)
++    {
++return;
++      StdOut.printl("balanceing\n");
++
++        if (nodeToBalance == NULL)
++            return; 
++
++
++        AVLNode nn = *nodeToBalance;
++        AVLNode* glc = nn.leftChild;
++        AVLNode* grc = nn.rightChild;
++
++        StdOut.printl("bal3",nn.leftChild,"\n");
++        int leftSubTreeHeight = getHeight(glc);
++        StdOut.printl("bal2\n");
++        int rightSubTreeHeight = getHeight(grc);
++
++
++
++        int balanceFactor = leftSubTreeHeight - rightSubTreeHeight;
++        StdOut.printl("bal2\n");
++        if (balanceFactor <=-2)
++            {
++            rotateLeft(nodeToBalance);         
++            }
++        else if (balanceFactor >= 2)
++            rotateRight(nodeToBalance);         
++        else  
++            {      
++              balance(nodeToBalance->parent);
++            }
++    }
++
++
++    int getHeight(AVLNode* rootp)
++    {   
++        int leftH = 0;     
++        int rightH = 0;
++      	if (rootp == NULL){
++	return 0;}
++
++   	AVLNode root = *rootp;
++
++        if (root.leftChild!=NULL)
++        {
++            AVLNode* lc = root.leftChild;
++            int leftH = getHeight(lc);     
++        }
++        //int rightH = getHeight(rc);
++
++
++
++        return max2(leftH,rightH);
++    }
++	
++
++	//Given some node that is the root of a subtree. Rotate left around that subtree.
++    void rotateLeft(AVLNode* root)
++    {
++        AVLNode* temp = root->rightChild;
++        
++        //Update Root's rightChild
++        root->rightChild = temp->leftChild;
++        if (temp->leftChild !=NULL)
++            temp->leftChild->parent = root;
++
++        //Actual Rotation        
++        temp->parent = root->parent;
++        root->parent = temp; 
++        temp->leftChild = root;    
++         
++        if (temp->parent ==NULL)
++            treeRoot = temp;
++        else
++            {
++                if (temp->parent->leftChild == root)
++                    temp->parent->leftChild = temp;
++                else
++                    temp->parent->rightChild = temp;                
++
++            }
++    }
++
++
++    void rotateRight(AVLNode* root)
++    {      
++       AVLNode* temp = root->leftChild;
++        root->leftChild = temp->rightChild;
++        if (temp->rightChild !=NULL)
++            temp->rightChild->parent = root;
++        temp->parent = root->parent;
++        root->parent = temp; 
++        temp->rightChild = root;    
++         
++        if (temp->parent ==NULL)
++            treeRoot = temp;
++        else
++            {
++                if (temp->parent->leftChild == root)
++                    temp->parent->leftChild = temp;
++                else
++                    temp->parent->rightChild = temp;                
++            }
++      } 
++	    
++    AVLNode* makeNode(T obj, AVLNode* parent)
++    {
++        AVLNode* newNode = (AVLNode*)malloc(sizeof(struct AVLNode));
++        newNode->data = obj;
++        newNode->parent= parent;
++        newNode->leftChild = NULL;
++        newNode->rightChild = NULL;
++
++        
++        return newNode;
++    }  
++};
++#endif
+diff --git a/src/kernel/Kernel.cc b/src/kernel/Kernel.cc
+index 5a64aea..1ae25e2 100644
+--- a/src/kernel/Kernel.cc
++++ b/src/kernel/Kernel.cc
+@@ -21,6 +21,8 @@
+ #include "world/Access.h"
+ #include "machine/Machine.h"
+ #include "devices/Keyboard.h"
++#include <sstream>
++#include <stdlib.h>
+ 
+ #include "main/UserMain.h"
+ 
+@@ -50,8 +52,37 @@ void kosMain() {
+       if (f.read(&c, 1) == 0) break;
+       KOUT::out1(c);
+     }
+-    KOUT::outl();
++   KOUT::outl();
++
++  auto schedIter = kernelFS.find("schedparam");
++  if (iter == kernelFS.end()){
++    KOUT::outl("schedparam not found");
++   } 
++   else {
++ KOUT::outl("Retrieving Schedparams from file");
++     FileAccess f(schedIter -> second);
++     string s;
++     int values [2];
++     for (int i = 0; i < 2;) {
++        char c;
++		if (f.read(&c, 1) == 0) break;
++		if (c == '\n') { 
++            values[i] = atoi(s.c_str());            
++            s="";
++            i++;
++        }
++		s += c;
++        KOUT::out1(c);
++      } 
++     KOUT::outl("Setting Schedparams from file",values[0]);
++	 Scheduler::setTicks(values[0], values[1]);
++     KOUT::outl();
++   }
+   }
++
++
++
++
+ #if TESTING_TIMER_TEST
+   StdErr.print(" timer test, 3 secs...");
+   for (int i = 0; i < 3; i++) {
+diff --git a/src/machine/Machine.cc b/src/machine/Machine.cc
+index d10deb0..3984b89 100644
+--- a/src/machine/Machine.cc
++++ b/src/machine/Machine.cc
+@@ -344,7 +344,7 @@ void Machine::initBSP2() {
+   // start up APs one by one (on boot stack): APs go into long mode and halt
+   StdOut.print("AP init (", FmtHex(BOOTAP16 / 0x1000), "):");
+   for (mword idx = 0; idx < processorCount; idx += 1) {
+-    if (idx != bspIndex) {
++    if (idx != bspIndex) {  
+       apIndex = idx;
+       for (;;) {
+         mword ai = processorTable[idx].apicID;
+@@ -370,6 +370,9 @@ apDone:
+   }
+   StdOut.print(kendl);
+ 
++  //set min garin and epoch in scheduler
++  Scheduler::setTicks();
++
+   DBG::outl(DBG::Boot, "Building kernel filesystem...");
+   // initialize kernel file system with boot modules
+   Multiboot::readModules(kernelBase);
+@@ -397,6 +400,7 @@ apDone:
+   // start irq thread after cdi init -> avoid interference from device irqs
+   DBG::outl(DBG::Boot, "Creating IRQ thread...");
+   Thread::create()->setPriority(topPriority)->setAffinity(processorTable[0].scheduler)->start((ptr_t)asyncIrqLoop);
++
+ }
+ 
+ void Machine::bootCleanup() {
+diff --git a/src/main/InitProcess.cc b/src/main/InitProcess.cc
+index 053e8d5..f4f4626 100644
+--- a/src/main/InitProcess.cc
++++ b/src/main/InitProcess.cc
+@@ -17,7 +17,7 @@
+ #include "kernel/Process.h"
+ 
+ int InitProcess() {
+-  Process* p0 = knew<Process>();
++/*  Process* p0 = knew<Process>();
+   p0->exec("systest");
+ #if !TESTING_KEYCODE_LOOP
+   Process* p1 = knew<Process>();
+@@ -27,5 +27,6 @@ int InitProcess() {
+   p2->exec("threadtest");
+   Process* p3 = knew<Process>();
+   p3->exec("manythread");
++*/
+   return 0;
+ }
+diff --git a/src/main/UserMain.h b/src/main/UserMain.h
+new file mode 100644
+index 0000000..04c9994
+--- /dev/null
++++ b/src/main/UserMain.h
+@@ -0,0 +1,11 @@
++extern int LockTest();
++extern int TcpTest();
++extern int Experiments();
++extern int InitProcess();
++
++static void UserMain() {
++  LockTest();
++  TcpTest();
++  Experiments();
++  InitProcess();
++}
+diff --git a/src/runtime/Scheduler.cc b/src/runtime/Scheduler.cc
+index 7d760c3..1ec8ea3 100644
+--- a/src/runtime/Scheduler.cc
++++ b/src/runtime/Scheduler.cc
+@@ -18,19 +18,70 @@
+ #include "runtime/Scheduler.h"
+ #include "runtime/Stack.h"
+ #include "runtime/Thread.h"
++#include "generic/AVLTree.h"
+ #include "kernel/Output.h"
++#include "kernel/Clock.h"
++#include "generic/EmbeddedContainers.h"
++
++mword previousTSC;
++mword threadTimeLeft;
++mword minvRuntime=0;
++mword totalPriority = 0;
++
++int TCompare(Thread* a, Thread* b){ return a->vRuntime - b->vRuntime;}
++
++
++// scheduler settings and defaults
++int defaultMinGranularity=4;
++int defaultEpochLength=20;
++
++mword Scheduler::schedMinGranularityTicks;
++mword Scheduler::defaultEpochLengthTicks;
+ 
+ Scheduler::Scheduler() : readyCount(0), preemption(0), resumption(0), partner(this) {
++  readyTree.setComparator(TCompare);
+   Thread* idleThread = Thread::create((vaddr)idleStack, minimumStack);
+   idleThread->setAffinity(this)->setPriority(idlePriority);
+   // use low-level routines, since runtime context might not exist
+-  idleThread->stackPointer = stackInit(idleThread->stackPointer, &Runtime::getDefaultMemoryContext(), (ptr_t)Runtime::idleLoop, this, nullptr, nullptr);
+-  readyQueue[idlePriority].push_back(*idleThread);
++  idleThread->stackPointer = stackInit(idleThread->stackPointer, &Runtime::getDefaultMemoryContext(), (ptr_t)Runtime::idleLoop, this, nullptr, nullptr);  
++  readyTree.insert(idleThread);
+   readyCount += 1;
+ }
+ 
+ static inline void unlock() {}
+ 
++//sets min granulatiry and epoch size. Everything set in sched to minimize coupling.
++void Scheduler::setTicks(int grainInt, int epochInt){
++    //convert ints to mwords (there is no a-to-mword function so we used ints)
++    mword grain = grainInt;     
++    mword epoch = epochInt;
++
++    //find ticks per second
++	mword startTSC = CPU::readTSC();
++	Clock::wait(1000);
++	mword endTSC = CPU::readTSC();
++   	mword total = endTSC - startTSC;
++	
++	mword mgTicks = (total*grain) / 1000;
++	mword epTicks = (total*epoch) / 1000;
++	StdOut.printl("Cycles per second: ", total,"\n");
++	StdOut.printl("Epoch Length in ms: ", epoch,"\n");
++	StdOut.printl("Epoch Length in ticks: ", mgTicks,"\n");
++	StdOut.printl("Min Granularity in ms: ", grain,"\n");
++	StdOut.printl("Min Granularity in ticks: ", epTicks,"\n");
++
++	Scheduler::schedMinGranularityTicks = mgTicks;
++	Scheduler::defaultEpochLengthTicks = epTicks;   
++	Clock::wait(1000);
++}
++
++// sets min granularity and epoch size to defaults
++void Scheduler::setTicks(){
++     KOUT::outl("Setting Schedparams from default");
++	Scheduler::setTicks(defaultMinGranularity, defaultEpochLength);
++}
++
++
+ template<typename... Args>
+ static inline void unlock(BasicLock &l, Args&... a) {
+   l.release();
+@@ -42,15 +93,19 @@ template<typename... Args>
+ inline void Scheduler::switchThread(Scheduler* target, Args&... a) {
+   preemption += 1;
+   CHECK_LOCK_MIN(sizeof...(Args));
++
+   Thread* nextThread;
+   readyLock.acquire();
+-  for (mword i = 0; i < (target ? idlePriority : maxPriority); i += 1) {
+-    if (!readyQueue[i].empty()) {
+-      nextThread = readyQueue[i].pop_front();
+-      readyCount -= 1;
+-      goto threadFound;
+-    }
++
++  if (!readyTree.isEmpty()) {  	
++    nextThread = *readyTree.popMinNode();  
++    readyCount -= 1;
++    totalPriority -= Runtime::getCurrThread()->priority;
++    mword wait = CPU::readTSC() - nextThread->queueTime;
++    StdOut.printl("Switching thread. Waited ",wait," ticks\n");
++    goto threadFound;
+   }
++
+   readyLock.release();
+   GENASSERT0(target);
+   GENASSERT0(!sizeof...(Args));
+@@ -70,6 +125,27 @@ threadFound:
+ 
+   Runtime::MemoryContext& ctx = Runtime::getMemoryContext();
+   Runtime::setCurrThread(nextThread);
++
++  //find epoch time and slice for current thread			
++  mword slice = (Scheduler::defaultEpochLengthTicks * nextThread->priority) / totalPriority;		    // find time slice for next thread
++  if (slice < Scheduler::schedMinGranularityTicks * nextThread->priority)					// see if slice is too small (reduction of formula in assignment sheet)
++  {
++	  slice = Scheduler::schedMinGranularityTicks * nextThread->priority;
++  }
++  threadTimeLeft = slice;												// set time left on next thread to calculated time slice
++  previousTSC = CPU::readTSC();											// set start time of thread
++
++
++  if (!readyTree.isEmpty())
++  {
++    Thread** t = readyTree.readMinNode();
++    Thread* nt = *t;
++    minvRuntime = nt->vRuntime;
++  }else {
++    minvRuntime =currThread->vRuntime;
++  }
++
++
+   Thread* prevThread = stackSwitch(currThread, target, &currThread->stackPointer, nextThread->stackPointer);
+   // REMEMBER: Thread might have migrated from other processor, so 'this'
+   //           might not be currThread's Scheduler object anymore.
+@@ -95,11 +171,16 @@ extern "C" void invokeThread(Thread* prevThread, Runtime::MemoryContext* ctx, fu
+ }
+ 
+ void Scheduler::enqueue(Thread& t) {
++  StdOut.printl("enqueuing thread\n");
+   GENASSERT1(t.priority < maxPriority, t.priority);
+   readyLock.acquire();
+-  readyQueue[t.priority].push_back(t);
++  t.vRuntime += minvRuntime;
++  t.queueTime = CPU::readTSC();
++  Thread* tPoint= &t;
++  readyTree.insert(tPoint);
+   bool wake = (readyCount == 0);
+   readyCount += 1;
++  totalPriority += t.priority;
+   readyLock.release();
+   Runtime::debugS("Thread ", FmtHex(&t), " queued on ", FmtHex(this));
+   if (wake) Runtime::wakeUp(this);
+@@ -112,26 +193,47 @@ void Scheduler::resume(Thread& t) {
+ }
+ 
+ void Scheduler::preempt() {               // IRQs disabled, lock count inflated
++  mword timePassed = CPU::readTSC() - previousTSC;
++
+ #if TESTING_NEVER_MIGRATE
+   switchThread(this);
+-#else /* migration enabled */
++#else  //migration enabled 
+   Scheduler* target = Runtime::getCurrThread()->getAffinity();
+ #if TESTING_ALWAYS_MIGRATE
+   if (!target) target = partner;
+-#else /* simple load balancing */
++#else // simple load balancing 
+   if (!target) target = (partner->readyCount + 2 < readyCount) ? partner : this;
+ #endif
+-  switchThread(target);
++
++
++  Runtime::getCurrThread()->vRuntime += timePassed / Runtime::getCurrThread()->priority;    //add time/priority to virtual runtime
++  
++  if (threadTimeLeft > timePassed)
++     {threadTimeLeft -= timePassed;}
++  else {threadTimeLeft = 0;}
++
++  if (threadTimeLeft == 0 && Runtime::getCurrThread()->vRuntime <= minvRuntime){
++    Scheduler* target = Runtime::getCurrThread()->getAffinity();
++    switchThread(target);
++  }
++
++previousTSC = CPU::readTSC();
+ #endif
+ }
+ 
+ void Scheduler::suspend(BasicLock& lk) {
++  StdOut.printl("suspending thread\n");
+   Runtime::FakeLock fl;
++  Thread* thr = Runtime::getCurrThread();
++  thr->vRuntime -= minvRuntime;
+   switchThread(nullptr, lk);
+ }
+ 
+ void Scheduler::suspend(BasicLock& lk1, BasicLock& lk2) {
++  StdOut.printl("suspending thread\n");
+   Runtime::FakeLock fl;
++  Thread* thr = Runtime::getCurrThread();
++  thr->vRuntime -= minvRuntime;
+   switchThread(nullptr, lk1, lk2);
+ }
+ 
+diff --git a/src/runtime/Scheduler.h b/src/runtime/Scheduler.h
+index bc86000..a98ddf8 100644
+--- a/src/runtime/Scheduler.h
++++ b/src/runtime/Scheduler.h
+@@ -18,9 +18,11 @@
+ #define _Scheduler_h_ 1
+ 
+ #include "generic/EmbeddedContainers.h"
++#include "generic/AVLTree.h"
+ #include "runtime/Runtime.h"
++#include "runtime/Thread.h"
+ 
+-class Thread;
++//class Thread;
+ 
+ class Scheduler {
+   friend void Runtime::idleLoop(Scheduler*);
+@@ -29,10 +31,11 @@ class Scheduler {
+   // very simple N-class prio scheduling
+   BasicLock readyLock;
+   volatile mword readyCount; 
+-  EmbeddedList<Thread> readyQueue[maxPriority];
++  AVLTree<Thread*> readyTree;
+   volatile mword preemption;
+   volatile mword resumption;
+ 
++
+   Scheduler* partner;
+ 
+   template<typename... Args>
+@@ -45,12 +48,17 @@ class Scheduler {
+ 
+ public:
+   Scheduler();
++  static mword schedMinGranularityTicks;
++  static mword defaultEpochLengthTicks;
+   void setPartner(Scheduler& s) { partner = &s; }
+   static void resume(Thread& t);
+   void preempt();
+   void suspend(BasicLock& lk);
+   void suspend(BasicLock& lk1, BasicLock& lk2);
+   void terminate() __noreturn;
++  static void setTicks();
++  static void setTicks(int grain, int epoch);
+ };
+ 
++
+ #endif /* _Scheduler_h_ */
+diff --git a/src/runtime/Scheduler.h~ b/src/runtime/Scheduler.h~
+new file mode 100644
+index 0000000..b03f69a
+--- /dev/null
++++ b/src/runtime/Scheduler.h~
+@@ -0,0 +1,63 @@
++/******************************************************************************
++    Copyright © 2012-2015 Martin Karsten
++
++    This program is free software: you can redistribute it and/or modify
++    it under the terms of the GNU General Public License as published by
++    the Free Software Foundation, either version 3 of the License, or
++    (at your option) any later version.
++
++    This program is distributed in the hope that it will be useful,
++    but WITHOUT ANY WARRANTY; without even the implied warranty of
++    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++    GNU General Public License for more details.
++
++    You should have received a copy of the GNU General Public License
++    along with this program.  If not, see <http://www.gnu.org/licenses/>.
++******************************************************************************/
++#ifndef _Scheduler_h_
++#define _Scheduler_h_ 1
++
++#include "generic/EmbeddedContainers.h"
++#include "generic/AVLTree.h"
++#include "runtime/Runtime.h"
++
++class Thread;
++
++class Scheduler {
++  friend void Runtime::idleLoop(Scheduler*);
++  bufptr_t idleStack[minimumStack];
++
++  // very simple N-class prio scheduling
++  BasicLock readyLock;
++  volatile mword readyCount; 
++  AVLTree<Thread> readyTree;
++  volatile mword preemption;
++  volatile mword resumption;
++
++
++  Scheduler* partner;
++
++  template<typename... Args>
++  inline void switchThread(Scheduler* target, Args&... a);
++
++  inline void enqueue(Thread& t);
++
++  Scheduler(const Scheduler&) = delete;                  // no copy
++  const Scheduler& operator=(const Scheduler&) = delete; // no assignment
++
++public:
++  Scheduler();
++  static mword schedMinGranularityTicks;
++  static mword defaultEpochLengthTicks;
++  void setPartner(Scheduler& s) { partner = &s; }
++  static void resume(Thread& t);
++  void preempt();
++  void suspend(BasicLock& lk);
++  void suspend(BasicLock& lk1, BasicLock& lk2);
++  void terminate() __noreturn;
++  static void setTicks();
++  static void setTicks(int grain, int epoch);
++};
++
++
++#endif /* _Scheduler_h_ */
+diff --git a/src/runtime/Thread.h b/src/runtime/Thread.h
+index a09bb0e..11c523f 100644
+--- a/src/runtime/Thread.h
++++ b/src/runtime/Thread.h
+@@ -60,6 +60,9 @@ public:
+   void start(ptr_t func, ptr_t p1 = nullptr, ptr_t p2 = nullptr, ptr_t p3 = nullptr);
+   void direct(ptr_t func, ptr_t p1 = nullptr, ptr_t p2 = nullptr, ptr_t p3 = nullptr, ptr_t p4 = nullptr);
+   void cancel();
++  mword vRuntime = 0;
++  mword queueTime = 0;
++
+ 
+   bool block(UnblockInfo* ubi) {
+     GENASSERT1(this == Runtime::getCurrThread(), Runtime::getCurrThread());
+diff --git a/src/ulib/Makefile.dep b/src/ulib/Makefile.dep
+new file mode 100644
+index 0000000..c7d63d5
+--- /dev/null
++++ b/src/ulib/Makefile.dep
+@@ -0,0 +1,8 @@
++libKOS.o: libKOS.cc /home/ugd/ihmayor/kos/src/ulib/../testoptions.h \
++ /home/ugd/ihmayor/kos/src/ulib/../include/syscalls.h \
++ /home/ugd/ihmayor/kos/src/ulib/../include/kostypes.h
++pthread.o: pthread.cc /home/ugd/ihmayor/kos/src/ulib/../testoptions.h \
++ /home/ugd/ihmayor/kos/src/ulib/../include/syscalls.h \
++ /home/ugd/ihmayor/kos/src/ulib/../include/kostypes.h \
++ /home/ugd/ihmayor/kos/src/ulib/../include/pthread.h \
++ /home/ugd/ihmayor/kos/src/ulib/../include/syscalls.h
+
+diff --git a/src/user/Makefile b/src/user/Makefile
+index d86949a..3965764 100644
+--- a/src/user/Makefile
++++ b/src/user/Makefile
+@@ -11,7 +11,7 @@ SRC=$(wildcard *.cc)
+ OBJ=$(SRC:%.cc=%.o)
+ EXE=$(SRC:%.cc=exec/%)
+ 
+-all: $(EXE) exec/motb
++all: $(EXE) exec/motb  exec/schedparam
+ 
+ .PHONY: .FORCE
+ 
+@@ -34,6 +34,15 @@ exec/motb: .FORCE
+ 	@date >> $@
+ 	@echo >> $@
+ 
++exec/schedparam: .FORCE
++	@echo creating $@
++	@mkdir -p exec
++	@echo "4 -> schedMinGranularity" >> $@
++	@echo -n "20 -> defaultEpochLength" >> $@
++	@echo >> $@
++	@echo >> $@
++
++
+ echo:
+ 	@echo SRC: $(SRC)
+ 	@echo OBJ: $(OBJ)
+diff --git a/src/user/Makefile.dep b/src/user/Makefile.dep
+new file mode 100644
+index 0000000..f6b065d
+--- /dev/null
++++ b/src/user/Makefile.dep
+@@ -0,0 +1,16 @@
++threadtest.o: threadtest.cc \
++ /home/ugd/ihmayor/kos/src/user/../testoptions.h \
++ /home/ugd/ihmayor/kos/src/user/../include/syscalls.h \
++ /home/ugd/ihmayor/kos/src/user/../include/kostypes.h \
++ /home/ugd/ihmayor/kos/src/user/../include/pthread.h \
++ /home/ugd/ihmayor/kos/src/user/../include/syscalls.h
++systest.o: systest.cc /home/ugd/ihmayor/kos/src/user/../testoptions.h \
++ /home/ugd/ihmayor/kos/src/user/../include/syscalls.h \
++ /home/ugd/ihmayor/kos/src/user/../include/kostypes.h
++manythread.o: manythread.cc \
++ /home/ugd/ihmayor/kos/src/user/../testoptions.h \
++ /home/ugd/ihmayor/kos/src/user/../include/syscalls.h \
++ /home/ugd/ihmayor/kos/src/user/../include/kostypes.h \
++ /home/ugd/ihmayor/kos/src/user/../include/pthread.h \
++ /home/ugd/ihmayor/kos/src/user/../include/syscalls.h
++kbloop.o: kbloop.cc /home/ugd/ihmayor/kos/src/user/../testoptions.h

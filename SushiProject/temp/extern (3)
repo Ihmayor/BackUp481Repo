@@ -1,0 +1,3 @@
+extern: main_code.c func_code.m
+	m4 func_code.m > func_code.s
+	gcc main_code.c func_code.s

@@ -1,0 +1,4 @@
+﻿The simplest resource on counting: http://discrete.gr/complexity/
+
+A book alogorithms without codes!: http://ldc.usb.ve/~xiomara/ci2525/ALG_3rd.pdf
+

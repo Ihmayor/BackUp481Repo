@@ -47,9 +47,6 @@ namespace SushiSushi
         public static EventHandler<MenuItemData> OnMinusButtonPressed;
         public static EventHandler<MenuItemData> OnPlusButtonPressed;
         
-
-
-
         public SidebarItemControl()
         {
             InitializeComponent();
