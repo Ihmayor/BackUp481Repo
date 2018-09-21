@@ -1,4 +1,3 @@
-# BackUp481Repo
 TO RUN SOURCE CODE:
 ===============================
 Go to folder "SushiProject"
